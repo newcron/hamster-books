@@ -9,22 +9,16 @@ function getBookController($id) {
     echo json_encode(getBook($id));
 }
 
+function updateBookController($id) {
+    echo json_encode(updateBook(createDataObjectFromPost()));
+}
+
 function listBooksByStateController($state) {
     echo json_encode(listBooks($state));
 }
 
 function createBookController() {
-    global $mysqli;
-    $object = new stdClass();
-    while(list($key, $val) = each($_POST)) {
-
-        if(empty($val)) {
-            $object->$key="null";
-        } else {
-            $object->$key="'".$mysqli->real_escape_string($val)."'";
-        }
-    }
-    echo json_encode(createBook($object));
+    echo json_encode(createBook(createDataObjectFromPost()));
 }
 
 ?>

@@ -49,6 +49,24 @@ function createBook($contents) {
         );");
 }
 
+function updateBook($contents) {
+    $sql = "update book set
+        modified_date = now(),
+        isbn = $contents->isbn,
+        title = $contents->title,
+        publisher = $contents->publisher,
+        author_id = $contents->author_id,
+        page_count = $contents->page_count,
+        language = 'DE',
+        publication_year = $contents->publication_year,
+        read_date = $contents->read_date,
+        read_comment = $contents->read_comment,
+        read_rating = $contents->read_rating,
+        read_state = $contents->read_state
+        where id = $contents->id;";
+    return execute($sql);
+}
+
 /*
  *
 +-------------------+-----------------------+------+-----+---------+----------------+
@@ -72,6 +90,21 @@ function createBook($contents) {
 | tags              | text                  | YES  |     | NULL    |                |
 +-------------------+-----------------------+------+-----+---------+----------------+
  */
+
+function createDataObjectFromPost() {
+    global $mysqli;
+    $object = new stdClass();
+    while(list($key, $val) = each($_POST)) {
+
+        if(empty($val)) {
+            $object->$key="null";
+        } else {
+            $object->$key="'".$mysqli->real_escape_string($val)."'";
+        }
+    }
+
+    return $object;
+}
 
 function execute($query) {
     global $mysqli;

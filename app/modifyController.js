@@ -9,14 +9,16 @@
                     bookService.create(data, function () {
                         window.location.href = "#/read"
                     });
-
                 });
             },
 
             editController: function (bookId) {
                 bookService.getBook(bookId, function (book) {
                     modifyFormHandler.showForm(book, function (data) {
-                        alert("implement me");
+                        bookService.update(data, function(data){
+                            console.log(data);
+                            // window.location.href="#/read";
+                        });
                     });
 
                 });

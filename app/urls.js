@@ -13,6 +13,9 @@
             },
             createBook: function() {
                 return "api/book"
+            },
+            updateBook: function(id) {
+                return "api/book/"+id;
             }
 
         }

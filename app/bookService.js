@@ -17,16 +17,18 @@
             },
 
             create: function (book, callback) {
-                var convertedBook = {};
-
-                $.each(book, function (key, val) {
-                    var keyC = key.replace("-", "_");
-                    convertedBook[keyC] = val;
-                });
-
                 $.ajax(urls.createBook(), {
                     method: "POST",
-                    data: convertedBook,
+                    data: book,
+                    success: callback,
+                    error: failRequest
+                });
+            },
+
+            update: function(book, callback) {
+                $.ajax(urls.updateBook(book.id), {
+                    method: "POST",
+                    data: book,
                     success: callback,
                     error: failRequest
                 });
@@ -52,11 +54,7 @@
     }
 
     function fromApiToLocalModel(data) {
-        data.read_date = data.read_date.substr(0,10);
-        $.each(data, function (key, value) {
-            data[key.replace("_", "-")] = value;
-        });
-
+        data.read_date = data.read_date ? data.read_date.substr(0, 10) : null;
 
     }
 
