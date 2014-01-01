@@ -1,0 +1,115 @@
+<form class="form-horizontal" id="modify-form" role="form" action="/">
+
+    <input type="hidden" name="id" id="modify-id" value="{{id}}">
+
+    <div class="form-group">
+        <label for="modify-title" class="col-sm-2 control-label" >Buchtitel:</label>
+
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="modify-title" name="title" value="{{title}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="modify-author-id" class="col-sm-2 control-label">Author:</label>
+
+        <div class="col-sm-10">
+            <p class="form-control-static">
+                <input name="author-id" id="modify-author-id" type="hidden" value="{{author_id}}">
+                <span id="modify-author-name">
+                    {{#author-id}}{{last-name}}, {{first-name}} {{middle-name}}{{/author-id}}
+                    {{^author-id}}Kein Author{{/author-id}}
+                </span>
+                <button type="button" class="btn btn-primary btn-xs" id="modify-author-selector" data-toggle="modal" data-target="#modify-author-dialog">&hellip;</button>
+            </p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="modify-isbn" class="col-sm-2 control-label" >Seitenzahl:</label>
+
+        <div class="col-sm-2">
+            <input type="number" class="form-control" id="modify-page-count" name="page-count" value="{{page-count}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="modify-isbn" class="col-sm-2 control-label">ISBN:</label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="modify-isbn" name="isbn" value="{{isbn}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="modify-isbn" class="col-sm-2 control-label">Verlag:</label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="modify-publisher" name="publisher" value="{{publisher}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="modify-isbn" class="col-sm-2 control-label">Veröffentlichungsjahr:</label>
+
+        <div class="col-sm-2">
+            <input type="number" class="form-control" id="modify-publication-year" name="publication-year" value="{{publication-year}}">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">
+            <input type="checkbox" id="modify-is-read" {{#book-read}}checked="checked" data-foo="bar"{{/book-read}}> Gelesen
+            <input type="hidden" id="modify-read-state" name="read-state">
+        </label>
+        {{read}}
+
+        <div class="col-sm-3 is-read-context hidden">
+            <input value="{{read-date}}" type="date" class="form-control" name="read-date" id="modify-read-date" >
+        </div>
+    </div>
+    <div class="form-group is-read-context hidden">
+        <label for="modify-isbn" class="col-sm-2 control-label">Bewertung:</label>
+
+        <div class="col-sm-2">
+            <input type="number" class="form-control" id="modify-read-rating" name="read-rating" value="{{read-rating}}">
+        </div>
+    </div>
+    <div class="form-group is-read-context hidden">
+        <label for="modify-read-comment" class="col-sm-2 control-label">Kommentar:</label>
+        <div class="col-sm-4">
+            <textarea class="form-control" id="modify-read-comment" name="read-comment">{{read-comment}}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Speichern</button>
+        </div>
+    </div>
+</form>
+
+
+
+<div class="modal fade" id="modify-author-dialog" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content form">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Author</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                        <input type="text" class="form-control" id="modify-author-dialog-filter" placeholder="Filter">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+
+                        <div class="list-group l-medium-height" id="modify-author-dialog-list">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
