@@ -1,0 +1,19 @@
+<section id="read-books">
+
+    <div class="list-group">
+        {{#clusters}}
+            <section class="cluster">
+                <h3 class="cluster-title">{{title}}</h3>
+                <section class="cluster-content">
+                    {{#books}}
+                        <a href="#/book/{{id}}" class="unread-book-entry">
+                            <span class="unread-book-entry-title">{{title}}</span>
+                            <span class="unread-book-entry-added">{{addedDate}}</span>
+                        </a>
+                    {{/books}}
+                </section>
+            </section>
+        {{/clusters}}
+    </div>
+
+</section>

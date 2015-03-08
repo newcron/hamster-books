@@ -1,0 +1,68 @@
+.read-book-entry {
+  @element-breakpoint: 640px;
+
+  text-decoration: none;
+  color: black;
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0;
+
+  .read-book-entry-title {
+    font-size: 1rem;
+    display: block;
+  }
+
+  .read-book-entry-added, .read-book-entry-author, .read-book-entry-read, .read-book-entry-rating {
+    font-size: 1rem;
+    color: @hamsters-books-lightgrey;
+  }
+
+  @media screen and (max-width: @element-breakpoint) {
+    .read-book-entry-added, .read-book-entry-read {
+      display: none;
+    }
+
+    .read-book-entry-rating {
+      display: inline;
+      &:before {
+        content: ". Note: ";
+      }
+    }
+  }
+
+  @media screen and (min-width: @element-breakpoint) {
+
+    .read-book-entry-added, .read-book-entry-author, .read-book-entry-read, .read-book-entry-rating {
+      display: inline-block;
+      width: 25%;
+      text-align: right;
+
+      &:before {
+        font-size: 0.8rem;
+      }
+    }
+
+    .read-book-entry-author {
+      text-align: left;
+    }
+
+    &:hover {
+
+      .read-book-entry-added:before {
+        content: "Eingetragen: ";
+      }
+      .read-book-entry-read:before {
+        content: "Gelesen: ";
+      }
+      .read-book-entry-rating:before {
+        content: "Note: ";
+      }
+    }
+  }
+
+  &:first-child {
+
+  }
+
+}
+

@@ -16,6 +16,12 @@
             },
             updateBook: function(id) {
                 return "api/book/"+id;
+            },
+            createAuthor: function() {
+                return "api/author";
+            },
+            retrieveBookInfo: function(isbn) {
+                return "api/book/search/"+isbn;
             }
 
         }

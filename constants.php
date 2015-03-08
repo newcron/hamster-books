@@ -1,10 +1,11 @@
 <?php
+# file is only on production and will override the following settings - this will make a switch between local dev settings and prod settings
 @include_once "production_constants.php";
 
 define("DB_HOST", "127.0.0.1");
-define("DB_USER", "hamsters_books");
-define("DB_PASS", "hamsters_books");
-define("DB_DATABASE", "hamsters_books");
+define("DB_USER", "hamstersbooks");
+define("DB_PASS", "hamstersbooks");
+define("DB_DATABASE", "hamstersbooks");
 
 
 if (get_magic_quotes_gpc()) {

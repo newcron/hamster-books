@@ -1,0 +1,21 @@
+<section id="read-books">
+    <div class="list-group">
+        {{#clusters}}
+            <section class="cluster">
+                <h3 class="cluster-title">{{title}}</h3>
+                <section class="cluster-content">
+                    {{#books}}
+                        <a href="#/book/{{id}}" class="read-book-entry">
+                            <span class="read-book-entry-title">{{title}}</span>
+                            <span class="read-book-entry-author">{{author}}</span>
+                            <span class="read-book-entry-added">{{addedDate}}</span>
+                            <span class="read-book-entry-read">{{readDate}}</span>
+                            <span class="read-book-entry-rating">{{rating}}</span>
+                        </a>
+                    {{/books}}
+                </section>
+            </section>
+        {{/clusters}}
+    </div>
+
+</section>

@@ -17,6 +17,11 @@ function listAuthors() {
     return listObjects("select * from author");
 }
 
+function createAuthor($contents) {
+    execute("insert into author(added_date, modified_date, first_name, middle_name, last_name) values(now(), now(), $contents->first_name, $contents->middle_name, $contents->last_name)");
+    return listObjects("select * from author order by id desc limit 1")[0];
+}
+
 function createBook($contents) {
     return execute("insert into book(
             added_date,

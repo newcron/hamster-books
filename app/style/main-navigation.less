@@ -1,0 +1,72 @@
+.main-navigation {
+
+  background-color: @hamsters-books-grey;
+
+  background-image: url("@{image-url}/read-books-background.png");
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99999;
+  font-family: Garamond;
+
+  .main-navigation-title {
+    color: white;
+    margin: 0;
+    text-shadow: 0 1px black;
+  }
+
+  .main-navigation-menu {
+    padding: 0;
+    border-bottom: 1px solid black;
+    font-size: 0;
+    margin-bottom: 0;
+
+    .main-navigation-menu-item {
+      list-style: none;
+      display: inline-block;
+      font-size: 1rem;
+
+      a, span {
+        color: white;
+        display: inline-block;
+        padding: 5px 20px;
+        text-shadow: 1px 1px 0 black;
+      }
+
+      a:hover {
+        text-decoration: none;
+        background: rgba(255,255,255, 0.4)
+      }
+    }
+
+    .main-navigation-menu-item.is-selected > a {
+      background: white;
+      border: solid black;
+      border-width: 1px 1px 0 1px;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+      text-shadow: none;
+      color: black;
+      position: relative;
+      bottom: -1px;
+    }
+  }
+
+}
+
+
+@media screen and (min-width: 500px) {
+  .main-navigation {
+      /* transition is very expensive for phones without hardware acceleration */
+      transition: background-image 0.4s;
+  }
+}
+
+.main-navigation.is-on-unread {
+  background-image: url("@{image-url}/unread-books-background.png");
+}
+
+.main-navigation.is-on-new {
+  background-image: url("@{image-url}/new-book-background.png");
+}

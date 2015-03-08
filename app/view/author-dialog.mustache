@@ -1,0 +1,65 @@
+<section id="author-dialog" class="is-dialog dialog">
+    <header class="dialog-header">
+        <button class="dialog-close-button" id="dialog-close-button">x</button>
+        <h1>Author Auswählen</h1>
+    </header>
+    <section id="author-dialog-existing">
+        <h3>Vorhandener Author</h3>
+
+        <div class="book-form">
+            <div class="book-form-group">
+                <label for="author-filter" class="book-form-label">Filter:</label>
+
+                <div class="book-form-field">
+
+                    <input type="text" class="form-control" id="modify-author-dialog-filter" name="author-filter" value="{{#newAuthorSuggestion}}{{last_name}}, {{first_name}}{{/newAuthorSuggestion}}">
+                </div>
+            </div>
+            <div class="book-form-group">
+                <label class="book-form-label">Vorhandene:</label>
+                <div class="book-form-field">
+                    <ul id="modify-author-dialog-existing-list" class="select-box">
+                        {{#authors}}
+                            <li  class="select-box-item" data-author-id="{{id}}">{{name}}</li>
+                        {{/authors}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section id="author-dialog-new">
+        <h3>Neuer Author</h3>
+        <div class="book-form">
+            <div class="book-form-group">
+                <label for="author-first-name" class="book-form-label">Vorname:</label>
+
+                <div class="book-form-field">
+                    <input type="text" class="form-control" id="author-first-name" name="author-first-name" value="{{newAuthorSuggestion.first_name}}">
+                </div>
+            </div>
+
+            <div class="book-form-group">
+                <label for="author-middle-name" class="book-form-label">Beiname:</label>
+
+                <div class="book-form-field">
+                    <input type="text" class="form-control" id="author-middle-name" name="author-middle-name" value="{{newAuthorSuggestion.middle_name}}">
+                </div>
+            </div>
+
+            <div class="book-form-group">
+                <label for="author-last-name" class="book-form-label">Nachname:</label>
+
+                <div class="book-form-field">
+                    <input type="text" class="form-control" id="author-last-name" name="author-last-name" value="{{newAuthorSuggestion.last_name}}">
+                </div>
+            </div>
+            <div class="book-form-group">
+                <label class="book-form-label"></label>
+                <div class="book-form-field">
+                    <button id="author-create-action">Anlegen</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

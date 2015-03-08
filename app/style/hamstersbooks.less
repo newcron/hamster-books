@@ -1,9 +1,67 @@
-.l-mainarea {
-  margin-top: 60px;
+@image-url: "../img";
+@headline-font: Garamond, serif;
+@main-font: Helvetica, sans-serif;
+@hamsters-books-grey: #353329;
+@hamsters-books-lightgrey: lighten(@hamsters-books-grey, 60%);
+
+@import "layout";
+
+html {
+  font-size: 14px;
 }
 
-.l-medium-height {
-  max-height: 200px;
-  overflow-y: scroll;
+body {
+  margin:0;
+  padding: 0;
+  font-family: Helvetica, sans-serif;
+  line-height: 1.5rem;
 }
+
+a {
+  text-decoration: none;
+}
+
+h1, h2 {
+  font-family: @headline-font;
+  font-weight: normal;
+}
+
+h3, h4, h5 {
+  font-family: @main-font;
+  font-size: 1rem;
+  color: @hamsters-books-grey;
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+
+h2 {
+  font-size: 1.4rem;
+}
+
+
+.is-hidden {
+  display: none!important;
+}
+
+.is-blurry {
+  -webkit-filter: blur(4px);
+}
+
+@import "icons";
+@import "main-navigation";
+@import "cluster";
+@import "read-book-entry";
+@import "unread-book-entry";
+@import "book-form";
+@import "select-box";
+@import "dialog";
+
+
+
+
+
+
 

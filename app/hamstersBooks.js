@@ -1,10 +1,5 @@
 (function() {
-
-    define(["dispatcher", "bootstrap", "less"], function (dispatcher, bootstrap, less) {
+    define(["dispatcher", "mainMenu"], function (dispatcher) {
         dispatcher.start();
     });
-
-
-
-
 })();

@@ -54,7 +54,9 @@
     }
 
     function fromApiToLocalModel(data) {
-        data.read_date = data.read_date ? data.read_date.substr(0, 10) : null;
+        data.read_date = data.read_date ? new XDate(data.read_date.replace(" ", "T")) : null;
+        data.added_date = data.added_date ? new XDate(data.added_date.replace(" ", "T")) : null;
+        data.modified_date = data.modified_date ? new XDate(data.modified_date.replace(" ", "T")) : null;
 
     }
 

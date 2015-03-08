@@ -16,8 +16,7 @@
                 bookService.getBook(bookId, function (book) {
                     modifyFormHandler.showForm(book, function (data) {
                         bookService.update(data, function(data){
-                            console.log(data);
-                            // window.location.href="#/read";
+                            window.location.href="#/read";
                         });
                     });
 

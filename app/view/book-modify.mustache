@@ -1,155 +1,90 @@
-<form class="form-horizontal" id="modify-form" role="form" action="/">
+<form class="book-form" id="modify-form" role="form" action="/">
 
     <input type="hidden" name="id" id="modify-id" value="{{id}}">
 
-    <div class="form-group">
-        <label for="modify-title" class="col-sm-2 control-label">Buchtitel:</label>
+    <div class="book-form-group">
+        <label for="modify-title" class="book-form-label">Buchtitel:</label>
 
-        <div class="col-sm-4">
+        <div class="book-form-field">
             <input type="text" class="form-control" id="modify-title" name="title" value="{{title}}">
         </div>
     </div>
-    <div class="form-group">
-        <label for="modify-author-id" class="col-sm-2 control-label">Author:</label>
-
-        <div class="col-sm-10">
-            <p class="form-control-static">
-                <input name="author_id" id="modify-author-id" type="hidden" value="{{author_id}}">
+    <div class="book-form-group">
+        <label for="modify-author-id" class="book-form-label">Author:</label>
+        <div class="book-form-field input-like-indented">
+            <input name="author_id" id="modify-author-id" type="hidden" value="{{author_id}}">
                 <span id="modify-author-name">
                     {{#author_id}}{{last_name}}, {{first_name}} {{middle_name}}{{/author_id}}
                     {{^author_id}}Kein Author{{/author_id}}
                 </span>
-                <button type="button" class="btn btn-primary btn-xs" id="modify-author-selector" data-toggle="modal"
-                        data-target="#modify-author-dialog">&hellip;</button>
-            </p>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="modify-isbn" class="col-sm-2 control-label">Seitenzahl:</label>
+            <button type="button" class="condensed" id="modify-author-selector" data-toggle="modal"
+                    data-target="#modify-author-dialog">&hellip;</button>
 
-        <div class="col-sm-2">
+        </div>
+
+    </div>
+    <div class="book-form-group">
+        <label for="modify-page-count" class="book-form-label">Seitenzahl:</label>
+
+        <div class="book-form-field number">
             <input type="number" class="form-control" id="modify-page-count" name="page_count" value="{{page_count}}">
         </div>
     </div>
-    <div class="form-group">
-        <label for="modify-isbn" class="col-sm-2 control-label">ISBN:</label>
+    <div class="book-form-group">
+        <label for="modify-isbn" class="book-form-label">ISBN:</label>
 
-        <div class="col-sm-3">
-            <input type="text" class="form-control" id="modify-isbn" name="isbn" value="{{isbn}}">
+        <div class="book-form-field ">
+            <input type="text" class="form-control isbn" id="modify-isbn" name="isbn" value="{{isbn}}">
+            <i id="action-search-isbn" class="icon-search"></i>
         </div>
     </div>
-    <div class="form-group">
-        <label for="modify-isbn" class="col-sm-2 control-label">Verlag:</label>
+    <div class="book-form-group">
+        <label for="modify-publisher" class="book-form-label">Verlag:</label>
 
-        <div class="col-sm-3">
+        <div class="book-form-field">
             <input type="text" class="form-control" id="modify-publisher" name="publisher" value="{{publisher}}">
         </div>
     </div>
-    <div class="form-group">
-        <label for="modify-isbn" class="col-sm-2 control-label">Veröffentlichungsjahr:</label>
+    <div class="book-form-group">
+        <label for="modify-publication-year" class="book-form-label">Veröffentlichungsjahr:</label>
 
-        <div class="col-sm-2">
+        <div class="book-form-field number">
             <input type="number" class="form-control" id="modify-publication-year" name="publication_year"
                    value="{{publication_year}}">
         </div>
     </div>
 
 
-    <div class="form-group">
-        <label class="col-sm-2 control-label">
+    <div class="book-form-group">
+        <label class="book-form-label">
             <input type="checkbox" id="modify-is-read" {{#book_read}}checked="checked" data-foo="bar"{{/book_read}}>
             Gelesen
             <input type="hidden" id="modify-read-state" name="read_state">
         </label>
 
-        <div class="col-sm-3 is-read-context hidden">
+        <div class="book-form-field is-read-context hidden date">
             <input value="{{read_date}}" type="date" class="form-control" name="read_date" id="modify-read-date">
         </div>
     </div>
-    <div class="form-group is-read-context hidden">
-        <label for="modify-isbn" class="col-sm-2 control-label">Bewertung:</label>
+    <div class="book-form-group is-read-context hidden">
+        <label for="modify-read-rating" class="book-form-label">Bewertung:</label>
 
-        <div class="col-sm-2">
+        <div class="book-form-field number">
             <input type="number" class="form-control" id="modify-read-rating" name="read_rating" step="0.01"
                    value="{{read_rating}}">
         </div>
     </div>
-    <div class="form-group is-read-context hidden">
-        <label for="modify-read-comment" class="col-sm-2 control-label">Kommentar:</label>
+    <div class="book-form-group is-read-context hidden">
+        <label for="modify-read-comment" class="book-form-label">Kommentar:</label>
 
-        <div class="col-sm-4">
-            <textarea class="form-control" id="modify-read-comment" name="read_comment">{{read_comment}}</textarea>
+        <div class="book-form-field">
+            <textarea class="form-control" id="modify-read-comment" name="read_comment" rows="6">{{read_comment}}</textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="book-form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-default">Speichern</button>
         </div>
     </div>
 </form>
 
-
-<div class="modal fade" id="modify-author-dialog" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content form">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Author</h4>
-            </div>
-            <div class="modal-body">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#modify-author-dialog-existing" data-toggle="tab">Vorhandener</a></li>
-                    <li><a href="#modify-author-dialog-new" data-toggle="tab">Neuer</a></li>
-
-                </ul>
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div class="tab-pane active" id="modify-author-dialog-existing">
-                        <p>
-
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-                                <input type="text" class="form-control" id="modify-author-dialog-filter"
-                                       placeholder="Filter">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-
-                                <div class="list-group l-medium-height" id="modify-author-dialog-list">
-
-                                </div>
-                            </div>
-                        </div>
-
-                        </p>
-                    </div>
-
-                    <div class="tab-pane" id="modify-author-dialog-new">
-                        <p>
-
-                        <div class="form-inline">
-
-                            <div class="form-group">
-                                <input name="first_name" placeholder="Vorname" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <input name="middle_name" placeholder="Zuname" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <input name="last_name" placeholder="Nachname" class="form-control">
-                            </div>
-                            <button class="btn btn-primary" id="modify-author-dialog-new-create">Anlegen</button>
-
-
-
-                        </div>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
