@@ -7,6 +7,9 @@ define("DB_USER", "hamstersbooks");
 define("DB_PASS", "hamstersbooks");
 define("DB_DATABASE", "hamstersbooks");
 
+@define("AWS_PUBLIC_KEY", null);
+@define("AWS_SECRET_KEY", null);
+@define("AWS_ASSOCIATE_TAG", null);
 
 if (get_magic_quotes_gpc()) {
     $process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);

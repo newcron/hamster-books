@@ -55,14 +55,14 @@
         }
 
         function onBookSearchResponse(response) {
-            var bookSuggestion = response.volumeInfo;
+            var bookSuggestion = response;
 
-            pickAuthor.show(onAuthorPicked, bookSuggestion.authors[0]);
+            pickAuthor.show(onAuthorPicked, bookSuggestion["ItemAttributes"]["Author"]);
 
-            $form.find("#modify-title").val(bookSuggestion.title);
-            $form.find("#modify-page-count").val(bookSuggestion.pageCount);
-            $form.find("#modify-publication-year").val(bookSuggestion.publishedDate);
-            $form.find("#modify-publisher").val(bookSuggestion.publisher);
+            $form.find("#modify-title").val(bookSuggestion["ItemAttributes"]["Title"]);
+            $form.find("#modify-page-count").val(bookSuggestion["ItemAttributes"]["NumberOfPages"]);
+            $form.find("#modify-publication-year").val(bookSuggestion["ItemAttributes"]["PublicationDate"].substring(0,4));
+            $form.find("#modify-publisher").val(bookSuggestion["ItemAttributes"]["Publisher"]);
         }
 
         function renderForm(model, saveCallback) {
@@ -75,7 +75,7 @@
             });
 
             $form.find("#action-search-isbn").on("click", function(){
-                var isbn = $form.find("#modify-isbn").val().replace(/[^0-9Xx]/g, "");
+                var isbn = $form.find("#modify-isbn").val().replace(/[^0-9A-Za-z]/g, "");
                 searchBookController.bookDataByIsbn(isbn, onBookSearchResponse);
             });
 

@@ -21,7 +21,7 @@
                 return "api/author";
             },
             retrieveBookInfo: function(isbn) {
-                return "api/book/search/"+isbn;
+                return "api/book/search/"+isbn+"?in[]=ASIN&in[]=SmallImage&in[]=MediumImage&in[]=LargeImage&in[]=ItemAttributes";
             }
 
         }
