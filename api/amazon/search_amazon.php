@@ -16,5 +16,12 @@ function searchBook($isbn)
         return true;
     };
 
-    echo json_encode(array_filter($result, $filterFunction, ARRAY_FILTER_USE_KEY));
+    $filteredResult = [];
+    foreach($result as $key=>$value) {
+        if($filterFunction($key) === true) {
+            $filteredResult[$key] = $value;
+        }
+    }
+
+    echo json_encode($filteredResult);
 }
