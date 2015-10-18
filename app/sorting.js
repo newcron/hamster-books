@@ -28,6 +28,12 @@
         }
 
         function readDateComparator(first, second) {
+            if(first.read_date === null) {
+                return -1;
+            }
+            if(second.read_date === null) {
+                return 1;
+            }
             if (first.read_date == second.read_date) {
                 return first.title > second.title ? 1 : -1;
             }
@@ -37,7 +43,9 @@
         function readMonthClusterFinder(book){
             const monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
             var readDate = book.read_date;
-
+            if(readDate === null) {
+                return new Cluster("Wird Gelesen");
+            }
 
             return new Cluster(monthNames[readDate.getMonth()]+ " "+readDate.getFullYear());
         }

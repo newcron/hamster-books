@@ -39,7 +39,15 @@ module.exports = function (grunt) {
                     out: "app-optimized/js/hamstersbooks.js"
                 }
             }
+        }, hogan: {
+            files: {
+                "app-optimized/js" : "view/**/*.mustache"
+            },
+            options: {
+                amdWrapper: true
+            }
         },
+
 
         watch: {
             options: {
@@ -50,6 +58,9 @@ module.exports = function (grunt) {
             }, scripts: {
                 files: ["app/**/*.js"],
                 tasks: ["requirejs"]
+            }, templates: {
+                files: ["view/**/*.js"],
+                tasks: ["hogan"]
             }
         }
     });
@@ -57,6 +68,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
-    grunt.registerTask('default', ['less','requirejs']);
+    grunt.loadNpmTasks('grunt-contrib-hogan');
+    grunt.registerTask('default', ['less', 'hogan', 'requirejs']);
 
 }

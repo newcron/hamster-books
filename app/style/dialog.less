@@ -1,19 +1,45 @@
-.dialog-header {
-  border-bottom: 1px solid @hamsters-books-grey;
-  clear: both;
-  h1 {
-    margin-bottom: 2px;
+.dialog {
+
+
+
+  .dialog-header {
+    border-bottom: 1px solid @hamsters-books-grey;
+    clear: both;
+    h1 {
+      margin-bottom: 2px;
+    }
+
+    .dialog-close-button {
+      vertical-align: bottom;
+      font-size: 0.8rem;
+      border: 1px solid @hamsters-books-lightgrey;
+      color: @hamsters-books-lightgrey;
+      font-weight: bold;
+      background: white;
+      border-radius: 3px;
+      margin: 0;
+      float: right;
+    }
+
+
   }
 
-  .dialog-close-button {
-    vertical-align: bottom;
-    font-size: 0.8rem;
-    border: 1px solid @hamsters-books-lightgrey;
-    color: @hamsters-books-lightgrey;
-    font-weight: bold;
-    background: white;
-    border-radius: 3px;
-    margin: 0;
-    float: right;
+  &.a-loading {
+    .dialog-header {
+      text-align: center;
+      margin-top: 20%;
+    }
+
+    .dialog-content {
+      border-bottom: 1px solid @hamsters-books-grey;
+    }
+
+    .dialog-content-loadingimage {
+      display: block;
+      width: 40px;
+      height: 40px;
+      margin: 4px auto;
+    }
   }
+
 }

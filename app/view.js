@@ -5,11 +5,10 @@
         var $contantArea = $("#app-contentarea");
         var templates = {};
 
+        closeDialogCallback = null;
 
         fetchTemplate("book-list");
-        fetchTemplate("read-book-list");
-        fetchTemplate("book-modify");
-        fetchTemplate("author-dialog");
+
 
         function fetchTemplate(templateName) {
             $.ajax("app/view/" + templateName + ".mustache", {
@@ -45,15 +44,16 @@
 
         }
 
-        function renderDialog(templateName, model) {
+        function renderDialog(templateName, model, closeCallback) {
             $contantArea.children().hide();
+            console.log(model);
             var $dialog = renderOutsideDom(templateName, model);
             $dialog.find("#dialog-close-button").on("click", closeDialog);
             $dialog.addClass("is-dialog");
             $contantArea.append($dialog);
             $headerArea.addClass("is-blurry");
             $headerArea.on("click", blockInteractionHandler);
-
+            closeDialogCallback = closeCallback;
             window.scrollTo(0, 0);
         }
 
@@ -62,6 +62,10 @@
             $headerArea.removeClass("is-blurry");
             $headerArea.unbind("click", blockInteractionHandler);
 
+            if(closeDialogCallback) {
+                closeDialogCallback();
+                closeDialogCallback = null;
+            }
             $contantArea.children().show();
         }
 
