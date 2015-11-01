@@ -1,7 +1,7 @@
 (function(){
 
 
-    define(["xdate", "jquery", "bookViewModel"], function(XDate, $, bookViewModel){
+    define(["jquery", "bookViewModel"], function($, bookViewModel){
 
 
 

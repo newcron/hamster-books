@@ -1,30 +1,12 @@
 (function () {
-    define(["mustache", "jquery"], function (Mustache, $) {
+    define(["jquery", "Templates", "Hogan"], function ($, templates, hogan) {
 
         var $headerArea = $("#main-navigation");
         var $contantArea = $("#app-contentarea");
-        var templates = {};
 
         closeDialogCallback = null;
 
-        fetchTemplate("book-list");
 
-
-        function fetchTemplate(templateName) {
-            $.ajax("app/view/" + templateName + ".mustache", {
-                dataType: "text",
-                async: false,
-
-                success: function (data) {
-                    Mustache.parse(data);
-                    templates[templateName] = data;
-                },
-
-                error: function () {
-                    alert("Fatal Error: Could not fetch " + templateName);
-                }
-            });
-        }
 
         function render(templateName, model) {
             $contantArea.children().detach();
@@ -34,13 +16,15 @@
         }
 
         function renderOutsideDom(templateName, model) {
+            templateName = "app/view/"+templateName+".mustache";
             if(!model) {
                 model = {};
             }
             if(!templates[templateName]) {
-                fetchTemplate(templateName);
+                throw "template does not exist"
             }
-            return $(Mustache.render(templates[templateName], model));
+            var render2 = templates[templateName].render(model);
+            return $(render2);
 
         }
 

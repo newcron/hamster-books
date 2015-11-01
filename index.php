@@ -4,7 +4,7 @@
     <title>Hamster's Books</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="app-optimized/style/hamstersbooks.css" type="text/css" rel="stylesheet">
+    <link href="app-optimized/style/hamstersbooks.css?v=160202a930e00737a6438d3240885103" type="text/css" rel="stylesheet">
 
 
 </head>
@@ -29,9 +29,8 @@
 
 </div>
 
-<script src="app/lib/requirejs/require.js"></script>
+<script src="app-optimized/js/hamstersbooks-full.js?v=ac4786ec88bc96dcc486d28ba8cde83c"></script>
 <script>
-    require.config({paths: {hamstersBooks: "app-optimized/js/hamstersbooks"}})
     require(["hamstersBooks"]);
 </script>
 

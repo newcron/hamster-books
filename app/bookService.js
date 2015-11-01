@@ -1,10 +1,9 @@
 (function () {
-    define(["jquery", "urls", "view"], function ($, urls, view) {
+    define(["jquery", "urls", "loadingDialog"], function ($, urls, loadingDialog) {
 
         return {
             listBooksInState: function (state, callback) {
-                view.showAsDialog("loading-dialog", {title: "Lade..."});
-
+                loadingDialog.show();
                 $.ajax(urls.getBooksByState(state), {
                     success: convertList(callback),
                     error: failRequest
