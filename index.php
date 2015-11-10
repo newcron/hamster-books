@@ -4,7 +4,7 @@
     <title>Hamster's Books</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="app-optimized/style/hamstersbooks.css?v=160202a930e00737a6438d3240885103" type="text/css" rel="stylesheet">
+    <link href="app-optimized/style/hamstersbooks.css?v=53b8052b0c55ebf0ba041aefb3092aa9" type="text/css" rel="stylesheet">
 
 
 </head>
@@ -29,7 +29,7 @@
 
 </div>
 
-<script src="app-optimized/js/hamstersbooks-full.js?v=ac4786ec88bc96dcc486d28ba8cde83c"></script>
+<script src="app-optimized/js/hamstersbooks-full.js?v=e4687aa84255bdeee0dc122be9e5b85d"></script>
 <script>
     require(["hamstersBooks"]);
 </script>

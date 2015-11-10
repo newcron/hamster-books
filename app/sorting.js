@@ -21,7 +21,8 @@
                     lastCluster.books.push(model);
                 });
 
-                return {clusters: clusters };
+
+                return {clusters: clusters, count: sortedBooks.length };
             },
             groupByReadMonth: {sort: readDateComparator, group: readMonthClusterFinder},
             groupByAuthor: {sort: byAuthorComparator, group: byAuthorClusterFinder}
