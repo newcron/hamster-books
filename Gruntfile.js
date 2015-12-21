@@ -64,22 +64,40 @@ module.exports = function (grunt) {
                 }
             }
         },
+        "copy": {
+            api: {
+                src: "api/*",
+                dest: "app-optimized/"
+            },
+            index: {
+                src:"index.php",
+                dest: "app-optimized/index.php"
+            },
+            htaccess: {
+                files: [
+                    {src: "htaccess-api-routing", dest: "app-optimized/api/.htaccess"},
+                    {src: "htaccess-enable-gzip", dest: "app-optimized/.htaccess"},
+                    {src: "htaccess-set-cache-control", dest: "app-optimized/js/.htaccess"},
+                    {src: "htaccess-set-cache-control", dest: "app-optimized/style/.htaccess"}
+                ]
+            }
+
+        },
 
         'cache-busting': {
             js: {
-                replace: ['index.php'],
+                replace: ['app-optimized/index.php'],
                 replacement: 'hamstersbooks-full.js',
                 file: 'app-optimized/js/hamstersbooks-full.js',
                 get_param: true
             },
             css: {
-                replace: ['index.php'],
+                replace: ['app-optimized/index.php'],
                 replacement: 'hamstersbooks.css',
                 file: 'app-optimized/style/hamstersbooks.css',
                 get_param: true
             }
         },
-
 
         watch: {
             options: {
@@ -90,6 +108,9 @@ module.exports = function (grunt) {
             }, scripts: {
                 files: ["app/**/*.js", "view/**/*.mustache"],
                 tasks: ["hogan", "requirejs", 'uglify', 'cache-busting']
+            }, php: {
+                files: ["api/*", "index.php"],
+                tasks: ["copy", "cache-busting"]
             }
         }
     });
@@ -100,7 +121,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-hogan');
     grunt.loadNpmTasks('grunt-cache-busting');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
-    grunt.registerTask('default', ['less', 'hogan', 'requirejs', 'uglify', 'cache-busting']);
+
+    grunt.registerTask('default', ['less', 'hogan', 'requirejs', 'uglify', 'copy', 'cache-busting']);
 
 }

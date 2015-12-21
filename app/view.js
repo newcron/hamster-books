@@ -1,5 +1,5 @@
 (function () {
-    define(["jquery", "Templates", "Hogan"], function ($, templates, hogan) {
+    define(["jquery", "Templates"], function ($, templates) {
 
         var $headerArea = $("#main-navigation");
         var $contantArea = $("#app-contentarea");

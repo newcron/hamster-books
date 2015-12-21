@@ -5,7 +5,6 @@ require_once "mysql_connect.php";
 
 require 'flight/Flight.php';
 require "books.php";
-#require "googlebooks_api_bridge.php";
 require "amazon/search_amazon.php";
 require "authors.php";
 

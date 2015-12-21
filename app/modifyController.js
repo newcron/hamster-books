@@ -1,6 +1,6 @@
 (function () {
 
-    define(["view", "jquery", "bookService", "modifyFormHandler"], function (view, $, bookService, modifyFormHandler) {
+    define(["bookService", "modifyFormHandler"], function (bookService, modifyFormHandler) {
 
 
         return {
