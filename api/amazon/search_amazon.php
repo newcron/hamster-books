@@ -18,7 +18,7 @@ function searchBook($isbn)
 
     $filteredResult = [];
     foreach($result as $key=>$value) {
-        if($filterFunction($key) === true) {
+        if($filterFunction($key) !== true) {
             $filteredResult[$key] = $value;
         }
     }

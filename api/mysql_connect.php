@@ -117,7 +117,6 @@ function execute($query) {
     if(!$queryResult) {
         throw new Exception($mysqli->error);
     }
-    syslog(LOG_INFO, $query);
     return array("success" => true, "query" => $query);
 
 }
@@ -132,7 +131,6 @@ function listObjects($selectQuery) {
     while($item = $queryResult->fetch_object()) {
         $result[] = $item;
     }
-    syslog(LOG_INFO, $selectQuery);
     return $result;
 }
 
@@ -142,7 +140,6 @@ function getObject($selectQuery) {
     if(!$queryResult) {
         throw new Exception($mysqli->error);
     }
-    syslog(LOG_ERR, $selectQuery);
     return $queryResult->fetch_object();
 }
 

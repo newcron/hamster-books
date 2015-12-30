@@ -11,10 +11,8 @@ module.exports = function (grunt) {
                     paths: ["app/style/"],
                     compress: true,
                     cleanCss: true,
-                    sourceMap: true,
-                    modifyVars: {
-                        "image-url": "\"../../app/img\""
-                    }
+                    sourceMap: true
+
                 },
                 files: {
                     "app-optimized/style/hamstersbooks.css": "app/style/hamstersbooks.less"
@@ -65,19 +63,25 @@ module.exports = function (grunt) {
             }
         },
         "copy": {
-            api: {
-                src: "api/*",
-                dest: "app-optimized/"
+            code: {
+                files: [
+                    { src: "web/index.php", dest: "app-optimized/index.php" },
+                    { src: "web/api.php", dest: "app-optimized/api.php" }
+                ]
+
             },
-            index: {
-                src:"index.php",
-                dest: "app-optimized/index.php"
+            media: {
+                flatten: true,
+                expand: true,
+                cwd: "app/img",
+                src: "*",
+                dest: "app-optimized/img/"
             },
             htaccess: {
                 files: [
-                    {src: "htaccess-api-routing", dest: "app-optimized/api/.htaccess"},
-                    {src: "htaccess-enable-gzip", dest: "app-optimized/.htaccess"},
+                    {src: "htaccess-enable-gzip-and-routing", dest: "app-optimized/.htaccess"},
                     {src: "htaccess-set-cache-control", dest: "app-optimized/js/.htaccess"},
+                    {src: "htaccess-set-cache-control", dest: "app-optimized/img/.htaccess"},
                     {src: "htaccess-set-cache-control", dest: "app-optimized/style/.htaccess"}
                 ]
             }

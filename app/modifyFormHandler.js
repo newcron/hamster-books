@@ -32,11 +32,13 @@
         }
 
 
-        function initReadStateHandling() {
+        function initReadStateHandling(initialReadDate) {
             var $checkbox = $("#modify-is-read");
+            console.log("read state handling", initialReadDate);
+
 
             $checkbox.on("change", updateState);
-            updateState()
+            updateState();
 
             function updateState() {
                 var state = $checkbox.is(":checked");
@@ -44,7 +46,7 @@
                 if (state) {
                     $contexts.removeClass("hidden");
                     if (!$("#modify-read-date").val()) {
-                        $("#modify-read-date").val(new XDate().toString("yyyy-MM-dd"));
+                        $("#modify-read-date").val(initialReadDate ? initialReadDate.toString("yyyy-MM-dd") : null);
                     }
                     $("#modify-read-state").val("READ");
                 } else {
@@ -69,7 +71,7 @@
 
             view.show("book-modify", buildViewModel(model));
             $form = $("#modify-form");
-            initReadStateHandling();
+            initReadStateHandling(model.read_state === "READ" ? model.read_date : new XDate());
             $form.find("#modify-author-selector").on("click", function(){
                 pickAuthor.show(onAuthorPicked, null);
             });

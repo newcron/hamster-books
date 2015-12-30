@@ -1,5 +1,7 @@
 (function () {
-    define(["jquery", "Templates"], function ($, templates) {
+    // dependency to hogan MUST be there, so that requireJS includes it.
+
+    define(["jquery", "Templates", "Hogan"], function ($, templates, hogan) {
 
         var $headerArea = $("#main-navigation");
         var $contantArea = $("#app-contentarea");
