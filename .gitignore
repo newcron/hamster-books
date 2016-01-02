@@ -1,6 +1,7 @@
 .idea/
 *.iml
 *.ipr
+build.tar
 *.iws
 .DS_Store
 production_constants.php

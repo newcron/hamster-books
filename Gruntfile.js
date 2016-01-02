@@ -65,8 +65,8 @@ module.exports = function (grunt) {
         "copy": {
             code: {
                 files: [
-                    { src: "web/index.php", dest: "app-optimized/index.php" },
-                    { src: "web/api.php", dest: "app-optimized/api.php" }
+                    {src: "web/index.php", dest: "app-optimized/index.php"},
+                    {src: "web/api.php", dest: "app-optimized/api.php"}
                 ]
 
             },
@@ -116,6 +116,27 @@ module.exports = function (grunt) {
                 files: ["api/*", "index.php"],
                 tasks: ["copy", "cache-busting"]
             }
+        },
+        compress: {
+            options: {
+                archive: "build.tar",
+                mode: "tar"
+            }, files: {
+                dot: true,
+                src: ["*", "**/*",
+                    "!node_modules/**/*",
+                    "!app/**/*",
+                    "!.gitignore",
+                    "!composer.*",
+                    "!production_constants.php",
+                    "!*.iml",
+                    "!.idea/**/*",
+                    "!package.json",
+                    "!build.tar",
+                    "!build.sh",
+                    "!**/.DS_Store",
+                    "!.git/**/*"]
+            }
         }
     });
 
@@ -126,8 +147,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-cache-busting');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-compress');
 
 
     grunt.registerTask('default', ['less', 'hogan', 'requirejs', 'uglify', 'copy', 'cache-busting']);
+    grunt.registerTask('build', ["default", "compress"]);
 
 }
