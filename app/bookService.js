@@ -1,38 +1,23 @@
 (function () {
-    define(["jquery", "urls", "loadingDialog"], function ($, urls, loadingDialog) {
+    define(["jquery", "urls", "loadingDialog", "ajax"], function ($, urls, loadingDialog, ajax) {
 
         return {
             listBooksInState: function (state, callback) {
                 loadingDialog.show();
-                $.ajax(urls.getBooksByState(state), {
-                    success: convertList(callback),
-                    error: failRequest
-                });
+                ajax.get(urls.getBooksByState(state)).then(convertList(callback));
+
             },
 
             getBook: function (id, callback) {
-                $.ajax(urls.getBook(id), {
-                    success: convertSingle(callback),
-                    error: failRequest
-                });
+                ajax.get(urls.getBook(id)).then(convertSingle(callback));
             },
 
             create: function (book, callback) {
-                $.ajax(urls.createBook(), {
-                    method: "POST",
-                    data: book,
-                    success: callback,
-                    error: failRequest
-                });
+                ajax.post(urls.createBook()).data(book).then(callback);
             },
 
             update: function(book, callback) {
-                $.ajax(urls.updateBook(book.id), {
-                    method: "POST",
-                    data: book,
-                    success: callback,
-                    error: failRequest
-                });
+                ajax.post(urls.updateBook(book.id)).data(book).then(callback);
             }
         };
 
@@ -58,10 +43,5 @@
         data.read_date = data.read_date ? new XDate(data.read_date.replace(" ", "T")) : null;
         data.added_date = data.added_date ? new XDate(data.added_date.replace(" ", "T")) : null;
         data.modified_date = data.modified_date ? new XDate(data.modified_date.replace(" ", "T")) : null;
-
-    }
-
-    function failRequest() {
-        alert("error");
     }
 })();

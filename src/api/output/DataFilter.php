@@ -1,10 +1,10 @@
 <?php
 
 
-namespace hamstersbooks\api;
+namespace hamstersbooks\api\output;
 
 
-class DataFilter
+class DataFilter implements Filter
 {
 
     private $allowedJsonRootElements = [];
@@ -14,7 +14,7 @@ class DataFilter
         $this->allowedJsonRootElements = $allowedJsonRootElements;
     }
 
-    public function filter($jsonResponse)
+    public function filter(array $jsonResponse)
     {
         if (empty($this->allowedJsonRootElements)) {
             return $jsonResponse;
@@ -41,10 +41,10 @@ class DataFilter
     /**
      * @return array
      */
-    private function filterElement($jsonResponse)
+    private function filterElement(array $jsonResponse)
     {
         $filteredResult = [];
-        foreach ((array)$jsonResponse as $key => $value) {
+        foreach ($jsonResponse as $key => $value) {
             if (array_search($key, $this->allowedJsonRootElements) !== false) {
                 $filteredResult[$key] = $value;
             }

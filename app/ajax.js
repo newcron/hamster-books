@@ -1,5 +1,5 @@
 (function () {
-    define(["jQuery"], function ($) {
+    define(["jquery"], function ($) {
         return {
             "post": function(url) {
                 return dataObjectFactory("POST", url);
@@ -11,8 +11,13 @@
 
 
         function errorHandler(url, data) {
-            return function () {
-                alert("Error "+url+" "+data);
+            return function (jqxhr, status, thrownError ) {
+                if(thrownError ===  "Unauthorized") {
+                    var loginUrl = JSON.parse(jqxhr.responseText).login;
+                    if(loginUrl) {
+                        window.location=loginUrl;
+                    }
+                }
             }
         }
 
@@ -27,6 +32,7 @@
         function thenObjectFactory(method, url, data) {
             return {
                 then: function (callback) {
+                    console.log(method, url, data);
                     var options = {
                         method: method,
                         success: callback,

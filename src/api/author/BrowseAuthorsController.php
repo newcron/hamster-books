@@ -4,7 +4,7 @@
 namespace hamstersbooks\api\author;
 
 
-use hamstersbooks\api\ApiResponse;
+use hamstersbooks\api\output\ApiResponse;
 use hamstersbooks\util\persistence\QueryExecutor;
 
 class BrowseAuthorsController
@@ -13,7 +13,7 @@ class BrowseAuthorsController
     {
         $result = $executor->fetchAll(new AllAuthorsQuery());
 
-        ApiResponse::ok()->withContent($result)->send();
+        ApiResponse::ok()->withJsonContent($result)->send();
     }
 
     public static function handle()

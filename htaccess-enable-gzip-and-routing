@@ -11,4 +11,5 @@ mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
 
 
 RewriteEngine On
-RewriteRule ^api/(.*)$ api.php [QSA,L]
+RewriteRule ^api/(.*)$ index.php [QSA,L]
+RewriteRule .html$ index.php [QSA,L]

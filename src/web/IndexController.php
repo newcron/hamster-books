@@ -1,15 +1,23 @@
 <?php
-ini_set("display_errors", "true");
-ini_set("show_errors", "true");
 
-use hamstersbooks\api\Dispatcher;
 
-require_once __DIR__."/../constants.php";
-require_once __DIR__."/../vendor/autoload.php";
+namespace hamstersbooks\web;
 
-(new Dispatcher())->dispatch();
 
-/*
+use hamstersbooks\api\output\ApiResponse;
+
+class IndexController
+{
+    public static function handle()
+    {
+        return function () {
+            (new IndexController())->__invoke();
+        };
+    }
+
+    public function __invoke()
+    {
+        $content=<<<end
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,4 +57,8 @@ require_once __DIR__."/../vendor/autoload.php";
 </body>
 </html>
 
-*/
+end;
+        ApiResponse::ok()->withHtmlContent($content)->send();
+
+    }
+}

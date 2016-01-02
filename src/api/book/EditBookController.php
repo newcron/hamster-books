@@ -4,7 +4,7 @@
 namespace hamstersbooks\api\book;
 
 
-use hamstersbooks\api\ApiResponse;
+use hamstersbooks\api\output\ApiResponse;
 use hamstersbooks\util\persistence\QueryExecutor;
 
 class EditBookController

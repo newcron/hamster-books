@@ -4,7 +4,7 @@
 namespace hamstersbooks\api\author;
 
 
-use hamstersbooks\api\ApiResponse;
+use hamstersbooks\api\output\ApiResponse;
 use hamstersbooks\util\persistence\QueryExecutor;
 use hamstersbooks\util\Strings;
 
@@ -22,7 +22,7 @@ class AddAuthorController
 
 
         ApiResponse::created()
-            ->withContent($executor->fetchUnique(new FindLastInsertAuthorQuery()))
+            ->withJsonContent($executor->fetchUnique(new FindLastInsertAuthorQuery()))
             ->send();
 
     }

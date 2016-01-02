@@ -5,7 +5,7 @@ namespace hamstersbooks\api\book;
 
 
 use AmazonECS;
-use hamstersbooks\api\ApiResponse;
+use hamstersbooks\api\output\ApiResponse;
 
 class SearchBookOnAmazonController
 {
@@ -15,7 +15,7 @@ class SearchBookOnAmazonController
         $result = $amazonEcs->responseGroup("Large")->returnType(AmazonECS::RETURN_TYPE_ARRAY)->lookup($isbn)["Items"]["Item"];
 
 
-        ApiResponse::ok()->withContent($result)->send();
+        ApiResponse::ok()->withJsonContent($result)->send();
     }
 
     public static function handle()

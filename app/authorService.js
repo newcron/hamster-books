@@ -1,31 +1,23 @@
-(function(){
-    define(["jquery", "urls"], function($, urls){
+(function () {
+    define(["jquery", "urls", "ajax"], function ($, urls, ajax) {
 
 
         return {
-            listAuthors: function(callback) {
-                $.ajax(urls.getAuthors(), {
-                    success: function(data){
-                        var converted = [];
-                        $.each(data, function(){
-                            var name = authorName(this);
-                            converted.push({id: this.id, name: name});
-                        });
-                        callback(converted);
-                    },
-                    error: function(){alert("error")}
+            listAuthors: function (callback) {
+                ajax.get(urls.getAuthors()).then(function (data) {
+                    var converted = [];
+                    $.each(data, function () {
+                        var name = authorName(this);
+                        converted.push({id: this.id, name: name});
+                    });
+                    callback(converted);
                 });
             },
 
-            createAuthor: function(author, callback) {
-                $.ajax(urls.createAuthor(), {
-                    method: "POST",
-                    data: author,
-                    success:function(data){
-                        callback({id: data.id, name: authorName(data)});
-                    },
-                    error: function(){alert("error")}
-                })
+            createAuthor: function (author, callback) {
+                ajax.post(urls.createAuthor()).data(author).then(function (data) {
+                    callback({id: data.id, name: authorName(data)});
+                });
             }
         }
 

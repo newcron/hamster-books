@@ -4,7 +4,7 @@
 namespace hamstersbooks\api\book;
 
 
-use hamstersbooks\api\ApiResponse;
+use hamstersbooks\api\output\ApiResponse;
 use hamstersbooks\util\persistence\QueryExecutor;
 
 class BrowseBooksController
@@ -13,7 +13,7 @@ class BrowseBooksController
     {
         $result = $executor->fetchAll(new FindBooksByStateQuery($state));
 
-        ApiResponse::ok()->withContent($result)->send();
+        ApiResponse::ok()->withJsonContent($result)->send();
     }
 
     public static function handle()
