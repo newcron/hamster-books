@@ -8,6 +8,13 @@ define(["crossroads", "listController", "modifyController", "mainMenu"], functio
 
     return {
         "start": function () {
+            // facebook appends this hash in the redirect URI. chrome transports this through all redirections.
+
+            if (location.hash == "#_=_") {
+                console.log("facebook crap");
+                location.hash = "";
+            }
+
             window.onhashchange = handleHashChange;
             if (!location.hash) {
                 location.hash = "#/read";
@@ -18,8 +25,10 @@ define(["crossroads", "listController", "modifyController", "mainMenu"], functio
 
             function handleHashChange() {
                 var hash = window.location.hash.substr(1);
+                console.log("Hash changed to: " + hash);
                 crossroads.parse(hash);
             }
-        }};
+        }
+    };
 
 });

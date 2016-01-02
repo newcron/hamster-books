@@ -90,13 +90,13 @@ module.exports = function (grunt) {
 
         'cache-busting': {
             js: {
-                replace: ['app-optimized/index.php'],
+                replace: ['src/web/indexDocument.html'],
                 replacement: 'hamstersbooks-full.js',
                 file: 'app-optimized/js/hamstersbooks-full.js',
                 get_param: true
             },
             css: {
-                replace: ['app-optimized/index.php'],
+                replace: ['src/web/indexDocument.html'],
                 replacement: 'hamstersbooks.css',
                 file: 'app-optimized/style/hamstersbooks.css',
                 get_param: true
