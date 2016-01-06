@@ -4,7 +4,7 @@
 namespace hamstersbooks\web\auth;
 
 
-use hamstersbooks\api\AccessVerifier;
+use hamstersbooks\api\auth\AccessVerifier;
 use hamstersbooks\api\output\ApiResponse;
 use League\OAuth2\Client\Provider\Facebook;
 

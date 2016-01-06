@@ -1,0 +1,1 @@
+alter table book change read_date read_date_end datetime default null, add read_date_start datetime default null;

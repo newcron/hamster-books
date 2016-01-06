@@ -71,7 +71,7 @@
 
             view.show("book-modify", buildViewModel(model));
             $form = $("#modify-form");
-            initReadStateHandling(model.read_state === "READ" ? model.read_date : new XDate());
+            initReadStateHandling(model.read_state === "READ" ? model.read_date_end : new XDate());
             $form.find("#modify-author-selector").on("click", function(){
                 pickAuthor.show(onAuthorPicked, null);
             });

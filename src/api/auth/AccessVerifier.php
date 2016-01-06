@@ -1,10 +1,9 @@
 <?php
 
 
-namespace hamstersbooks\api;
+namespace hamstersbooks\api\auth;
 
 
-use League\OAuth2\Client\Token\AccessToken;
 
 class AccessVerifier
 {

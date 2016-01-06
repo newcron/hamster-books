@@ -29,21 +29,21 @@
         }
 
         function readDateComparator(first, second) {
-            if(first.read_date === null) {
+            if(first.read_date_end === null) {
                 return -1;
             }
-            if(second.read_date === null) {
+            if(second.read_date_end === null) {
                 return 1;
             }
-            if (first.read_date == second.read_date) {
+            if (first.read_date_end == second.read_date_end) {
                 return first.title > second.title ? 1 : -1;
             }
-            return first.read_date > second.read_date ? -1 : 1;
+            return first.read_date_end > second.read_date_end ? -1 : 1;
         };
 
         function readMonthClusterFinder(book){
             const monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-            var readDate = book.read_date;
+            var readDate = book.read_date_end;
             if(readDate === null) {
                 return new Cluster("Wird Gelesen");
             }

@@ -17,7 +17,7 @@ class InsertBookQuery implements Query
         "author_id",
         "page_count",
         "publication_year",
-        "read_date",
+        "read_date_end",
         "read_comment",
         "read_rating",
         "read_state"
@@ -54,7 +54,7 @@ class InsertBookQuery implements Query
             page_count,
             language,
             publication_year,
-            read_date,
+            read_date_end,
             read_comment,
             read_rating,
             read_state
