@@ -2,6 +2,7 @@
 *.iml
 *.ipr
 build.tar
+environment/web.env
 *.iws
 .DS_Store
 production_constants.php

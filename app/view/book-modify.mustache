@@ -61,11 +61,28 @@
             Gelesen
             <input type="hidden" id="modify-read-state" name="read_state">
         </label>
-
-        <div class="book-form-field is-read-context hidden date">
-            <input value="{{read_date_end}}" type="date" class="form-control" name="read_date_end" id="modify-read-date">
+        <div class="book-form-field is-read-context hidden">
+            <hr>
         </div>
     </div>
+
+    <div class="book-form-group is-read-context hidden">
+        <label class="book-form-label">
+            Aufgeschlagen
+        </label>
+        <div class="book-form-field date">
+            <input value="{{read_date_start}}" type="date" class="form-control" name="read_date_start" id="modify-read-date-start">
+        </div>
+    </div>
+    <div class="book-form-group is-read-context hidden">
+        <label class="book-form-label">
+            Zugeschlagen
+        </label>
+        <div class="book-form-field date">
+            <input value="{{read_date_end}}" type="date" class="form-control" name="read_date_end" id="modify-read-date-end">
+        </div>
+    </div>
+
     <div class="book-form-group is-read-context hidden">
         <label for="modify-read-rating" class="book-form-label">Bewertung:</label>
 

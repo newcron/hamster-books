@@ -17,6 +17,7 @@ class UpdateBookQuery implements Query
         "author_id",
         "page_count",
         "publication_year",
+        "read_date_start",
         "read_date_end",
         "read_comment",
         "read_rating",
@@ -49,13 +50,14 @@ class UpdateBookQuery implements Query
     {
         return "update book set
             modified_date = now(),
+            language = 'DE',
             isbn = ?,
             title = ?,
             publisher = ?,
             author_id = ?,
             page_count = ?,
-            language = 'DE',
             publication_year = ?,
+            read_date_start = ?,
             read_date_end = ?,
             read_comment = ?,
             read_rating = ?,

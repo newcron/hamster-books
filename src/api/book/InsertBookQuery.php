@@ -17,6 +17,7 @@ class InsertBookQuery implements Query
         "author_id",
         "page_count",
         "publication_year",
+        "read_date_start",
         "read_date_end",
         "read_comment",
         "read_rating",
@@ -41,25 +42,25 @@ class InsertBookQuery implements Query
     }
 
 
-
     public function getPreparedStatement()
     {
         return "insert into book(
             added_date,
             modified_date,
+            language,
             isbn,
             title,
             publisher,
             author_id,
             page_count,
-            language,
             publication_year,
+            read_date_start,
             read_date_end,
             read_comment,
             read_rating,
             read_state
         ) values (
-            now(), now(), ?, ?, ?, ?, ?, 'DE', ?, ?, ?, ?, ?);";
+            now(), now(), 'DE', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     }
 
     public function getParameters()

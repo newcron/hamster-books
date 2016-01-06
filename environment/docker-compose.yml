@@ -1,0 +1,16 @@
+mysql:
+  image: mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: password
+    MYSQL_DATABASE: hamstersbooks
+  ports:
+   - "3306:3306"
+web:
+  build: web
+  env_file: web.env
+  ports:
+   - "80:80"
+  volumes:
+   - ../:/opt/hamstersbooks
+  links:
+   - mysql

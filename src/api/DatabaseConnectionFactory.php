@@ -12,7 +12,7 @@ class DatabaseConnectionFactory
 
     public static function registerDatabase($host, $database, $user, $pass)
     {
-        if(static::$pdo !== null) {
+        if (static::$pdo !== null) {
             throw new \Exception("Can't initialize database twice (connection already established)");
         }
 
@@ -24,10 +24,9 @@ class DatabaseConnectionFactory
         }
 
         try {
-        static::$pdo = new \PDO("mysql:host=$host;dbname=$database;charset=utf8", $user, $pass);
-
-        } catch(\PDOException $e) {
-            throw new \Exception($e);
+            static::$pdo = new \PDO("mysql:host=$host;dbname=$database;charset=utf8", $user, $pass);
+        } catch (\PDOException $e) {
+            throw new \Exception("Could not connect to mysql:host=$host;dbname=$database;charset=utf8", 1, $e);
         }
 
     }

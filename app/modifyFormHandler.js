@@ -11,13 +11,9 @@
             return contents;
         }
 
-
         return {
             showForm: renderForm
         };
-
-
-
 
         function buildViewModel(model) {
             // no model or create book
@@ -31,30 +27,6 @@
             return viewModel;
         }
 
-
-        function initReadStateHandling(initialReadDate) {
-            var $checkbox = $("#modify-is-read");
-            console.log("read state handling", initialReadDate);
-
-
-            $checkbox.on("change", updateState);
-            updateState();
-
-            function updateState() {
-                var state = $checkbox.is(":checked");
-                var $contexts = $(".is-read-context");
-                if (state) {
-                    $contexts.removeClass("hidden");
-                    if (!$("#modify-read-date").val()) {
-                        $("#modify-read-date").val(initialReadDate ? initialReadDate.toString("yyyy-MM-dd") : null);
-                    }
-                    $("#modify-read-state").val("READ");
-                } else {
-                    $contexts.addClass("hidden");
-                    $("#modify-read-state").val("UNREAD");
-                }
-            }
-        }
 
         function onBookSearchResponse(response) {
             var bookSuggestion = response;
@@ -76,6 +48,14 @@
                 pickAuthor.show(onAuthorPicked, null);
             });
 
+            console.log(model.read_date_start);
+
+            
+            if(model.read_date_start) {
+                var startDate = new XDate(model.read_date_start);
+                $("#modify-read-date-start").val(startDate.toString("yyyy-MM-dd"));
+            }
+
             $form.find("#action-search-isbn").on("click", function(){
                 var isbn = $form.find("#modify-isbn").val().replace(/[^0-9A-Za-z]/g, "");
                 searchBookController.bookDataByIsbn(isbn, onBookSearchResponse);
@@ -91,6 +71,31 @@
         function onAuthorPicked(authorId, authorName){
             $("#modify-author-name").text(authorName);
             $("#modify-author-id").val(authorId);
+        }
+
+        function initReadStateHandling(initialReadDate) {
+            var $checkbox = $("#modify-is-read");
+            console.log("read state handling", initialReadDate);
+
+
+            $checkbox.on("change", updateState);
+            updateState();
+
+            function updateState() {
+                var state = $checkbox.is(":checked");
+                var $contexts = $(".is-read-context");
+                if (state) {
+                    $contexts.removeClass("hidden");
+                    if (!$("#modify-read-date-end").val()) {
+                        $("#modify-read-date-end").val(initialReadDate ? initialReadDate.toString("yyyy-MM-dd") : null);
+                    }
+
+                    $("#modify-read-state").val("READ");
+                } else {
+                    $contexts.addClass("hidden");
+                    $("#modify-read-state").val("UNREAD");
+                }
+            }
         }
     });
 
