@@ -28,3 +28,7 @@ migrations-dryrun:
 migrations-run:
 	curl $(DOCKER_IP)/deploy/database/migrate/run
 
+
+release:
+	rm -f build.tar
+	grunt build

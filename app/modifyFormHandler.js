@@ -48,9 +48,6 @@
                 pickAuthor.show(onAuthorPicked, null);
             });
 
-            console.log(model.read_date_start);
-
-            
             if(model.read_date_start) {
                 var startDate = new XDate(model.read_date_start);
                 $("#modify-read-date-start").val(startDate.toString("yyyy-MM-dd"));
