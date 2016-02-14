@@ -41,7 +41,7 @@ class ApiResponse
         $this->content = new FilteredJsonContent($content,
             new CompoundFilter([DataFilter::fromInGetParameter(), new NullValuesFilter()]));
 
-        return $this->withHeader("Content-Type", "application/json");
+        return $this->withHeader("Content-Type", "application/json;charset=utf8");
     }
 
     /** @return ApiResponse */
@@ -94,7 +94,7 @@ class ApiResponse
     public function withHtmlContent($content)
     {
         $this->content = new StringContent($content);
-        return $this->withHeader("Content-Type", "text/html");
+        return $this->withHeader("Content-Type", "text/html;charset=utf8");
     }
 
 

@@ -5,12 +5,17 @@
         return {
             listAuthors: function (callback) {
                 ajax.get(urls.getAuthors()).then(function (data) {
+/*
                     var converted = [];
                     $.each(data, function () {
                         var name = authorName(this);
                         converted.push({id: this.id, name: name});
-                    });
-                    callback(converted);
+                    });*/
+                    callback(data.map(function(author){
+                        return {
+                            id: author.id, name: authorName(author)
+                        };
+                    }));
                 });
             },
 

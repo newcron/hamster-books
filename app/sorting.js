@@ -1,19 +1,20 @@
-(function(){
+(function () {
 
 
-    define(["jquery", "bookViewModel"], function($, bookViewModel){
+    define(["jquery", "bookViewModel"], function ($, bookViewModel) {
 
 
+        const END_OF_TIME = new XDate("2099-01-01");
 
         return {
-            sortAndCluster: function(listOfBooks, groupByStrategy) {
+            sortAndCluster: function (listOfBooks, groupByStrategy) {
                 var sortedBooks = listOfBooks.slice();
                 sortedBooks.sort(groupByStrategy.sort);
                 var clusters = [];
                 var lastCluster = null;
-                $.each(sortedBooks, function(){
+                $.each(sortedBooks, function () {
                     var currentCluster = groupByStrategy.group(this);
-                    if(lastCluster === null || currentCluster.title != lastCluster.title) {
+                    if (lastCluster === null || currentCluster.title != lastCluster.title) {
                         lastCluster = currentCluster;
                         clusters.push(currentCluster);
                     }
@@ -22,33 +23,34 @@
                 });
 
 
-                return {clusters: clusters, count: sortedBooks.length };
+                return {clusters: clusters, count: sortedBooks.length};
             },
             groupByReadMonth: {sort: readDateComparator, group: readMonthClusterFinder},
             groupByAuthor: {sort: byAuthorComparator, group: byAuthorClusterFinder}
         }
 
         function readDateComparator(first, second) {
-            if(first.read_date_end === null) {
-                return -1;
+            var leftBookReadFinishDate = first.read_date_end || END_OF_TIME;
+            var rightBookReadFinishDate = second.read_date_end || END_OF_TIME;
+
+
+            var comparision = Math.sign(leftBookReadFinishDate.diffDays(rightBookReadFinishDate));
+
+            if (comparision === 0) {
+                return Math.sign(first.modified_date.diffDays(second.modified_date));
             }
-            if(second.read_date_end === null) {
-                return 1;
-            }
-            if (first.read_date_end == second.read_date_end) {
-                return first.title > second.title ? 1 : -1;
-            }
-            return first.read_date_end > second.read_date_end ? -1 : 1;
+
+            return comparision
         };
 
-        function readMonthClusterFinder(book){
+        function readMonthClusterFinder(book) {
             const monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
             var readDate = book.read_date_end;
-            if(readDate === null) {
+            if (readDate === null) {
                 return new Cluster("Wird Gelesen");
             }
 
-            return new Cluster(monthNames[readDate.getMonth()]+ " "+readDate.getFullYear());
+            return new Cluster(monthNames[readDate.getMonth()] + " " + readDate.getFullYear());
         }
 
         function byAuthorComparator(first, second) {
@@ -58,8 +60,8 @@
             return firstName > secondName ? 1 : -1;
         }
 
-        function byAuthorClusterFinder(element){
-            return new Cluster((element.last_name+", "+element.first_name+" "+(element.middle_name == null ? "" : element.middle_name)).trim());
+        function byAuthorClusterFinder(element) {
+            return new Cluster((element.last_name + ", " + element.first_name + " " + (element.middle_name == null ? "" : element.middle_name)).trim());
         }
 
         function Cluster(title) {
