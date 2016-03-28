@@ -1,12 +1,4 @@
-define(["crossroads", "listController", "modifyController", "statisticsController",  "mainMenu"], function (crossroads, listController, modifyController, statisticsController, mainMenu) {
-    crossroads.addRoute("/read", listController.readBooksController);
-    crossroads.addRoute("/unread", listController.unreadBooksController);
-    crossroads.addRoute("/new", modifyController.createController);
-    crossroads.addRoute("/statistics", statisticsController.showStatisticsController);
-    crossroads.addRoute("/book/{id}", modifyController.editController);
-
-    crossroads.routed.add(mainMenu.notifyChange);
-
+define(["listController", "modifyController", "statisticsController", "mainMenu"], function (listController, modifyController, statisticsController, mainMenu) {
     return {
         "start": function () {
 
@@ -25,8 +17,40 @@ define(["crossroads", "listController", "modifyController", "statisticsControlle
 
             function handleHashChange() {
                 var hash = window.location.hash.substr(1);
-                console.log("Hash changed to: " + hash);
-                crossroads.parse(hash);
+
+                var routes = [
+                    {
+                        pattern: /^\/read$/,
+                        handler: listController.readBooksController
+                    },
+                    {
+                        pattern: /^\/unread$/,
+                        handler: listController.unreadBooksController
+                    },
+                    {
+                        pattern: /^\/new$/,
+                        handler: modifyController.createController
+                    },
+                    {
+                        pattern: /^\/statistics/,
+                        handler: statisticsController.showStatisticsController
+                    },
+                    {
+                        pattern: /^\/book\/([0-9]+)$/,
+                        handler: modifyController.editController
+
+                    }
+                ];
+
+                for(var i=0; i<routes.length; i++) {
+                    var handler = routes[i];
+                    var match = hash.match(handler.pattern);
+                    if(match!==null) {
+                        var handlerArgs = match.splice(1);
+                        handler.handler.apply(this, handlerArgs);
+                    }
+                }
+
             }
         }
     };
