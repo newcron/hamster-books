@@ -1,5 +1,5 @@
 (function () {
-    define(["jquery", "urls", "loadingDialog", "ajax"], function ($, urls, loadingDialog, ajax) {
+    define(["urls", "loadingDialog", "ajax"], function (urls, loadingDialog, ajax) {
 
         return {
             listBooksInState: function (state, callback) {
@@ -25,10 +25,8 @@
 
     function convertList(callback) {
         return function (data) {
-            $.each(data, function () {
-                fromApiToLocalModel(this)
-            });
-            callback(data);
+            var map = data.map(fromApiToLocalModel);
+            callback(map);
         }
     }
 
@@ -43,5 +41,7 @@
         data.read_date_end = data.read_date_end ? new XDate(data.read_date_end.replace(" ", "T")) : null;
         data.added_date = data.added_date ? new XDate(data.added_date.replace(" ", "T")) : null;
         data.modified_date = data.modified_date ? new XDate(data.modified_date.replace(" ", "T")) : null;
+
+        return data;
     }
 })();

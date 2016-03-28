@@ -1,7 +1,7 @@
 (function () {
 
 
-    define(["jquery", "bookViewModel"], function ($, bookViewModel) {
+    define(["jquery", "bookViewModel", "xdate"], function ($, bookViewModel, XDate) {
 
 
         const END_OF_TIME = new XDate("2099-01-01");
@@ -27,7 +27,7 @@
             },
             groupByReadMonth: {sort: readDateComparator, group: readMonthClusterFinder},
             groupByAuthor: {sort: byAuthorComparator, group: byAuthorClusterFinder}
-        }
+        };
 
         function readDateComparator(first, second) {
             var leftBookReadFinishDate = first.read_date_end || END_OF_TIME;
@@ -49,6 +49,7 @@
             if (readDate === null) {
                 return new Cluster("Wird Gelesen");
             }
+
 
             return new Cluster(monthNames[readDate.getMonth()] + " " + readDate.getFullYear());
         }

@@ -1,17 +1,17 @@
-define(["crossroads", "listController", "modifyController", "mainMenu"], function (crossroads, listController, modifyController, mainMenu) {
+define(["crossroads", "listController", "modifyController", "statisticsController",  "mainMenu"], function (crossroads, listController, modifyController, statisticsController, mainMenu) {
     crossroads.addRoute("/read", listController.readBooksController);
     crossroads.addRoute("/unread", listController.unreadBooksController);
     crossroads.addRoute("/new", modifyController.createController);
+    crossroads.addRoute("/statistics", statisticsController.showStatisticsController);
     crossroads.addRoute("/book/{id}", modifyController.editController);
 
     crossroads.routed.add(mainMenu.notifyChange);
 
     return {
         "start": function () {
-            // facebook appends this hash in the redirect URI. chrome transports this through all redirections.
 
             if (location.hash == "#_=_") {
-                console.log("facebook crap");
+                // facebook appends this hash in the redirect URI. chrome transports this through all redirections.
                 location.hash = "";
             }
 

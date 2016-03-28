@@ -1,5 +1,7 @@
 module.exports = function (grunt) {
 
+    var webpack = require("webpack");
+
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
 
@@ -25,6 +27,7 @@ module.exports = function (grunt) {
                     baseUrl: "app/",
                     paths: {
                         "signals": "lib/signals/signals",
+                        "Chart": "lib/chartjs/Chart",
                         "jquery": "lib/jquery2/jquery",
                         "crossroads": "lib/crossroads/crossroads",
                         "xdate": "lib/xdate/xdate",
@@ -148,6 +151,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
+
 
 
     grunt.registerTask('default', ['less', 'hogan', 'requirejs', 'uglify', 'copy', 'cache-busting']);

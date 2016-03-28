@@ -98,6 +98,17 @@
             <textarea class="form-control" id="modify-read-comment" name="read_comment" rows="6">{{read_comment}}</textarea>
         </div>
     </div>
+    <div class="book-form-group is-read-context hidden">
+        <label class="book-form-label">Anmerkungen:</label>
+
+        <div class="book-form-field">
+            {{#tagModel}}
+                <input type="checkbox" {{#selected}}checked{{/selected}} name="{{name}}" id="{{name}}" /> <label for="{{name}}">{{title}}</label><br/>
+            {{/tagModel}}
+
+        </div>
+
+    </div>
     <div class="book-form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-default">Speichern</button>

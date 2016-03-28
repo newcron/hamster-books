@@ -8,6 +8,7 @@ define(["jquery"], function ($) {
         $root.removeClass("is-on-new");
         $root.removeClass("is-on-unread");
         $root.removeClass("is-on-read");
+        $root.removeClass("is-on-statistics");
         $menu.find(".is-main-menu-item").removeClass("is-hidden");
 
     }
@@ -32,6 +33,9 @@ define(["jquery"], function ($) {
             } else if (path == "/unread") {
                 $root.addClass("is-on-unread");
                 $root.find("#unread-books-action").addClass("is-selected");
+            } else if (path == "/statistics") {
+                $root.addClass("is-on-statistics");
+                $root.find("#statistics-action").addClass("is-selected");
             } else {
                 $root.addClass("is-on-new");
                 $root.find("#new-book-action").addClass("is-selected");

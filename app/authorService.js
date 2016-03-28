@@ -1,16 +1,11 @@
 (function () {
-    define(["jquery", "urls", "ajax"], function ($, urls, ajax) {
+    define(["urls", "ajax"], function (urls, ajax) {
 
 
         return {
             listAuthors: function (callback) {
                 ajax.get(urls.getAuthors()).then(function (data) {
-/*
-                    var converted = [];
-                    $.each(data, function () {
-                        var name = authorName(this);
-                        converted.push({id: this.id, name: name});
-                    });*/
+
                     callback(data.map(function(author){
                         return {
                             id: author.id, name: authorName(author)
