@@ -1,7 +1,5 @@
 .dialog {
 
-
-
   .dialog-header {
     border-bottom: 1px solid @hamsters-books-grey;
     clear: both;
@@ -21,25 +19,43 @@
       float: right;
     }
 
-
   }
 
   &.a-loading {
     .dialog-header {
       text-align: center;
       margin-top: 20%;
+      border: 0;
+
+      .dialog-car {
+        display: inline-block;
+        width: 100%;
+        border-bottom: 1px solid black;
+        top: -1rem;
+        font-size: 2rem;
+        text-align: left;
+
+        .dialog-car-movable {
+          display: inline-block;
+          animation-name: loading;
+          position: relative;
+          animation-timing-function: linear;
+          animation-duration: 4s;
+          animation-iteration-count: infinite;
+          animation-play-state: running;
+        }
+      }
     }
 
-    .dialog-content {
-      border-bottom: 1px solid @hamsters-books-grey;
-    }
-
-    .dialog-content-loadingimage {
-      display: block;
-      width: 40px;
-      height: 40px;
-      margin: 4px auto;
-    }
   }
 
+}
+
+@keyframes loading {
+  0% {
+    left: 90%
+  }
+  100% {
+    left: 10%
+  }
 }

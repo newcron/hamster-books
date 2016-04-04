@@ -21,7 +21,8 @@ class InsertBookQuery implements Query
         "read_date_end",
         "read_comment",
         "read_rating",
-        "read_state"
+        "read_state",
+        "tags"
     ];
 
 
@@ -58,9 +59,10 @@ class InsertBookQuery implements Query
             read_date_end,
             read_comment,
             read_rating,
-            read_state
+            read_state,
+            tags
         ) values (
-            now(), now(), 'DE', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            now(), now(), 'DE', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     }
 
     public function getParameters()

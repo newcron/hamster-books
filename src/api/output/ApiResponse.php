@@ -91,6 +91,14 @@ class ApiResponse
         return (new ApiResponse())->withStatusCode(401);
     }
 
+
+    public static function notModified()
+    {
+        return (new ApiResponse())->withStatusCode(304);
+
+    }
+
+
     public function withHtmlContent($content)
     {
         $this->content = new StringContent($content);

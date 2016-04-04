@@ -22,6 +22,7 @@ class UpdateBookQuery implements Query
         "read_comment",
         "read_rating",
         "read_state",
+        "tags",
         "id"
     ];
 
@@ -61,7 +62,8 @@ class UpdateBookQuery implements Query
             read_date_end = ?,
             read_comment = ?,
             read_rating = ?,
-            read_state = ?
+            read_state = ?,
+            tags = ?
             where id = ?;";
 
 

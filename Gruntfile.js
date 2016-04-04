@@ -1,6 +1,5 @@
 module.exports = function (grunt) {
 
-    var webpack = require("webpack");
 
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
@@ -8,37 +7,38 @@ module.exports = function (grunt) {
         less: {
             development: {
                 options: {
-                    /* https://www.npmjs.org/package/grunt-css-url-embed --> data uri support  */
-
                     paths: ["app/style/"],
                     compress: true,
                     cleanCss: true,
                     sourceMap: true
-
                 },
                 files: {
                     "app-optimized/style/hamstersbooks.css": "app/style/hamstersbooks.less"
                 }
             }
 
-        }, requirejs: {
-            compile: {
-                options: {
-                    baseUrl: "app/",
-                    paths: {
-                        "signals": "lib/signals/signals",
-                        "Chart": "lib/chartjs/Chart",
-                        "jquery": "lib/jquery2/jquery",
-                        "crossroads": "lib/crossroads/crossroads",
-                        "xdate": "lib/xdate/xdate",
-                        "Hogan": "lib/hogan/hogan-2.0.0",
-                        "Templates": "../app-optimized/js/templates"
-                    },
-                    preserveLicenseComments: false,
-                    optimize: "uglify2",
-                    generateSourceMaps: true,
-                    name: "hamstersBooks", // assumes a production build using almond
-                    out: "app-optimized/js/hamstersbooks.js"
+        },
+        browserify: {
+            options: {
+                alias: {
+                    "xdate": "./node_modules/xdate/src/xdate.js",
+                    "Chart": "./node_modules/chart.js/Chart.js",
+                    "Hogan": "./node_modules/hogan.js/dist/template-3.0.2.js",
+                    "Templates": "./app-optimized/js/templates.js",
+                    "form-serialize": "./node_modules/form-serialize/index.js"
+                },
+                browserifyOptions: {
+                    builtins: {},
+                    insertGlobalVars: {
+                        Hogan: function (file, dir) {
+                            return 'require("Hogan")';
+                        }
+                    }
+                }
+            },
+            dist: {
+                files: {
+                    'app-optimized/js/hamstersbooks.js': ["app/**/*.js", "app/*.js"]
                 }
             }
         }, hogan: {
@@ -46,7 +46,7 @@ module.exports = function (grunt) {
                 options: {
                     prettify: true,
                     asString: false,
-                    amdWrapper: true
+                    commonJsWrapper: true
                 },
                 files: {
                     "app-optimized/js/templates.js": ["app/view/*.mustache"]
@@ -55,13 +55,13 @@ module.exports = function (grunt) {
         }, uglify: {
             aggregate: {
                 options: {
-                    sourceMapIn: "app-optimized/js/hamstersbooks.js.map",
-                    sourceMapName: 'app-optimized/js/hamstersbooks-full.js.map',
-                    sourceMap: true,
+                    // sourceMapIn: "app-optimized/js/hamstersbooks.js.map",
+                    // sourceMapName: 'app-optimized/js/hamstersbooks.js.map',
+                    sourceMap: false,
                     screwIE8: true
                 },
                 files: {
-                    "app-optimized/js/hamstersbooks-full.js": ["app/lib/requirejs/require.js", "app-optimized/js/hamstersbooks.js"]
+                    "app-optimized/js/hamstersbooks.js": ["app-optimized/js/hamstersbooks.js"]
                 }
             }
         },
@@ -94,8 +94,8 @@ module.exports = function (grunt) {
         'cache-busting': {
             js: {
                 replace: ['src/web/indexDocument.html'],
-                replacement: 'hamstersbooks-full.js',
-                file: 'app-optimized/js/hamstersbooks-full.js',
+                replacement: 'hamstersbooks.js',
+                file: 'app-optimized/js/hamstersbooks.js',
                 get_param: true
             },
             css: {
@@ -111,10 +111,10 @@ module.exports = function (grunt) {
                 spawn: false
             }, css: {
                 files: ['app/**/*.less'],
-                tasks: ['less', 'cache-busting']
+                tasks: ['less', 'copy', 'cache-busting']
             }, scripts: {
-                files: ["app/**/*.js", "view/**/*.mustache"],
-                tasks: ["hogan", "requirejs", 'uglify', 'cache-busting']
+                files: ["app/**/*.js", "app/view/**/*.mustache"],
+                tasks: ["hogan", "browserify", 'cache-busting']
             }, php: {
                 files: ["api/*", "index.php"],
                 tasks: ["copy", "cache-busting"]
@@ -143,18 +143,18 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-templates-hogan');
     grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
-    grunt.loadNpmTasks('grunt-contrib-hogan');
-    grunt.loadNpmTasks('grunt-cache-busting');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-babel');
+    grunt.loadNpmTasks('grunt-cache-busting');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
 
 
-
-    grunt.registerTask('default', ['less', 'hogan', 'requirejs', 'uglify', 'copy', 'cache-busting']);
+    grunt.registerTask('default', ['less', 'hogan', 'browserify', 'copy', 'cache-busting']);
     grunt.registerTask('build', ["default", "compress"]);
 
 }

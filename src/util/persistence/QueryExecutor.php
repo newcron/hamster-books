@@ -30,7 +30,19 @@ class QueryExecutor
     }
 
     public function execute(Query $query) {
-        $this->fetchAll($query);
+        if(!$this->pdo->beginTransaction()) {
+            throw new \Exception("can't initialize transaction");
+        }
+        try {
+            $this->fetchAll($query);
+            $this->fetchAll(new ModificationLoggingQuery());
+            if(!$this->pdo->commit()) {
+                throw new \Exception("Commit failed");
+            }
+        } catch(\Exception $e) {
+            $this->pdo->rollBack();
+            throw $e;
+        }
     }
 
     public function fetchAll(Query $query)

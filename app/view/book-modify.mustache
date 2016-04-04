@@ -1,5 +1,5 @@
 <form class="book-form" id="modify-form" role="form" action="/">
-
+    hier ist es {{tagModel.length}}
     <input type="hidden" name="id" id="modify-id" value="{{id}}">
 
     <div class="book-form-group">
@@ -101,10 +101,11 @@
     <div class="book-form-group is-read-context hidden">
         <label class="book-form-label">Anmerkungen:</label>
 
-        <div class="book-form-field">
+        <div class="book-form-field" id="modify-tag-list">
             {{#tagModel}}
                 <input type="checkbox" {{#selected}}checked{{/selected}} name="{{name}}" id="{{name}}" /> <label for="{{name}}">{{title}}</label><br/>
             {{/tagModel}}
+            <input type="hidden" name="tags" id="modify-tags" />
 
         </div>
 

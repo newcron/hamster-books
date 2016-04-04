@@ -24,7 +24,6 @@ class LoginController
 
         if (AccessVerifier::fromSession()->mayAccess()) {
             ApiResponse::found(APP_BASE_URL)->send();
-
             return;
         }
 
