@@ -16,6 +16,8 @@ if (getenv("MYSQL_1_PORT") !== false) {
     define("DB_DATABASE", "hamstersbooks");
 }
 
+
+@define("ENFORCE_HTTPS", false);
 @define("AWS_PUBLIC_KEY", null);
 @define("AWS_SECRET_KEY", null);
 @define("AWS_ASSOCIATE_TAG", null);

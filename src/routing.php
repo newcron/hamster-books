@@ -37,5 +37,8 @@ return [
     'GET /' => IndexController::handle(),
     'GET /login.html' => LoginController::handle(),
     'GET /login-return.html' => LoginReturnController::handle(),
-    'GET /authorize.html' => AuthorizeController::handle()
+    'GET /authorize.html' => AuthorizeController::handle(),
+    'GET /phpinfo.html' => function() {
+        return phpinfo();
+    }
 ];
