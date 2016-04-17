@@ -13,7 +13,6 @@ class ReadBookController
 {
     public function __invoke($id, QueryExecutor $executor) {
         $result = $executor->fetchUnique(new FindBookByIdQuery($id));
-
         ApiResponse::ok()->withJsonContent($result)->send();
     }
 

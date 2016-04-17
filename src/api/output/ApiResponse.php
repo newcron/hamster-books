@@ -94,6 +94,8 @@ class ApiResponse
 
     public static function notModified()
     {
+        header_remove("Cache-Control");
+        header_remove("Expires");
         return (new ApiResponse())->withStatusCode(304);
 
     }

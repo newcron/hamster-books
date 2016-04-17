@@ -7,6 +7,9 @@ module.exports = {
     readBooksController: function () {
         bookService.listBooksInState("READ", function (data) {
             var clusterModel = sorting.sortAndCluster(data, sorting.groupByReadMonth);
+            clusterModel.readCount = data.filter(function(d){
+                return d.read_date_end !== null;
+            }).length;
             view.show("read-book-list", clusterModel);
         });
     },

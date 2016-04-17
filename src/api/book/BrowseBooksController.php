@@ -22,7 +22,7 @@ class BrowseBooksController
 
         // php sends pragma: no-cache header by default effectively disallowing browsers to use etag.
         header_remove("Pragma");
-        ApiResponse::ok()->withJsonContent($result)->withHeader("ETag", sprintf('"%s"', $etag))->withHeader("Cache-Control", '"max-age=0, must-revalidate"')->send();
+        ApiResponse::ok()->withJsonContent($result)->withHeader("ETag", sprintf('"%s"', $etag))->withHeader("Cache-Control", '"max-age=3600, must-revalidate"')->send();
     }
 
     public static function handle()
