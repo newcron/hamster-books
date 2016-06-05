@@ -6,4 +6,5 @@ RUN docker-php-ext-install pdo pdo_mysql
 RUN a2enmod headers
 RUN a2enmod rewrite
 
+COPY 100-timezones.ini /usr/local/etc/php/conf.d/
 COPY 100-hamstersbooks.conf /etc/apache2/sites-enabled/
