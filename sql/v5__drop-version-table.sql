@@ -1,0 +1,1 @@
+drop table modification_log;

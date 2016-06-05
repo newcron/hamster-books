@@ -110,8 +110,8 @@ function initReadStateHandling(initialReadDate) {
             editBookForm.apply(function(form){
                 form.allReadContextElements().forEach(ui.batch().class("hidden").remove());
                 form.readStateField().value().set("READ");
-                if(!form.finishedReadingField().value().get()) {
-                    form.finishedReadingField().value().set(initialReadDate ? DATE_FORMATTER.format(initialReadDate) : null);
+                if(!form.startedReadingField().value().get()) {
+                    form.startedReadingField().value().set(initialReadDate ? DATE_FORMATTER.format(initialReadDate) : null);
                 }
             });
         } else {

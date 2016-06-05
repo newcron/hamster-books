@@ -35,7 +35,6 @@ class QueryExecutor
         }
         try {
             $this->fetchAll($query);
-            $this->fetchAll(new ModificationLoggingQuery());
             if(!$this->pdo->commit()) {
                 throw new \Exception("Commit failed");
             }

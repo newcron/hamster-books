@@ -1,7 +1,11 @@
 module.exports = class AuthorNameAnalyzer {
     analyzeCompleteNameFromString(authorString) {
+
         if (!authorString) {
             return null;
+        }
+        if(authorString instanceof Array) {
+            authorString = authorString.shift();
         }
         var authorExploded = authorString.split(" ");
         var author = {first_name: "", last_name: "", middle_name: ""};

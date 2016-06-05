@@ -1,8 +1,6 @@
 <?php
 
 
-use dbmigrate\Migrate;
-use dbmigrate\MigrateDryRun;
 use hamstersbooks\api\auth\AuthController;
 use hamstersbooks\api\author\AddAuthorController;
 use hamstersbooks\api\author\BrowseAuthorsController;
@@ -20,7 +18,6 @@ use hamstersbooks\web\auth\LoginReturnController;
 use hamstersbooks\web\IndexController;
 
 return [
-
     "GET|POST /api/*" => AuthController::handle(),
     'GET /api/book/@id' => ReadBookController::handle(),
     'GET /api/book/all/@state' => BrowseBooksController::handle(),

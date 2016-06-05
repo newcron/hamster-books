@@ -4,7 +4,10 @@
 namespace hamstersbooks\web\auth;
 
 
+use Birke\Rememberme\Authenticator;
 use hamstersbooks\api\auth\AccessVerifier;
+use hamstersbooks\api\auth\HamstersBooksRememberMeStorage;
+use hamstersbooks\api\DatabaseConnectionFactory;
 use hamstersbooks\api\output\ApiResponse;
 use League\OAuth2\Client\Provider\Facebook;
 use League\OAuth2\Client\Token\AccessToken;
@@ -43,6 +46,9 @@ class AuthorizeController
         }
         session_regenerate_id(true);
         $_SESSION["user"] = $user;
+
+        (new Authenticator(new HamstersBooksRememberMeStorage(DatabaseConnectionFactory::retrieveDatabase())))
+            ->createCookie($email);
 
 
         ApiResponse::found(APP_BASE_URL)->send();

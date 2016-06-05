@@ -1,6 +1,4 @@
 module.exports = function (grunt) {
-
-
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
 
@@ -22,7 +20,7 @@ module.exports = function (grunt) {
             options: {
                 alias: {
                     "xdate": "./node_modules/xdate/src/xdate.js",
-                    "Chart": "./node_modules/chart.js/Chart.js",
+                    "Chart": "./node_modules/chart.js/Chart.min.js",
                     "Hogan": "./node_modules/hogan.js/dist/template-3.0.2.js",
                     "Templates": "./app-optimized/js/templates.js",
                     "form-serialize": "./node_modules/form-serialize/index.js"
@@ -148,7 +146,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-cache-busting');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');

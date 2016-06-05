@@ -15,6 +15,10 @@ class AuthController
             return true;
         }
 
+        if(AccessVerifier::fromRememberMe()->mayAccess()) {
+            return true;
+        }
+
         ApiResponse::unauthorized()->withJsonContent(["login" => APP_BASE_URL . "login.html"])->send();
 
         return false;

@@ -1,0 +1,2 @@
+create table remember_me(credential varchar(255), token varchar(255), persistentToken varchar(255), expires datetime);
+create index authentication_index on remember_me(credential, persistentToken, expires);

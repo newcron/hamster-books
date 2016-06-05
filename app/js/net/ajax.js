@@ -24,13 +24,18 @@ function thenObjectFactory(method, url, data) {
                     errorHandler(url, responseData);
                 }
             };
-            if(data === null) {
-                r.send(null);
-            } else {
-                dataAsJson = JSON.stringify(data);
-                r.setRequestHeader('Content-type','application/json; charset=utf-8');
-                r.send(dataAsJson);
+
+            var form = null;
+            if(data !== null) {
+                form = new FormData();
+                for(let field in data) {
+                    if(!data.hasOwnProperty(field) || data[field] === null) {
+                        continue;
+                    }
+                    form.append(field, data[field]);
+                }
             }
+            r.send(form);
         }
     }
 }

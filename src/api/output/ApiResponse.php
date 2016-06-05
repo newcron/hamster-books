@@ -63,6 +63,12 @@ class ApiResponse
             header("$name: $value");
         }
 
+        if($this->statusCode===200) {
+            header_remove("Pragma");
+            header('Cache-Control: "max-age=3600, must-revalidate"');
+            Flight::etag(md5($plainContent));
+        }
+
         Flight::halt($this->statusCode, $plainContent?:"");
     }
 
@@ -90,6 +96,13 @@ class ApiResponse
     {
         return (new ApiResponse())->withStatusCode(401);
     }
+
+    public static function internalServerError()
+    {
+        return (new ApiResponse())->withStatusCode(500);
+    }
+
+
 
 
     public static function notModified()

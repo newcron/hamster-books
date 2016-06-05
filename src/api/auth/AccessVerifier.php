@@ -5,6 +5,9 @@ namespace hamstersbooks\api\auth;
 
 
 
+use Birke\Rememberme\Authenticator;
+use hamstersbooks\api\DatabaseConnectionFactory;
+
 class AccessVerifier
 {
 
@@ -25,7 +28,7 @@ class AccessVerifier
             return false;
         }
 
-        return array_search($this->mail, explode(";", strtolower(OAUTH_ALLOWED_USER_MAILS))) !== false;
+        return array_search(strtolower($this->mail), explode(";", strtolower(OAUTH_ALLOWED_USER_MAILS))) !== false;
     }
 
 
@@ -35,6 +38,19 @@ class AccessVerifier
         }
 
         return new AccessVerifier($_SESSION["user"]["email"]);
+    }
+
+    public static function fromRememberMe() {
+        $authenticator = new Authenticator(new HamstersBooksRememberMeStorage(DatabaseConnectionFactory::retrieveDatabase()));
+
+        $loginResult = $authenticator->login();
+        if($loginResult !== false) {
+            $user = $loginResult;
+            $_SESSION["user"] = ["email" => $user];
+            session_regenerate_id(true);
+        }
+
+        return static::fromSession();
     }
 
 
