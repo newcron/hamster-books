@@ -9,7 +9,6 @@ function dataObjectFactory(method, url) {
 function thenObjectFactory(method, url, data) {
     return {
         then: function (callback) {
-            console.log(method, url, data);
 
             var r = new XMLHttpRequest();
             r.open(method, url, true);

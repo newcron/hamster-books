@@ -1,10 +1,10 @@
 <?php
 # file is only on production and will override the following settings - this will make a switch between local dev settings and prod settings
-@include_once "production_constants.php";
+@include "production_constants.php";
 
 
-if (getenv("MYSQL_1_PORT") !== false) {
-    define("DB_HOST", str_replace("tcp://", "", getenv("MYSQL_1_PORT")));
+if (getenv("DB_1_PORT") !== false) {
+    define("DB_HOST", str_replace("tcp://", "", getenv("DB_1_PORT")));
     define("DB_USER", "root");
     define("DB_PASS", "password");
     define("DB_DATABASE", "hamstersbooks");
@@ -37,7 +37,6 @@ if (get_magic_quotes_gpc()) {
     }
     unset($process);
 }
-
 
 
 ?>

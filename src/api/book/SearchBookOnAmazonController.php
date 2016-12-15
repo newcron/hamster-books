@@ -12,8 +12,8 @@ class SearchBookOnAmazonController
     public function __invoke(\AmazonECS $amazonECS, $isbn)
     {
         $amazonEcs = new AmazonECS(AWS_PUBLIC_KEY, AWS_SECRET_KEY, "DE", AWS_ASSOCIATE_TAG);
-        $result = $amazonEcs->responseGroup("Large")->returnType(AmazonECS::RETURN_TYPE_ARRAY)->lookup($isbn)["Items"]["Item"];
-
+        $lookup = $amazonEcs->responseGroup("Large")->returnType(AmazonECS::RETURN_TYPE_ARRAY)->lookup($isbn);
+        $result = $lookup["Items"]["Item"];
 
         ApiResponse::ok()->withJsonContent($result)->send();
     }

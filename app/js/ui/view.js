@@ -30,6 +30,7 @@ function renderOutsideDom(templateName, model) {
 }
 
 function renderDialog(templateName, model, closeCallback) {
+    contentArea.find().all(".is-dialog").forEach(ui.batch().remove());
     contentArea.children().forEach(ui.batch().class("is-hidden").add());
     var dialogContents = renderOutsideDom(templateName, model);
     dialogContents.find().all("#dialog-close-button").forEach(function(x){x.on("click").fireAndConsume(closeDialog)});

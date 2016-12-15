@@ -47,7 +47,6 @@ function onBookSearchResponse(response) {
 
 function renderForm(model, saveCallback) {
 
-    console.log(model);
 
     view.show("book-modify", buildViewModel(model));
     editBookForm = new EditBookForm(ui.find().byId("modify-form"));

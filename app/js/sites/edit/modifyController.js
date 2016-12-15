@@ -20,7 +20,6 @@ module.exports = {
         bookService.getBook(bookId, function (book) {
 
             book.tagModel = tagModel(parseTags(book));
-            console.log(book);
             modifyFormHandler.showForm(book, function (data) {
                 bookService.update(data, function () {
                     window.location.href = "#/read";

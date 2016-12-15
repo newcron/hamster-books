@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  web:
+    build: web
+    env_file: web.env
+    ports:
+     - "80:80"
+    volumes:
+     - ../:/opt/hamstersbooks
+    links:
+     - mysql
+  mysql:
+    image: mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+     - MYSQL_ROOT_PASSWORD=root
+     - MYSQL_DATABASE=hamstersbooks
+     - MYSQL_USER=hamstersbooks
+     - MYSQL_PASSWORD=hamstersbooks
+    ports:
+     - "3306:3306"
+
+volumes:
+  mysql-data:
