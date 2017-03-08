@@ -20,8 +20,8 @@ module.exports = function (grunt) {
             options: {
                 alias: {
                     "xdate": "./node_modules/xdate/src/xdate.js",
-                    "Chart": "./node_modules/chart.js/Chart.min.js",
-                    "Hogan": "./node_modules/hogan.js/dist/template-3.0.2.js",
+                    "chartist": "./node_modules/chartist/dist/chartist.min.js",
+                    "Hogan": "./node_modules/hogan.js/dist/template-3.0.2.min.js",
                     "Templates": "./app-optimized/js/templates.js",
                     "form-serialize": "./node_modules/form-serialize/index.js"
                 },

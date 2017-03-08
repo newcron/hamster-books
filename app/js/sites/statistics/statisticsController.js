@@ -1,9 +1,9 @@
 var ui = require('../../ui/ui');
-var Chart = require("Chart");
 var bookService = require("../../data/bookService");
 var sorting = require("../../data/sorting");
 var view = require("../../ui/view");
 var XDate = require("xdate");
+var Chartist = require("chartist");
 
 
 module.exports = {
@@ -23,57 +23,59 @@ module.exports = {
 
             view.show("statistics", viewModel);
 
-            var config = {
-                showToolTips: false,
-                tooltipXPadding: 1,
-                responsive: true,
-                scaleBeginAtZero: true,
-                bezierCurve: false,
-                maintainAspectRatio: true
+
+            var chartOptions = {
+                axisX: {
+                    labelInterpolationFnc: function (value, index) {
+                        return index % 4 == 0 ?  value.title : null;
+                    }
+                },
+                axisY: {
+                    onlyInteger: true
+                }
             };
-
-
-            new Chart(ui.find().byId("read-history-books-chart").getDrawingContext()).Line({
-                labels: last2YearData.map(function (element) {
-                    return element.title
-                }),
-                datasets: [
-                    {
-                        label: "Bücher",
-                        fillColor: "rgba(207,205,193,0.2)",
-                        strokeColor: "#cfcdc1",
-                        pointColor: "#cfcdc1",
-                        pointStrokeColor: "rgb(207,205,193)",
-                        pointHighlightFill: "#cfcdc1",
-                        pointHighlightStroke: "black",
-                        data: last2YearData.map(function (element) {
-                            return element.count
-                        })
+            var responsiveOptions = [
+                ["screen and (max-width: 700px)", {
+                    showLine: false,
+                    axisX: {
+                        labelInterpolationFnc: function (value, index) {
+                            // Will return M, T, W etc. on small screens
+                            return index % 4 == 0 ? value.titleShort : null;
+                        }
                     }
-                ]
-            }, config);
-
-            new Chart(ui.find().byId("read-history-pages-chart").getDrawingContext()).Line({
-                labels: last2YearData.map(function (element) {
-                    return element.title
-                }),
-                datasets: [
-                    {
-                        label: "Seiten",
-
-                        fillColor: "rgba(207,205,193,0.2)",
-                        strokeColor: "#cfcdc1",
-                        pointColor: "#cfcdc1",
-                        pointStrokeColor: "rgb(207,205,193)",
-                        pointHighlightFill: "#cfcdc1",
-                        pointHighlightStroke: "black",
-                        data: last2YearData.map(function (element) {
-                            return element.pages
-                        })
+                }],
+                ["screen and (max-width: 450px)", {
+                    showLine: false,
+                    axisX: {
+                        labelInterpolationFnc: function (value, index) {
+                            // Will return M, T, W etc. on small screens
+                            return index % 6 == 2 ? value.titleShort : null;
+                        }
                     }
-                ]
-            }, config);
+                }]
 
+            ];
+            new Chartist.Bar("#read-history-books-diagram", {
+                    labels: reportDataClusters,
+                    series: [
+                        reportDataClusters.map(function (d) {
+                            return d.count
+                        })
+                    ]
+                }, chartOptions,
+                responsiveOptions
+            );
+            
+            new Chartist.Bar("#read-history-pages-diagram", {
+                    labels: reportDataClusters,
+                    series: [
+                        reportDataClusters.map(function (d) {
+                            return d.pages
+                        })
+                    ]
+                }, chartOptions,
+                responsiveOptions
+            );
         });
     }
 };
@@ -82,14 +84,15 @@ module.exports = {
 function clusterAnalyzer(cluster) {
     var stats = cluster.books.reduce(function (previous, current) {
         previous.count++;
-        if (current.pageCount) {
-            previous.pages = previous.pages + parseInt(current.pageCount);
+        if (current.page_count) {
+            previous.pages = previous.pages + parseInt(current.page_count);
         }
         return previous;
     }, {count: 0, pages: 0});
 
+    console.log(cluster, stats);
     stats.title = cluster.title;
-
+    stats.titleShort = cluster.titleShort;
     return stats;
 }
 
@@ -98,11 +101,11 @@ function mapToBuckets(books) {
     var now = new XDate();
     var lookup = {};
 
-    var historyLength = window.innerWidth >= 700 ? 24 : window.innerWidth >= 400 ? 12 : 6;
-    for (var i = 0; i < historyLength; i++) {
+    for (var i = 0; i < 48; i++) {
         var title = now.toString("MMMM yyyy", "de");
         var bucket = {
             title: title,
+            titleShort: now.toString("MMM yy", "de"),
             books: []
         };
         buckets.push(bucket);
@@ -110,9 +113,12 @@ function mapToBuckets(books) {
         lookup[title] = bucket;
     }
 
-    books.forEach(function(book){
+    books.forEach(function (book) {
+        if (!book.read_date_end) {
+            return;
+        }
         var bucket = lookup[book.read_date_end.toString("MMMM yyyy", "de")];
-        if(bucket) {
+        if (bucket) {
             bucket.books.push(book);
         }
     });
