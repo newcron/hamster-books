@@ -65,7 +65,7 @@ module.exports = {
                 }, chartOptions,
                 responsiveOptions
             );
-            
+
             new Chartist.Bar("#read-history-pages-diagram", {
                     labels: reportDataClusters,
                     series: [
@@ -90,7 +90,6 @@ function clusterAnalyzer(cluster) {
         return previous;
     }, {count: 0, pages: 0});
 
-    console.log(cluster, stats);
     stats.title = cluster.title;
     stats.titleShort = cluster.titleShort;
     return stats;
