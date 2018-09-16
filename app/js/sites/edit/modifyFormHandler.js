@@ -39,6 +39,7 @@ function onBookSearchResponse(response) {
 
     editBookForm.apply(function(form){
         form.titleField().value().set(bookSuggestion["ItemAttributes"]["Title"]);
+        form.isbnField().value().set(bookSuggestion["ItemAttributes"]["ISBN"]);
         form.pageCountField().value().set(bookSuggestion["ItemAttributes"]["NumberOfPages"]);
         form.publicationYearField().value().set(bookSuggestion["ItemAttributes"]["PublicationDate"].substring(0, 4));
         form.publisherField().value().set(bookSuggestion["ItemAttributes"]["Publisher"]);
@@ -64,7 +65,7 @@ function renderForm(model, saveCallback) {
 
 
     editBookForm.isbnSearchButton().on("click").fireAndConsume(function(){
-        var isbn = editBookForm.isbnField().value().get().replace(/[^0-9A-Za-z]/g, "");
+        var isbn = editBookForm.isbnField().value().get();
         searchBookController.bookDataByIsbn(isbn, onBookSearchResponse);
     });
 

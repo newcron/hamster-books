@@ -1,5 +1,5 @@
 mysql:
-  image: mysql
+  image: mysql:5
   environment:
     MYSQL_ROOT_PASSWORD: password
     MYSQL_DATABASE: hamstersbooks
@@ -12,5 +12,13 @@ web:
    - "80:80"
   volumes:
    - ../:/opt/hamstersbooks
+  environment:
+  - APP_BASE_URL=http://127.0.0.1/
+  - DB_ENV_CONFIGURED=1
+  - DB_HOST=mysql
+  - DB_USER=hamstersbooks
+  - DB_PASS=hamstersbooks
+  - DB_DATABASE=hamstersbooks
+
   links:
    - mysql

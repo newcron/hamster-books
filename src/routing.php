@@ -9,6 +9,8 @@ use hamstersbooks\api\book\BrowseBooksController;
 use hamstersbooks\api\book\EditBookController;
 use hamstersbooks\api\book\ReadBookController;
 use hamstersbooks\api\book\SearchBookOnAmazonController;
+use hamstersbooks\api\book\SearchBookOnAmazonNewController;
+
 use hamstersbooks\deploy\DryRunController;
 use hamstersbooks\deploy\InitializeMigrationsController;
 use hamstersbooks\deploy\RunController;
@@ -22,6 +24,7 @@ return [
     'GET /api/book/@id' => ReadBookController::handle(),
     'GET /api/book/all/@state' => BrowseBooksController::handle(),
     'GET /api/book/search/@isbn' => SearchBookOnAmazonController::handle(),
+
     'POST /api/book' => AddBookController::handle(),
     'POST /api/book/@id' => EditBookController::handle(),
     'GET /api/author' => BrowseAuthorsController::handle(),

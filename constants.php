@@ -2,12 +2,11 @@
 # file is only on production and will override the following settings - this will make a switch between local dev settings and prod settings
 @include "production_constants.php";
 
-
-if (getenv("DB_1_PORT") !== false) {
-    define("DB_HOST", str_replace("tcp://", "", getenv("DB_1_PORT")));
-    define("DB_USER", "root");
-    define("DB_PASS", "password");
-    define("DB_DATABASE", "hamstersbooks");
+if (getenv("DB_ENV_CONFIGURED") !== false) {
+    define("DB_HOST", getenv("DB_HOST"));
+    define("DB_USER", getenv("DB_USER"));
+    define("DB_PASS", getenv("DB_PASS"));
+    define("DB_DATABASE", getenv("DB_DATABASE"));
 
 } else {
     define("DB_HOST", "127.0.0.1");
@@ -17,6 +16,8 @@ if (getenv("DB_1_PORT") !== false) {
 }
 
 
+
+@define("APP_BASE_URL", getenv("APP_BASE_URL"));
 @define("ENFORCE_HTTPS", false);
 @define("AWS_PUBLIC_KEY", null);
 @define("AWS_SECRET_KEY", null);

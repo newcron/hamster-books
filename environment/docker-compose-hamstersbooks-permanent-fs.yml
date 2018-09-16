@@ -3,15 +3,21 @@ version: '2'
 services:
   web:
     build: web
-    env_file: web.env
     ports:
      - "80:80"
     volumes:
      - ../:/opt/hamstersbooks
+    environment:
+      - APP_BASE_URL=http://127.0.0.1/
+      - DB_ENV_CONFIGURED=1
+      - DB_HOST=mysql
+      - DB_USER=hamstersbooks
+      - DB_PASS=hamstersbooks
+      - DB_DATABASE=hamstersbooks
     links:
      - mysql
   mysql:
-    image: mysql
+    image: mysql:5.5
     volumes:
       - mysql-data:/var/lib/mysql
     environment:

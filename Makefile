@@ -14,7 +14,7 @@ stop:
 
 delete:
 	docker-compose -f environment/docker-compose-hamstersbooks-permanent-fs.yml -p hamstersbooks kill
-	docker-compose -f environment/docker-compose-hamstersbooks-permanent-fs.yml -p hamstersbooks rm -f
+	docker-compose -f environment/docker-compose-hamstersbooks-permanent-fs.yml -p hamstersbooks rm -f -v
 
 
 migrations-init:
