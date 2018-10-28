@@ -63,10 +63,19 @@ class ApiResponse
             header("$name: $value");
         }
 
+
         if($this->statusCode===200) {
+            $etagValue="'".md5($plainContent)."'";
+            $passedEtagValue = $_SERVER["HTTP_IF_NONE_MATCH"]?:"";
+
             header_remove("Pragma");
             header('Cache-Control: "max-age=3600, must-revalidate"');
-            Flight::etag(md5($plainContent));
+            Flight::etag($etagValue);
+
+            if($etagValue === $passedEtagValue) {
+              flight::halt(304, "");
+              return;
+            }
         }
 
         Flight::halt($this->statusCode, $plainContent?:"");

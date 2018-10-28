@@ -1,7 +1,9 @@
 module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
-
+        ts: {
+		default: { tsconfig: "./tsconfig.json", src: ["app/ts/**/*.ts"] }
+	},
         less: {
             development: {
                 options: {
@@ -132,6 +134,7 @@ module.exports = function (grunt) {
                     "!production_constants.php",
                     "!*.iml",
                     "!.idea/**/*",
+                    "!.git/**/*",
                     "!package.json",
                     "!build.tar",
                     "!build.sh",
@@ -149,7 +152,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-cache-busting');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
-
+    grunt.loadNpmTasks("grunt-ts");
 
     grunt.registerTask('default', ['less', 'hogan', 'browserify', 'copy', 'cache-busting']);
     grunt.registerTask('build', ["default", "compress"]);

@@ -30,7 +30,7 @@ class AuthorizeController
             'clientId' => OAUTH_FB_APP_ID,
             'clientSecret' => OAUTH_FB_SECRET,
             'redirectUri' => APP_BASE_URL . "login-return.html",
-            'graphApiVersion' => 'v2.5',
+            'graphApiVersion' => 'v2.8',
         ]);
 
 
