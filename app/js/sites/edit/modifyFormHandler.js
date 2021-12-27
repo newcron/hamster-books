@@ -49,6 +49,7 @@ function onBookSearchResponse(response) {
 function renderForm(model, saveCallback) {
 
 
+    console.log(model);
     view.show("book-modify", buildViewModel(model));
     editBookForm = new EditBookForm(ui.find().byId("modify-form"));
     initReadStateHandling(model.read_state === "READ" ? model.read_date_end : new XDate());
@@ -59,8 +60,11 @@ function renderForm(model, saveCallback) {
 
 
     if (model.read_date_start) {
-        var startDate = new XDate(model.read_date_start);
-        editBookForm.startedReadingField().value().set(DATE_FORMATTER.format(startDate))
+        editBookForm.startedReadingField().value().set(DATE_FORMATTER.format(model.read_date_start))
+    }
+
+    if(model.read_date_end) {
+        editBookForm.finishedReadingField().value().set(DATE_FORMATTER.format(model.read_date_end))
     }
 
 

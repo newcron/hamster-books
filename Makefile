@@ -1,15 +1,15 @@
 DOCKER_IP := "127.0.0.1"
 
-regenerate_env: stop
+regenerate_env: down
 	docker-compose -f environment/docker-compose-hamstersbooks-permanent-fs.yml -p hamstersbooks down
 	docker-compose -f environment/docker-compose-hamstersbooks-permanent-fs.yml -p hamstersbooks rm -f
 	docker-compose -f environment/docker-compose-hamstersbooks-permanent-fs.yml -p hamstersbooks build web
 
-run:
+up:
 	@echo "APP_BASE_URL=http://$(DOCKER_IP)/" > ./environment/web.env
 	DOCKER_HOST=$(DOCKER_HOST) docker-compose -f environment/docker-compose-hamstersbooks-permanent-fs.yml -p hamstersbooks up
 
-stop:
+down:
 	docker-compose -f environment/docker-compose-hamstersbooks-permanent-fs.yml -p hamstersbooks kill
 
 delete:

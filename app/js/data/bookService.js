@@ -40,9 +40,17 @@ function convertSingle(callback) {
 }
 
 function fromApiToLocalModel(data) {
-    data.read_date_end = data.read_date_end ? new XDate(data.read_date_end.replace(" ", "T")) : null;
-    data.added_date = data.added_date ? new XDate(data.added_date.replace(" ", "T")) : null;
-    data.modified_date = data.modified_date ? new XDate(data.modified_date.replace(" ", "T")) : null;
+    
+
+    data.read_date_end = parseDate(data.read_date_end);
+    data.read_date_start = parseDate(data.read_date_start)
+    data.added_date = parseDate(data.added_date);
+    data.modified_date = parseDate(data.modified_date);
+
+    function parseDate(d) {
+        return d ? new XDate(d.replace(" ", "T")) : null;
+    }
+
 
     return data;
 }

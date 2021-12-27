@@ -91,7 +91,7 @@ module.exports = function (grunt) {
 
         },
 
-        'cache-busting': {
+        /*'cache-busting': {
             js: {
                 replace: ['src/web/indexDocument.html'],
                 replacement: 'hamstersbooks.js',
@@ -104,20 +104,20 @@ module.exports = function (grunt) {
                 file: 'app-optimized/style/hamstersbooks.css',
                 get_param: true
             }
-        },
+        },*/
 
         watch: {
             options: {
                 spawn: false
             }, css: {
                 files: ['app/**/*.less'],
-                tasks: ['less', 'copy', 'cache-busting']
+                tasks: ['less', 'copy'/*, 'cache-busting'*/]
             }, scripts: {
                 files: ["app/**/*.js", "app/view/**/*.mustache"],
-                tasks: ["hogan", "browserify", 'cache-busting']
+                tasks: ["hogan", "browserify"/*, 'cache-busting'*/]
             }, php: {
                 files: ["api/*", "index.php"],
-                tasks: ["copy", "cache-busting"]
+                tasks: ["copy", /*"cache-busting"*/]
             }
         },
         compress: {
@@ -134,7 +134,7 @@ module.exports = function (grunt) {
                     "!production_constants.php",
                     "!*.iml",
                     "!.idea/**/*",
-                    "!.git/**/*",
+                    "!**/.git/**/*",
                     "!package.json",
                     "!build.tar",
                     "!build.sh",
@@ -149,12 +149,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-cache-busting');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks("grunt-ts");
 
-    grunt.registerTask('default', ['less', 'hogan', 'browserify', 'copy', 'cache-busting']);
+    grunt.registerTask('default', ['less', 'hogan', 'browserify', 'copy']);
     grunt.registerTask('build', ["default", "compress"]);
 
 }

@@ -23,6 +23,13 @@ if (getenv("DB_ENV_CONFIGURED") !== false) {
 @define("AWS_SECRET_KEY", null);
 @define("AWS_ASSOCIATE_TAG", null);
 
+@define("OAUTH_APP_ID", "107177851889-esgcr2tl8nv5n5qjrfu8mm878d2llnh6.apps.googleusercontent.com");
+@define("OAUTH_SECRET", "jF5YSPj25ZS2NFXq2phz4IR7");
+@define("APP_BASE_URL", "http://localhost/");
+@define("OAUTH_ALLOWED_USER_MAILS", "matthias.huttar@gmx.de;b.berghaeuser@matluc.de;lucy@matluc.de;matthias.huttar@gmail.com;matthias.huttar@googlemail.com;lucype22@googlemail.com");
+@define("ENFORCE_HTTPS", true);
+
+/*
 if (get_magic_quotes_gpc()) {
     $process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
     while (list($key, $val) = each($process)) {
@@ -37,7 +44,7 @@ if (get_magic_quotes_gpc()) {
         }
     }
     unset($process);
-}
+}*/
 
 
 ?>

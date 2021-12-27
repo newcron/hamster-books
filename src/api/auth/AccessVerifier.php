@@ -27,7 +27,6 @@ class AccessVerifier
         if($this->mail === null) {
             return false;
         }
-
         return array_search(strtolower($this->mail), explode(";", strtolower(OAUTH_ALLOWED_USER_MAILS))) !== false;
     }
 

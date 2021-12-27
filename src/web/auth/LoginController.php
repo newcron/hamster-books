@@ -6,7 +6,7 @@ namespace hamstersbooks\web\auth;
 
 use hamstersbooks\api\auth\AccessVerifier;
 use hamstersbooks\api\output\ApiResponse;
-use League\OAuth2\Client\Provider\Facebook;
+use League\OAuth2\Client\Provider\Google;
 
 class LoginController
 {
@@ -21,17 +21,15 @@ class LoginController
 
     public function __invoke()
     {
-
         if (AccessVerifier::fromSession()->mayAccess()) {
             ApiResponse::found(APP_BASE_URL)->send();
             return;
         }
 
-        $provider = new Facebook([
-            'clientId' => OAUTH_FB_APP_ID,
-            'clientSecret' => OAUTH_FB_SECRET,
+        $provider = new Google([
+            'clientId' => OAUTH_APP_ID,
+            'clientSecret' => OAUTH_SECRET,
             'redirectUri' => APP_BASE_URL . "login-return.html",
-            'graphApiVersion' => 'v2.5',
         ]);
 
 

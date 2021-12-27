@@ -2,7 +2,7 @@ version: '2'
 
 services:
   web:
-    image: php:7.2-apache
+    image: php:8.0-apache
     volumes:
       - .:/var/www/html
     links:
