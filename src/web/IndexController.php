@@ -17,7 +17,7 @@ class IndexController
 
     public function __invoke()
     {
-        ApiResponse::ok()->withHtmlContent(file_get_contents(__DIR__."/indexDocument.html"))->send();
+        ApiResponse::ok()->withHtmlContent(file_get_contents(VIEW_FILE))->send();
 
     }
 }

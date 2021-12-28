@@ -7,7 +7,7 @@ module.exports = {
     show: function (selectCallback, suggestion) {
         authorService.listAuthors(function (authors) {
             var authorInfo = new AuthorNameAnalyzer().analyzeCompleteNameFromString(suggestion);
-            view.showAsDialog("author-dialog", {authors: authors, newAuthorSuggestion: authorInfo});
+            view.showAsDialog(require("../../../view/author-dialog.mustache"), {authors: authors, newAuthorSuggestion: authorInfo});
             setupDialog(selectCallback, authorInfo);
         });
     }

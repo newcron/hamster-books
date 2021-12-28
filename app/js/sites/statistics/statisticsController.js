@@ -21,7 +21,7 @@ module.exports = {
                 height: window.innerWidth >= 700 ? 300 : 600
             };
 
-            view.show("statistics", viewModel);
+            view.show(require("../../../view/statistics.mustache"), viewModel);
 
 
             var chartOptions = {

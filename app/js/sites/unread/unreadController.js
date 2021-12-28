@@ -5,7 +5,7 @@ var sorting = require("../../data/sorting");
 module.exports = {
     unreadBooksController: function () {
         bookService.listBooksInState("UNREAD", function (data) {
-            view.show("unread-book-list", sorting.sortAndCluster(data, sorting.groupByAuthor));
+            view.show(require("../../../view/unread-book-list.mustache"), sorting.sortAndCluster(data, sorting.groupByAuthor));
         });
 
     }

@@ -3,7 +3,7 @@ var view = require("./view");
 
 module.exports = {
     show: function () {
-        view.showAsDialog("loading-dialog", {title: "Laden"});
+        view.showAsDialog(require("../../view/loading-dialog.mustache"), {title: "Laden"});
     }
 };
 

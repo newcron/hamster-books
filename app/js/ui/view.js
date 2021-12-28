@@ -1,10 +1,11 @@
-var templates = require("Templates");
+
 var ui = require("./ui");
 var mainMenu = require('./components/mainmenu/mainMenu').menu;
 
 var contentArea = ui.find().byId("app-contentarea");
 
 var closeDialogCallback = null;
+
 
 
 function render(templateName, model) {
@@ -15,24 +16,22 @@ function render(templateName, model) {
     window.scrollTo(0, 0);
 }
 
-function renderOutsideDom(templateName, model) {
-    templateName = "app/view/" + templateName + ".mustache";
+function renderOutsideDom(template, model) {
+    
     if (!model) {
         model = {};
     }
-    if (!templates[templateName]) {
-        throw "template does not exist"
-    }
-    var renderedHtml = templates[templateName].render(model);
+    
+        var renderedHtml = template(model);
     return ui.createElement(renderedHtml);
 
 
 }
 
-function renderDialog(templateName, model, closeCallback) {
+function showAsDialog(template, model, closeCallback) {
     contentArea.find().all(".is-dialog").forEach(ui.batch().remove());
     contentArea.children().forEach(ui.batch().class("is-hidden").add());
-    var dialogContents = renderOutsideDom(templateName, model);
+    var dialogContents = renderOutsideDom(template, model);
     dialogContents.find().all("#dialog-close-button").forEach(function(x){x.on("click").fireAndConsume(closeDialog)});
     dialogContents.class("is-dialog").add();
     dialogContents.appendTo(contentArea);
@@ -55,4 +54,4 @@ function closeDialog() {
 }
 
 
-module.exports = {show: render, showAsDialog: renderDialog, closeDialog: closeDialog};
+module.exports = {show: render, showAsDialog: showAsDialog, closeDialog: closeDialog};

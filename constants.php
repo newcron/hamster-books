@@ -29,22 +29,6 @@ if (getenv("DB_ENV_CONFIGURED") !== false) {
 @define("OAUTH_ALLOWED_USER_MAILS", "matthias.huttar@gmx.de;b.berghaeuser@matluc.de;lucy@matluc.de;matthias.huttar@gmail.com;matthias.huttar@googlemail.com;lucype22@googlemail.com");
 @define("ENFORCE_HTTPS", true);
 
-/*
-if (get_magic_quotes_gpc()) {
-    $process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
-    while (list($key, $val) = each($process)) {
-        foreach ($val as $k => $v) {
-            unset($process[$key][$k]);
-            if (is_array($v)) {
-                $process[$key][stripslashes($k)] = $v;
-                $process[] = &$process[$key][stripslashes($k)];
-            } else {
-                $process[$key][stripslashes($k)] = stripslashes($v);
-            }
-        }
-    }
-    unset($process);
-}*/
-
+define("VIEW_FILE", __DIR__."/app-optimized/assets/index.html");
 
 ?>

@@ -31,4 +31,11 @@ migrations-run:
 
 release:
 	rm -f build.tar
-	grunt build
+	rm -rf app-optimized
+	php composer.phar install
+	npm ci
+	npx webpack --mode production 
+	cp web/index.php app-optimized/index.php
+	cp htaccess-enable-gzip-and-routing app-optimized/.htaccess
+	cp htaccess-set-cache-control app-optimized/assets/.htaccess
+	tar -cvf build.tar --exclude=.git app-optimized src sql constants.php vendor

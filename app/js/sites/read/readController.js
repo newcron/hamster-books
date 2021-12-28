@@ -10,7 +10,7 @@ module.exports = {
             clusterModel.readCount = data.filter(function(d){
                 return d.read_date_end !== null;
             }).length;
-            view.show("read-book-list", clusterModel);
+            view.show(require("../../../view/read-book-list.mustache"), clusterModel);
         });
     },
 
