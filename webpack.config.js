@@ -13,12 +13,16 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.ts$/,
+        use: "ts-loader", 
+        exclude: /node_modules/
+
+      }, {
         test: /\.mustache$/,
         use: [{ loader: "mustache-loader" }]
       }, {
         test: /\.less$/i,
         use: [
-          // compiles Less to CSS
           "style-loader",
           "css-loader",
           "less-loader",
@@ -26,6 +30,9 @@ module.exports = {
       }
     ]
 
+  }, 
+  resolve: {
+    extensions: [".js", ".ts"]
   }, 
   plugins: [
     new HtmlWebpackPlugin({

@@ -4,17 +4,15 @@ var sorting = require("../../data/sorting");
 var view = require("../../ui/view");
 var XDate = require("xdate");
 var Chartist = require("chartist");
+const { Book } = require('../../data/Book');
+const { ReportDataGenerator } = require('./ReportDataGenerator');
 
 
 module.exports = {
     showStatisticsController: function () {
         bookService.listBooksInState("READ", function (books) {
-            /* var byReadMonth = sorting.sortAndCluster(books, sorting.groupByReadMonth); */
-            var reportDataClusters = mapToBuckets(books).map(clusterAnalyzer);
-            reportDataClusters.reverse();
-
-            var last2YearData = reportDataClusters;
-            // view.show("unread-book-list", sorting.sortAndCluster(data, sorting.groupByAuthor));
+            let  monthReadingPerformance = new ReportDataGenerator(books.map(b=>b.bookObject)).generate().getMonthReadingPerformance();
+            monthReadingPerformance.filter(x=>x.bookProgress.length).forEach(x=>console.log(x.firstDayInMonth.toString("dd-MM-yyyy"), x.bookProgress))
 
 
             var viewModel = {
@@ -27,20 +25,21 @@ module.exports = {
             var chartOptions = {
                 axisX: {
                     labelInterpolationFnc: function (value, index) {
-                        return index % 4 == 0 ?  value.title : null;
+                        return index % 4 == 0 ?  value.getMonthTitle() : null;
                     }
                 },
                 axisY: {
                     onlyInteger: true
                 }
             };
+
             var responsiveOptions = [
                 ["screen and (max-width: 700px)", {
                     showLine: false,
                     axisX: {
                         labelInterpolationFnc: function (value, index) {
                             // Will return M, T, W etc. on small screens
-                            return index % 4 == 0 ? value.titleShort : null;
+                            return index % 4 == 0 ? value.getMonthTitle() : null;
                         }
                     }
                 }],
@@ -49,29 +48,25 @@ module.exports = {
                     axisX: {
                         labelInterpolationFnc: function (value, index) {
                             // Will return M, T, W etc. on small screens
-                            return index % 6 == 2 ? value.titleShort : null;
+                            return index % 6 == 2 ? value.getMonthTitle() : null;
                         }
                     }
                 }]
 
             ];
             new Chartist.Bar("#read-history-books-diagram", {
-                    labels: reportDataClusters,
+                    labels: monthReadingPerformance,
                     series: [
-                        reportDataClusters.map(function (d) {
-                            return d.count
-                        })
+                        monthReadingPerformance.map(x=>x.countBooks())
                     ]
                 }, chartOptions,
                 responsiveOptions
             );
 
             new Chartist.Bar("#read-history-pages-diagram", {
-                    labels: reportDataClusters,
+                    labels: monthReadingPerformance,
                     series: [
-                        reportDataClusters.map(function (d) {
-                            return d.pages
-                        })
+                        monthReadingPerformance.map(x=>x.countPages())
                     ]
                 }, chartOptions,
                 responsiveOptions
@@ -80,47 +75,3 @@ module.exports = {
     }
 };
 
-
-function clusterAnalyzer(cluster) {
-    var stats = cluster.books.reduce(function (previous, current) {
-        previous.count++;
-        if (current.page_count) {
-            previous.pages = previous.pages + parseInt(current.page_count);
-        }
-        return previous;
-    }, {count: 0, pages: 0});
-
-    stats.title = cluster.title;
-    stats.titleShort = cluster.titleShort;
-    return stats;
-}
-
-function mapToBuckets(books) {
-    var buckets = [];
-    var now = new XDate();
-    var lookup = {};
-
-    for (var i = 0; i < 48; i++) {
-        var title = now.toString("MMMM yyyy", "de");
-        var bucket = {
-            title: title,
-            titleShort: now.toString("MMM yy", "de"),
-            books: []
-        };
-        buckets.push(bucket);
-        now = now.addMonths(-1, false);
-        lookup[title] = bucket;
-    }
-
-    books.forEach(function (book) {
-        if (!book.read_date_end) {
-            return;
-        }
-        var bucket = lookup[book.read_date_end.toString("MMMM yyyy", "de")];
-        if (bucket) {
-            bucket.books.push(book);
-        }
-    });
-
-    return buckets;
-}

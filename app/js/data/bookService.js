@@ -2,6 +2,7 @@ var urls = require("../net/urls");
 var ajax = require("../net/ajax");
 var loadingDialog = require("../ui/loadingDialog");
 var XDate = require("xdate");
+const { Book } = require("./Book");
 
 
 module.exports = {
@@ -41,7 +42,7 @@ function convertSingle(callback) {
 
 function fromApiToLocalModel(data) {
     
-
+    data.bookObject = new Book(data);
     data.read_date_end = parseDate(data.read_date_end);
     data.read_date_start = parseDate(data.read_date_start)
     data.added_date = parseDate(data.added_date);

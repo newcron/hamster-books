@@ -29,6 +29,10 @@ migrations-run:
 	curl $(DOCKER_IP)/deploy/database/migrate/run
 
 
+watch:
+	npx webpack --mode development
+	npx webpack --watch --mode development
+
 release:
 	rm -f build.tar
 	rm -rf app-optimized
