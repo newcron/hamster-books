@@ -49,7 +49,7 @@ function onBookSearchResponse(response) {
 function renderForm(model, saveCallback) {
 
 
-    console.log(model);
+
     view.show(require("../../../view/book-modify.mustache"), buildViewModel(model));
     editBookForm = new EditBookForm(ui.find().byId("modify-form"));
     initReadStateHandling(model.read_state === "READ" ? model.read_date_end : new XDate());

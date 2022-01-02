@@ -1,9 +1,11 @@
 var modifyController = require("./sites/edit/modifyController");
-var statisticsController = require("./sites/statistics/statisticsController");
-var readController = require("./sites/read/readController");
-var unreadController = require("./sites/unread/unreadController");
+
 var mainMenu = require("./ui/components/mainmenu/mainMenu");
 const { ReadBooksController } = require("./sites/read/ReadBooksController");
+const { ErrorEventTarget, EventType } = require("./ErrorEventTarget");
+const { UnreadBooksController } = require("./sites/unread/UnreadBooksController");
+const { StatisticsController } = require("./sites/statistics/StatisticsController");
+
 
 
 module.exports = {
@@ -15,12 +17,20 @@ module.exports = {
         }
 
         window.onhashchange = handleHashChange;
-        if (!location.hash) {
+        if (!location.hash) {   
             location.hash = "#/read";
         } else {
             handleHashChange();
             mainMenu.notifyChange(location.hash.substr(1));
         }
+
+        ErrorEventTarget.singleton().addEventListener(EventType.LOGIN_REQUIRED, (event)=>{
+            window.location = event.detail
+        })
+        ErrorEventTarget.singleton().addEventListener(EventType.NET_ERROR, (event)=>{
+            alert("Netzwerk Fehler:\n\n"+event.detail);
+        })
+
 
         function handleHashChange() {
             var hash = window.location.hash.substr(1);
@@ -32,7 +42,7 @@ module.exports = {
                 },
                 {
                     pattern: /^\/unread$/,
-                    handler: unreadController.unreadBooksController
+                    handler: new UnreadBooksController().handle
                 },
                 {
                     pattern: /^\/new$/,
@@ -40,7 +50,7 @@ module.exports = {
                 },
                 {
                     pattern: /^\/statistics/,
-                    handler: statisticsController.showStatisticsController
+                    handler: new StatisticsController().handle
                 },
                 {
                     pattern: /^\/book\/([0-9]+)$/,
@@ -60,5 +70,6 @@ module.exports = {
             }
 
         }
-    }
+    }, 
+
 };

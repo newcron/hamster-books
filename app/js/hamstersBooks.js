@@ -1,8 +1,11 @@
 var dispatcher = require("./dispatcher");
+
 var loadingDialog = require("./ui/loadingDialog");
 var XDate = require("xdate");
 
 require("../style/hamstersbooks.less")
+
+
 
 XDate.locales['de'] = {
     monthNames: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],

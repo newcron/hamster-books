@@ -1,11 +1,11 @@
 <section id="unread-books">
     <p class="l-rightalign">
-        SUB: {{count}}
+        SUB: {{unreadCount}}, Alt-SUB: {{oldSubCount}}
     </p>
     <div class="list-group">
-        {{#clusters}}
+        {{#groups}}
             <section class="cluster">
-                <h3 class="cluster-title">{{title}}</h3>
+                <h3 class="cluster-title">{{groupName}}</h3>
                 <section class="cluster-content">
                     {{#books}}
                         <a href="#/book/{{id}}" class="unread-book-entry">
@@ -15,7 +15,7 @@
                     {{/books}}
                 </section>
             </section>
-        {{/clusters}}
+        {{/groups}}
     </div>
 
 </section>
