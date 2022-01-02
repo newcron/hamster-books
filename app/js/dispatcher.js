@@ -3,6 +3,7 @@ var statisticsController = require("./sites/statistics/statisticsController");
 var readController = require("./sites/read/readController");
 var unreadController = require("./sites/unread/unreadController");
 var mainMenu = require("./ui/components/mainmenu/mainMenu");
+const { ReadBooksController } = require("./sites/read/ReadBooksController");
 
 
 module.exports = {
@@ -27,7 +28,7 @@ module.exports = {
             var routes = [
                 {
                     pattern: /^\/read$/,
-                    handler: readController.readBooksController
+                    handler: new ReadBooksController().handle
                 },
                 {
                     pattern: /^\/unread$/,

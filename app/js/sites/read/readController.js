@@ -1,10 +1,12 @@
 var view = require("../../ui/view");
-var bookService = require("../../data/bookService");
+
 var sorting = require("../../data/sorting");
+const bookService = require("../../data/bookService");
 
 
 module.exports = {
     readBooksController: function () {
+        
         bookService.listBooksInState("READ", function (data) {
             var clusterModel = sorting.sortAndCluster(data, sorting.groupByReadMonth);
             clusterModel.readCount = data.filter(function(d){
