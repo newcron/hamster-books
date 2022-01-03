@@ -11,21 +11,9 @@ class BrowseBooksController
 {
     public function __invoke($state, QueryExecutor $executor)
     {
-        /*
-        $etag = $executor->fetchUnique(new BookAuthorEtagQuery())->{"etag"};
-        if($passedTag->equals($etag)) {
-            ApiResponse::notModified()->send();
-            return;
-        }
-*/
+
         $result = $executor->fetchAll(new FindBooksByStateQuery($state));
         
-
-
-        
-        // php sends pragma: no-cache header by default effectively disallowing browsers to use etag.
-        # header_remove("Pragma");
-        # ->withHeader("ETag", sprintf('"%s"', $etag))->withHeader("Cache-Control", '"max-age=3600, must-revalidate"')
         ApiResponse::ok()->withJsonContent(
             [ 
                 "books"=> (new BookFormatConverter())->convertList($result)

@@ -96,6 +96,11 @@ class ApiResponse
         return (new ApiResponse())->withStatusCode(201);
     }
 
+    public static function notFound()
+    {
+        return (new ApiResponse())->withStatusCode(404);
+    }
+
     public static function found($newUrl)
     {
         return (new ApiResponse())->withStatusCode(301)->withHeader("Location", $newUrl);
