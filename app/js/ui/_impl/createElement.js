@@ -1,13 +1,17 @@
-var uiElementFactory = require('./uiElementFactory');
+const { UiElement } = require('./UiElement');
+
 
 function createElement(htmlStructure) {
     var dummyElement = document.createElement("div");
     dummyElement.innerHTML = htmlStructure;
 
-    var element = uiElementFactory(dummyElement.firstChild);
+    var element = new UiElement(dummyElement.firstChild);
 
     element.appendTo = function(newTarget) {
-        newTarget._node.appendChild(element._node);
+        console.log(newTarget.element);
+        console.log(element);
+
+        newTarget.element.appendChild(element.element);
     };
 
     return element;

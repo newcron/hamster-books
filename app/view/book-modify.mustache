@@ -1,23 +1,43 @@
 <form class="book-form" id="modify-form" role="form" action="/">
-    <input type="hidden" name="id" id="modify-id" value="{{id}}">
+    {{#edit}}
+    <input type="hidden" name="id" id="modify-id" value="{{bookToEdit.id}}">
+    {{/edit}}
 
     <div class="book-form-group">
         <label for="modify-title" class="book-form-label">Buchtitel:</label>
 
         <div class="book-form-field">
-            <input type="text" class="form-control" id="modify-title" name="title" value="{{title}}">
+            <input type="text" class="form-control" id="modify-title" name="title" value="{{bookToEdit.title}}">
         </div>
     </div>
     <div class="book-form-group">
-        <label for="modify-author-id" class="book-form-label">Author:</label>
-        <div class="book-form-field input-like-indented">
-            <input name="author_id" id="modify-author-id" type="hidden" value="{{author_id}}">
-                <span id="modify-author-name">
-                    {{#author_id}}{{last_name}}, {{first_name}} {{middle_name}}{{/author_id}}
-                    {{^author_id}}Kein Author{{/author_id}}
-                </span>
-            <button type="button" class="condensed" id="modify-author-selector" data-toggle="modal"
-                    data-target="#modify-author-dialog">&hellip;</button>
+        <label for="modify-author-id" class="book-form-label">Author:in:</label>
+        <div class="book-form-field">
+            <input name="author_id" id="modify-author-id" type="hidden" value="{{#bookToEdit.authors}}{{id}};{{/bookToEdit.authors}}">
+
+            <div class="existing-author-list" id="existing-author-list">          
+                {{#bookToEdit.authors}}
+                    <div class="author-row" data-author-id="{{id}}">
+                        <div class="author-row-name">
+                            {{displayName}}
+                        </div>
+                        <div class="author-row-tools">
+                            <button class="inline-button" type="button">🗑️</button>
+                        </div>                        
+                    </div>
+                {{/bookToEdit.authors}}
+            </div>
+
+            <div class="author-row" id="add-new-author-button">
+                <div class="author-row-name">
+                    <input type="text" id="add-author-name" placeholder="Nachname, Vorname Zuname">
+                </div>
+            </div>
+            <div class="author-row existing-author-autocomplete" id="existing-author-autocomplete">
+                
+            </div>
+            
+                    
 
         </div>
 
@@ -26,14 +46,14 @@
         <label for="modify-page-count" class="book-form-label">Seitenzahl:</label>
 
         <div class="book-form-field number">
-            <input type="number" class="form-control" id="modify-page-count" name="page_count" value="{{page_count}}">
+            <input type="number" class="form-control" id="modify-page-count" name="page_count" value="{{bookToEdit.pageCount}}">
         </div>
     </div>
     <div class="book-form-group">
         <label for="modify-isbn" class="book-form-label">ISBN:</label>
 
         <div class="book-form-field ">
-            <input type="text" class="form-control isbn" id="modify-isbn" name="isbn" value="{{isbn}}">
+            <input type="text" class="form-control isbn" id="modify-isbn" name="isbn" value="{{bookToEdit.isbn}}">
             <i id="action-search-isbn" class="icon-search"></i>
         </div>
     </div>
@@ -41,7 +61,7 @@
         <label for="modify-publisher" class="book-form-label">Verlag:</label>
 
         <div class="book-form-field">
-            <input type="text" class="form-control" id="modify-publisher" name="publisher" value="{{publisher}}">
+            <input type="text" class="form-control" id="modify-publisher" name="publisher" value="{{bookToEdit.publisher}}">
         </div>
     </div>
     <div class="book-form-group">
@@ -49,14 +69,14 @@
 
         <div class="book-form-field number">
             <input type="number" class="form-control" id="modify-publication-year" name="publication_year"
-                   value="{{publication_year}}">
+                   value="{{bookToEdit.publicationYear}}">
         </div>
     </div>
 
 
     <div class="book-form-group">
         <label class="book-form-label">
-            <input type="checkbox" id="modify-is-read" {{#book_read}}checked="checked" data-foo="bar"{{/book_read}}>
+            <input type="checkbox" id="modify-is-read" {{#isRead}}checked="checked"{{/isRead}}>
             Gelesen
             <input type="hidden" id="modify-read-state" name="read_state">
         </label>
@@ -70,7 +90,7 @@
             Aufgeschlagen
         </label>
         <div class="book-form-field date">
-            <input value="{{read_date_start}}" type="date" class="form-control" name="read_date_start" id="modify-read-date-start">
+            <input value="{{bookToEdit.readInfo.startDate}}" type="date" class="form-control" name="read_date_start" id="modify-read-date-start">
         </div>
     </div>
     <div class="book-form-group is-read-context hidden">
@@ -78,7 +98,7 @@
             Zugeschlagen
         </label>
         <div class="book-form-field date">
-            <input value="{{read_date_end}}" type="date" class="form-control" name="read_date_end" id="modify-read-date-end">
+            <input value="{{bookToEdit.readInfo.finishDate}}" type="date" class="form-control" name="read_date_end" id="modify-read-date-end">
         </div>
     </div>
 
@@ -87,23 +107,23 @@
 
         <div class="book-form-field number">
             <input type="number" class="form-control" id="modify-read-rating" name="read_rating" step="0.1"
-                   value="{{read_rating}}">
+                   value="{{bookToEdit.readInfo.rating}}">
         </div>
     </div>
     <div class="book-form-group is-read-context hidden">
         <label for="modify-read-comment" class="book-form-label">Kommentar:</label>
 
         <div class="book-form-field">
-            <textarea class="form-control" id="modify-read-comment" name="read_comment" rows="6">{{read_comment}}</textarea>
+            <textarea class="form-control" id="modify-read-comment" name="read_comment" rows="6">{{bookToEdit.readInfo.comment}}</textarea>
         </div>
     </div>
     <div class="book-form-group is-read-context hidden">
         <label class="book-form-label">Anmerkungen:</label>
 
         <div class="book-form-field" id="modify-tag-list">
-            {{#tagModel}}
-                <input type="checkbox" {{#selected}}checked{{/selected}} name="{{name}}" id="{{name}}" /> <label for="{{name}}">{{title}}</label><br/>
-            {{/tagModel}}
+            <input type="checkbox" {{#bookToEdit.readInfo.cancelled}}checked{{/bookToEdit.readInfo.cancelled}} name="cancelled" id="cancelled" /> <label for="cancelled">Abgebrochen</label><br/>
+            <input type="checkbox" {{#bookToEdit.readInfo.readDateGuessed}}checked{{/bookToEdit.readInfo.readDateGuessed}} name="readDateGuessed" id="readDateGuessed" /> <label for="readDateGuessed">Lesedatum Geschätzt</label><br/>
+            <input type="checkbox" {{#bookToEdit.readInfo.monthHighlight}}checked{{/bookToEdit.readInfo.monthHighlight}} name="monthHighlight" id="monthHighlight" /> <label for="monthHighlight">Monatshighlight</label><br/>
             <input type="hidden" name="tags" id="modify-tags" />
 
         </div>

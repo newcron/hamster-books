@@ -94,6 +94,41 @@
     }
   }
 
+  .author-row {
+    display: flex;
+
+    .author-row-name {
+      flex-grow: 1;
+    }
+
+  }
+
+  .existing-author-autocomplete-suggestions {
+    width: 100%;
+    margin: 0px 10px;
+    border-top: 0;
+    border: 1px solid @hamsters-books-lightgrey;
+    padding: 0;
+
+    .existing-author-autocomplete-suggestion {
+      display: block;
+      list-style-type: none;
+      padding: 2px 4px;
+      border-bottom: 1px solid @hamsters-books-lightgrey
+    
+    }
+
+    .existing-author-autocomplete-createnew {
+      display: block;
+      list-style-type: none;
+      padding: 2px 4px;
+      background: @hamsters-books-lightgrey;
+    }
+
+    
+
+  }
+
 
   .input-like-indented {
     padding: 3px 5px;
@@ -101,6 +136,15 @@
 
   .hidden {
     display: none;
+  }
+
+  .inline-button {
+    border: 0; 
+    padding: 0;
+
+    &.right {
+      float: right
+    }
   }
 
 }

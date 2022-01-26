@@ -1,3 +1,4 @@
+const { Finder } = require("./Finder");
 
 function newUiElement(element) {
     if (element === null || element === undefined) {
@@ -7,16 +8,10 @@ function newUiElement(element) {
     var instance = {
         '_node': element,
 
-        parent: function() {
-            return newUiElement(element.parentElement);
-        },
+
 
         find: function() {
-            return require("./find")(element);
-        },
-
-        getDrawingContext: function() {
-            return element.getContext("2d");
+            return new Finder(element);
         },
 
         children: function() {

@@ -1,10 +1,10 @@
-var modifyController = require("./sites/edit/modifyController");
-
 var mainMenu = require("./ui/components/mainmenu/mainMenu");
 const { ReadBooksController } = require("./sites/read/ReadBooksController");
 const { ErrorEventTarget, EventType } = require("./ErrorEventTarget");
 const { UnreadBooksController } = require("./sites/unread/UnreadBooksController");
 const { StatisticsController } = require("./sites/statistics/StatisticsController");
+const {EditBookController} = require("./sites/edit/EditBookController");
+
 
 
 
@@ -45,17 +45,12 @@ module.exports = {
                     handler: new UnreadBooksController().handle
                 },
                 {
-                    pattern: /^\/new$/,
-                    handler: modifyController.createController
-                },
-                {
                     pattern: /^\/statistics/,
                     handler: new StatisticsController().handle
                 },
                 {
-                    pattern: /^\/book\/([0-9]+)$/,
-                    handler: modifyController.editController
-
+                    pattern: /^\/book\/([0-9]+)(\/authors)?$/,
+                    handler: new EditBookController().handle
                 }
             ];
 
@@ -64,7 +59,8 @@ module.exports = {
                 var match = hash.match(handler.pattern);
                 if (match !== null) {
                     var handlerArgs = match.splice(1);
-                    handler.handler.apply(this, handlerArgs);
+                
+                    handler.handler(...handlerArgs);
                     mainMenu.notifyChange(hash);
                 }
             }

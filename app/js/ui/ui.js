@@ -1,11 +1,12 @@
 var createElement = require("./_impl/createElement.js");
-var find = require("./_impl/find");
+const { Finder } = require("./_impl/Finder");
+
 var uiElementFactory = require('./_impl/uiElementFactory');
 
 
 module.exports = {
     find: function () {
-        return find(document);
+        return new Finder(document);
     },
     afterInit: function (callback) {
         if (document.readyState !== "loading") {

@@ -4,6 +4,8 @@
 use hamstersbooks\api\auth\AuthController;
 use hamstersbooks\api\author\AddAuthorController;
 use hamstersbooks\api\author\BrowseAuthorsController;
+use hamstersbooks\api\author\GetAuthorsBibliographyController;
+
 use hamstersbooks\api\book\AddBookController;
 use hamstersbooks\api\book\BrowseBooksController;
 use hamstersbooks\api\book\EditBookController;
@@ -29,6 +31,7 @@ return [
     'POST /api/book/@id' => EditBookController::handle(),
     'GET /api/author' => BrowseAuthorsController::handle(),
     'POST /api/author' => AddAuthorController::handle(),
+    'GET /api/author/@ids/bibliography' => GetAuthorsBibliographyController::handle(),
 
     'GET /deploy/database/init' =>InitializeMigrationsController::handle(),
     'GET /deploy/database/migrate/dry-run' =>DryRunController::handle(),
