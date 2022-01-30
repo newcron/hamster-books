@@ -18,7 +18,9 @@ class AddBookController
     public static function handle()
     {
         return function () {
-            (new AddBookController())->__invoke($_POST, QueryExecutor::usingExistingConnection());
+            $inputJSON = file_get_contents('php://input');
+            $input = json_decode($inputJSON, TRUE);
+            (new AddBookController())->__invoke($input, QueryExecutor::usingExistingConnection());
         };
     }
 }

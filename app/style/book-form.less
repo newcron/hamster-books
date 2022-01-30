@@ -6,7 +6,6 @@
   }
 
 
-
   @media screen and (min-width: @element-breakpoint) {
     .book-form-label {
 
@@ -32,7 +31,6 @@
   @media screen and (max-width: @element-breakpoint) {
 
 
-
     .book-form-label {
       display: block;
       color: @hamsters-books-lightgrey;
@@ -47,7 +45,9 @@
     &.number {
       width: 70px;
     }
+
     /* this element needs to be nested to have the button on the right */
+
     .isbn {
       max-width: 160px;
     }
@@ -85,7 +85,7 @@
       color: black;
     }
 
-    &.condensed{
+    &.condensed {
       font-size: 0.8em;
       line-height: 1rem;
       padding: 0 2px;
@@ -115,7 +115,7 @@
       list-style-type: none;
       padding: 2px 4px;
       border-bottom: 1px solid @hamsters-books-lightgrey
-    
+
     }
 
     .existing-author-autocomplete-createnew {
@@ -125,7 +125,6 @@
       background: @hamsters-books-lightgrey;
     }
 
-    
 
   }
 
@@ -139,12 +138,17 @@
   }
 
   .inline-button {
-    border: 0; 
+    border: 0;
     padding: 0;
 
     &.right {
       float: right
     }
+  }
+
+  input.is-validation-error {
+    border-color: red;
+    color: red;
   }
 
 }

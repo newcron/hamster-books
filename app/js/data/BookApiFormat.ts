@@ -25,7 +25,7 @@ export interface BookApiFormat {
     modifiedDate: string,
     pageCount?: number,
     language?: string
-    readState: ReadState, 
+    readState: ReadStateApi,
     readNotes?: {
         startDate?:string, 
         finishDate?:string,
@@ -36,7 +36,7 @@ export interface BookApiFormat {
 
 }
 
-export enum ReadState {
+export enum ReadStateApi {
     READ="READ", UNREAD="UNREAD"
 }
 

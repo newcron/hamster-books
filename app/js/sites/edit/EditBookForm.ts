@@ -18,6 +18,10 @@ export class EditBookForm {
         return this.element;
     }
 
+    pickAuthorTarget() {
+        return this.element.find().byId("pick-author-component-target")
+    }
+
     authorNameLabel() {
         return this.findField("modify-author-name");
     }

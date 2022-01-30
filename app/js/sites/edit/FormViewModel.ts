@@ -1,5 +1,6 @@
 import { Book, BookNotesTag, ReadState } from "../../data/Book";
 import { DateFormFormatter } from "../../ui/DateFormFormatter";
+import XDate from "xdate";
 
 export interface FormViewModel {
     edit: boolean; 
@@ -18,9 +19,12 @@ export interface FormViewModel {
             finishDate?: string,
             rating?: number,
             comment?: string, 
-            cancelled: boolean, 
-            readDateGuessed: boolean, 
-            monthHighlight: boolean
+            cancelled: boolean,
+            cancelledTagName: string,
+            readDateGuessed: boolean,
+            readDateGuessedTagName: string,
+            monthHighlight: boolean,
+            monthHighlightTagName: string
         }
     }
     
@@ -35,7 +39,7 @@ export function createNewBook() : FormViewModel {
 
 export function editBook(book: Book) : FormViewModel {
     return {
-        edit: true,
+        edit: !book.isTransient(),
         isRead: book.readState == ReadState.READ, 
         bookToEdit: {
             id: book.id, 
@@ -51,9 +55,12 @@ export function editBook(book: Book) : FormViewModel {
                 startDate: dateToString(book.readNotes.startDate), 
                 comment: book.readNotes.comment, 
                 rating: book.readNotes.rating, 
-                cancelled: book.is(BookNotesTag.CANCELLED), 
-                readDateGuessed: book.is(BookNotesTag.READ_DATE_GUESSED), 
-                monthHighlight: book.is(BookNotesTag.MONTH_FAVOURITE)
+                cancelled: book.is(BookNotesTag.CANCELLED),
+                cancelledTagName: BookNotesTag.CANCELLED,
+                readDateGuessed: book.is(BookNotesTag.READ_DATE_GUESSED),
+                readDateGuessedTagName: BookNotesTag.READ_DATE_GUESSED,
+                monthHighlight: book.is(BookNotesTag.MONTH_FAVOURITE),
+                monthHighlightTagName: BookNotesTag.MONTH_FAVOURITE
             }
         }, 
         

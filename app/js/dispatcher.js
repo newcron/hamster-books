@@ -49,9 +49,15 @@ module.exports = {
                     handler: new StatisticsController().handle
                 },
                 {
-                    pattern: /^\/book\/([0-9]+)(\/authors)?$/,
-                    handler: new EditBookController().handle
+                    pattern: /^\/book\/([0-9]+)$/,
+                    handler: new EditBookController().handleExisting
+                },
+
+                {
+                    pattern: /^\/new$/,
+                    handler: new EditBookController().handleCreateNew
                 }
+
             ];
 
             for (var i = 0; i < routes.length; i++) {

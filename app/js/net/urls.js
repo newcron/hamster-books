@@ -8,12 +8,10 @@ module.exports = {
     getAuthors: function () {
         return "api/author"
     },
-    createBook: function () {
+    addEditBook: function () {
         return "api/book"
     },
-    updateBook: function (id) {
-        return "api/book/" + id;
-    },
+
     createAuthor: function () {
         return "api/author";
     },

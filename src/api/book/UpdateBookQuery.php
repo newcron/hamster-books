@@ -5,27 +5,9 @@ namespace hamstersbooks\api\book;
 
 
 use hamstersbooks\util\persistence\Query;
-use hamstersbooks\util\Strings;
 
 class UpdateBookQuery implements Query
 {
-
-    const FORM_PARAMS_IN_CORRECT_ORDER = [
-        "isbn",
-        "title",
-        "publisher",
-        "author_id",
-        "page_count",
-        "publication_year",
-        "read_date_start",
-        "read_date_end",
-        "read_comment",
-        "read_rating",
-        "read_state",
-        "tags",
-        "id"
-    ];
-
 
     /** @var  array */
     private $formParams = [];
@@ -34,16 +16,26 @@ class UpdateBookQuery implements Query
      * UpdateBookQuery constructor.
      * @param array $formParams
      */
-    public function __construct(array $formParams)
+    public function __construct($id, $isbn, $title, $publisher, $pageCount, $publicationYear, $readDateStart, $readDateEnd, $readComment, $readRating, $readState, $tags)
     {
-        if(!isset($formParams["id"])) {
+        if (empty($id)) {
             throw new \Exception("id field mandatory for updating a book");
         }
-        foreach (static::FORM_PARAMS_IN_CORRECT_ORDER as $key) {
-            $value = isset($formParams[$key]) ? Strings::emptyToNull($formParams[$key]) : null;
+        $this->formParams = [
+            $isbn,
+            $title,
+            $publisher,
+            $pageCount,
+            $publicationYear,
+            $readDateStart,
+            $readDateEnd,
+            $readComment,
+            $readRating,
+            $readState,
+            $tags,
+            $id];
 
-            $this->formParams[] = $value;
-        }
+
     }
 
 
@@ -55,7 +47,6 @@ class UpdateBookQuery implements Query
             isbn = ?,
             title = ?,
             publisher = ?,
-            author_id = ?,
             page_count = ?,
             publication_year = ?,
             read_date_start = ?,

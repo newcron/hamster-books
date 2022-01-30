@@ -2,7 +2,7 @@ import { ErrorEventTarget, EventType } from "../ErrorEventTarget";
 
 export class AjaxService {
 
-    private async  makeRequest<T>(method: string, url: string) : Promise<T> {
+    private async  makeRequest<T>(method: string, url: string, data?: any) : Promise<T> {
         console.log(url);
         return new Promise((resolve, reject)=>{
             
@@ -42,12 +42,22 @@ export class AjaxService {
                     statusText: xhr.statusText
                 });
             };
-            xhr.send();
+            if(data === undefined) {
+                xhr.send();
+            } else {
+                xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                xhr.send(JSON.stringify(data));
+            }
+
         });
     }
 
     public async get<T>(url: string) : Promise<T> {
         return this.makeRequest("GET", url);
+    }
+
+    public async post<T>(url: string, data: any) : Promise<T> {
+        return this.makeRequest("POST", url, data);
     }
 }
 

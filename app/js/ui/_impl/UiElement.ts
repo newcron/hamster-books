@@ -23,8 +23,12 @@ export class UiElement {
     }
 
     appendTo(newTarget: UiElement) {
-        
         newTarget.element.appendChild(this.element);
+    }
+
+    replaceContentsOf(newTarget: UiElement) {
+        newTarget.children().forEach(x=>x.remove());
+        this.appendTo(newTarget);
     }
 
     class(className: string) {

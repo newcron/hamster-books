@@ -1,36 +1,38 @@
-import { AuthorService } from "../../data/AuthorService";
-import { Book } from "../../data/Book";
-import { BookService } from "../../data/BookService";
-import { UiToolkit } from "../../ui/UiToolkit";
-import { EditBookForm } from "./EditBookForm";
-import { EditFormViewController } from "./EditFormViewController";
-import { createNewBook, editBook } from "./FormViewModel";
+import {AuthorService} from "../../data/AuthorService";
+import {Author, Book} from "../../data/Book";
+import {BookService} from "../../data/BookService";
+import {UiToolkit} from "../../ui/UiToolkit";
+import {EditBookForm} from "./EditBookForm";
+import {EditFormViewController} from "./EditFormViewController";
+import {editBook} from "./FormViewModel";
+
 var view = require("../../ui/view");
 
 
 export class EditBookController {
 
-    async handle(id?: number, authors?: string) {
+    handleExisting = async (id: number) => {
 
-        
+        const authorPromise = new AuthorService().loadAll();
+        const bookToEdit = await new BookService().findBookById(id);
+        const allAuthors = await authorPromise;
+
+        this.showForm(bookToEdit, allAuthors);
 
 
-        let bookToEdit : Book = undefined;
-        let authorPromise = new AuthorService().loadAll(); 
-        if(id!==undefined) {
-            bookToEdit = await new BookService().findBookById(id);
-            await new AuthorService().loadAll();
-        }
-        let allAuthors = await authorPromise;
-        
-        view.show(require("../../../view/book-modify.mustache"), 
-            bookToEdit === undefined ? createNewBook() : editBook(bookToEdit))
-        
-            new EditFormViewController(new EditBookForm(), allAuthors, bookToEdit).showForm();
-        
-        
     }
 
+
+    private showForm(bookToEdit: Book, allAuthors: Author[]) {
+        view.show(require("../../../view/book-modify.mustache"),
+            editBook(bookToEdit));
+        new EditFormViewController(new EditBookForm(), allAuthors, bookToEdit).showForm();
+    }
+
+    handleCreateNew = async () => {
+        const allAuthors = await new AuthorService().loadAll();
+        this.showForm(Book.createTransient(), allAuthors);
+    }
 
 }
 

@@ -10,3 +10,4 @@ test-output/
 /app-optimized
 /node_modules
 /vendor
+/out

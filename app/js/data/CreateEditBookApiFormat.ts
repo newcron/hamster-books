@@ -1,17 +1,22 @@
 import { BookNotesTag } from "./Book";
-import { ReadState } from "./BookApiFormat";
+import { ReadStateApi } from "./BookApiFormat";
 
 export interface CreateEditBookApiFormat {
     id?: number, 
     title: string, 
     isbn?: string,
-    authors: number[], 
+    authors: {
+        id?: number,
+        firstName?: string,
+        middleName?: string,
+        lastName?: string
+    }[],
     publisher?: {
         name: string
     }
     publicationYear?: number,
     pageCount?: number,
-    readState: ReadState, 
+    readState: ReadStateApi,
     readNotes?: {
         startDate?: string,
         finishDate?: string, 
@@ -19,6 +24,4 @@ export interface CreateEditBookApiFormat {
         comment?: string,
         tags: BookNotesTag[]
     }
-
-    
 }

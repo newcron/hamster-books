@@ -1,0 +1,23 @@
+<div>
+
+
+    <div class="existing-author-list" id="existing-author-list">          
+        {{#authors}}
+            <div class="author-row" data-author-id="{{id}}">
+                <div class="author-row-name">
+                    {{displayName}} {{#transient}}(neu){{/transient}}
+                </div>
+                <div class="author-row-tools">
+                    <button class="inline-button delete-author-button" data-author-id="{{id}}" type="button">🗑️</button>
+                </div>                        
+            </div>
+        {{/authors}}
+    </div>
+
+    <div class="author-row" id="add-new-author-button">
+        <div class="author-row-name">
+            <input type="text" id="add-author-name" placeholder="Nachname, Vorname Zuname">
+        </div>
+    </div>
+    <div class="author-row existing-author-autocomplete" id="existing-author-autocomplete"></div>
+</div>

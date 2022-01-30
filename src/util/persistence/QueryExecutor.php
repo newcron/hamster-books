@@ -11,6 +11,8 @@ class QueryExecutor
     /** @var  \PDO */
     private $pdo;
 
+    private $inTransaction = false;
+
     /**
      * QueryExecutor constructor.
      * @param \PDO $pdo
@@ -29,17 +31,30 @@ class QueryExecutor
         return reset($results);
     }
 
-    public function execute(Query $query) {
-        if(!$this->pdo->beginTransaction()) {
-            throw new \Exception("can't initialize transaction");
+    public function execute(Query $query)
+    {
+        $this->executeAll($query);
+    }
+
+
+    public function executeAll(Query ...$queries)
+    {
+        $manageTransactionImplicitly = $this->inTransaction == false;
+        if ($manageTransactionImplicitly) {
+            $this->beginTransaction();
         }
         try {
-            $this->fetchAll($query);
-            if(!$this->pdo->commit()) {
-                throw new \Exception("Commit failed");
+            foreach ($queries as $query) {
+                $this->fetchAll($query);
             }
-        } catch(\Exception $e) {
-            $this->pdo->rollBack();
+            if ($manageTransactionImplicitly) {
+                $this->commitTransaction();
+            }
+
+        } catch (\Exception $e) {
+            if ($manageTransactionImplicitly) {
+                $this->rollbackTransaction();
+            }
             throw $e;
         }
     }
@@ -72,6 +87,40 @@ class QueryExecutor
     private function printableQuery(Query $query)
     {
         return preg_replace("/\\s+/", " ", $query->getPreparedStatement());
+    }
+
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    public function beginTransaction(): void
+    {
+
+        if (!$this->pdo->beginTransaction()) {
+            throw new \Exception("can't initialize transaction");
+        }
+        $this->inTransaction = true;
+    }
+
+    /**
+     * @return void
+     */
+    public function rollbackTransaction(): void
+    {
+        $this->pdo->rollBack();
+        $this->inTransaction = false;
+    }
+
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    public function commitTransaction(): void
+    {
+        $this->inTransaction = false;
+        if (!$this->pdo->commit()) {
+            throw new \Exception("Commit failed");
+        }
     }
 
 

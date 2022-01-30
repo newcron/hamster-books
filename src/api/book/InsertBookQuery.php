@@ -5,43 +5,27 @@ namespace hamstersbooks\api\book;
 
 
 use hamstersbooks\util\persistence\Query;
-use hamstersbooks\util\Strings;
 
 class InsertBookQuery implements Query
 {
+    private $formParams;
 
-    const FORM_PARAMS_IN_CORRECT_ORDER = [
-        "isbn",
-        "title",
-        "publisher",
-        "author_id",
-        "page_count",
-        "publication_year",
-        "read_date_start",
-        "read_date_end",
-        "read_comment",
-        "read_rating",
-        "read_state",
-        "tags"
-    ];
-
-
-    /** @var  array */
-    private $formParams = [];
-
-    /**
-     * InsertBookQuery constructor.
-     * @param array $formParams
-     */
-    public function __construct(array $formParams)
+    public function __construct($isbn, $title, $publisher, $pageCount, $publicationYear, $readDateStart, $readDateEnd, $readComment, $readRating, $readState, $tags)
     {
-        foreach (static::FORM_PARAMS_IN_CORRECT_ORDER as $key) {
-            $value = isset($formParams[$key]) ? Strings::emptyToNull($formParams[$key]) : null;
-
-            $this->formParams[] = $value;
-        }
+        $this->formParams = [
+            $isbn,
+            $title,
+            $publisher,
+            $pageCount,
+            $publicationYear,
+            $readDateStart,
+            $readDateEnd,
+            $readComment,
+            $readRating,
+            $readState,
+            $tags
+        ];
     }
-
 
     public function getPreparedStatement()
     {
@@ -52,7 +36,6 @@ class InsertBookQuery implements Query
             isbn,
             title,
             publisher,
-            author_id,
             page_count,
             publication_year,
             read_date_start,
@@ -62,7 +45,7 @@ class InsertBookQuery implements Query
             read_state,
             tags
         ) values (
-            now(), now(), 'DE', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            now(), now(), 'DE', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     }
 
     public function getParameters()

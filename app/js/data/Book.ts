@@ -1,7 +1,5 @@
 import XDate from "xdate";
-import { BookApiFormat } from "./BookApiFormat";
-import { BookTags } from "./BookTags";
-
+import {BookApiFormat, ReadStateApi} from "./BookApiFormat";
 
 
 export class Book {
@@ -17,7 +15,7 @@ export class Book {
     public readonly pageCount?: number;
 
     public readonly language? : string
-    public readonly readState: ReadState;  
+    public readonly readState: ReadState;
 
     public readonly readNotes : {
         readonly startDate?:XDate, 
@@ -27,7 +25,17 @@ export class Book {
         readonly tags: BookNotesTag[]
     }
 
-    constructor(apiData: BookApiFormat) {
+    constructor(apiData: BookApiFormat | "transient") {
+        if(apiData === "transient") {
+            this.id = 0;
+            this.title="";
+            this.authors = [];
+            this.addedDate = new XDate();
+            this.modifiedDate = new XDate();
+            this.readState = ReadState.UNREAD;
+            this.readNotes = { tags: []}
+            return;
+        }
         this.id = apiData.id; 
         this.title = apiData.title;
         this.isbn = apiData.isbn;
@@ -36,7 +44,7 @@ export class Book {
         this.publicationYear = apiData.publicationYear
         this.addedDate = new XDate(apiData.addedDate); 
         this.modifiedDate = new XDate(this.modifiedDate);
-        this.readState = apiData.readState as ReadState; 
+        this.readState = apiData.readState as unknown as ReadState;
         this.pageCount = apiData.pageCount == undefined ? undefined : apiData.pageCount;
                 
         
@@ -54,6 +62,10 @@ export class Book {
                 tags: [], 
             }
         }
+    }
+
+    public static createTransient() {
+        return new Book("transient")
     }
 
     public isCurrentlyRead() {
@@ -76,9 +88,9 @@ export class Book {
         return this.readNotes.tags.indexOf(tag) !== -1;
     }
 
-    
-
-
+    isTransient() {
+        return this.id === 0;
+    }
 }
 
 
@@ -91,12 +103,20 @@ export class Author {
         ) {
     }
 
+    public isTransient() {
+        return this.id === 0;
+    }
+
     public getNameFirstNameFirst() { 
         return orEmpty(this.firstName)+" "+orEmpty(this.middleName)+" "+orEmpty(this.lastName);
     }
 
     public getNameLastNameFirst() {
         return orEmpty(this.lastName)+", "+orEmpty(this.firstName)+" "+orEmpty(this.middleName);
+    }
+
+    public static createTransient(firstName?: string, middleName?: string, lastName?: string) {
+        return new Author(0, firstName, middleName, lastName);
     }
 }
 
@@ -106,8 +126,7 @@ export enum ReadState {
 
 export interface ReadingTimespan {
     startDate?: XDate;
-    endDate?: XDate; 
-
+    endDate?: XDate;
 }
 
 

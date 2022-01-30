@@ -12,32 +12,8 @@
     </div>
     <div class="book-form-group">
         <label for="modify-author-id" class="book-form-label">Author:in:</label>
-        <div class="book-form-field">
-            <input name="author_id" id="modify-author-id" type="hidden" value="{{#bookToEdit.authors}}{{id}};{{/bookToEdit.authors}}">
-
-            <div class="existing-author-list" id="existing-author-list">          
-                {{#bookToEdit.authors}}
-                    <div class="author-row" data-author-id="{{id}}">
-                        <div class="author-row-name">
-                            {{displayName}}
-                        </div>
-                        <div class="author-row-tools">
-                            <button class="inline-button" type="button">🗑️</button>
-                        </div>                        
-                    </div>
-                {{/bookToEdit.authors}}
-            </div>
-
-            <div class="author-row" id="add-new-author-button">
-                <div class="author-row-name">
-                    <input type="text" id="add-author-name" placeholder="Nachname, Vorname Zuname">
-                </div>
-            </div>
-            <div class="author-row existing-author-autocomplete" id="existing-author-autocomplete">
-                
-            </div>
-            
-                    
+        <div class="book-form-field" id="pick-author-component-target">
+                  
 
         </div>
 
@@ -121,9 +97,9 @@
         <label class="book-form-label">Anmerkungen:</label>
 
         <div class="book-form-field" id="modify-tag-list">
-            <input type="checkbox" {{#bookToEdit.readInfo.cancelled}}checked{{/bookToEdit.readInfo.cancelled}} name="cancelled" id="cancelled" /> <label for="cancelled">Abgebrochen</label><br/>
-            <input type="checkbox" {{#bookToEdit.readInfo.readDateGuessed}}checked{{/bookToEdit.readInfo.readDateGuessed}} name="readDateGuessed" id="readDateGuessed" /> <label for="readDateGuessed">Lesedatum Geschätzt</label><br/>
-            <input type="checkbox" {{#bookToEdit.readInfo.monthHighlight}}checked{{/bookToEdit.readInfo.monthHighlight}} name="monthHighlight" id="monthHighlight" /> <label for="monthHighlight">Monatshighlight</label><br/>
+            <input type="checkbox" {{#bookToEdit.readInfo.cancelled}}checked{{/bookToEdit.readInfo.cancelled}} name="cancelled" id="cancelled" data-tag-name="{{bookToEdit.readInfo.cancelledTagName}}" /> <label for="cancelled">Abgebrochen</label><br/>
+            <input type="checkbox" {{#bookToEdit.readInfo.readDateGuessed}}checked{{/bookToEdit.readInfo.readDateGuessed}} name="readDateGuessed" id="readDateGuessed" data-tag-name="{{bookToEdit.readInfo.readDateGuessedTagName}}" /> <label for="readDateGuessed">Lesedatum Geschätzt</label><br/>
+            <input type="checkbox" {{#bookToEdit.readInfo.monthHighlight}}checked{{/bookToEdit.readInfo.monthHighlight}} name="monthHighlight" id="monthHighlight" data-tag-name="{{bookToEdit.readInfo.monthHighlightTagName}}" /> <label for="monthHighlight">Monatshighlight</label><br/>
             <input type="hidden" name="tags" id="modify-tags" />
 
         </div>
