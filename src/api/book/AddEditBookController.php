@@ -4,8 +4,6 @@
 namespace hamstersbooks\api\book;
 
 
-use hamstersbooks\api\author\FindLastInsertAuthorQuery;
-use hamstersbooks\api\author\InsertAuthorQuery;
 use hamstersbooks\api\output\ApiResponse;
 use hamstersbooks\util\persistence\QueryExecutor;
 
@@ -25,7 +23,7 @@ class AddEditBookController
             $executor->rollbackTransaction();
             throw $e;
         }
-        ApiResponse::created()->send();
+        ApiResponse::created()->withJsonContent(["success" => true])->send();
 
     }
 

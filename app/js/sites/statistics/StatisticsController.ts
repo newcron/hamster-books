@@ -1,11 +1,9 @@
-import { ReadState } from "../../data/Book";
-import { BookService } from "../../data/BookService";
-import { MonthPerformance, ReportDataGenerator } from "./ReportDataGenerator";
-const ui = require('../../ui/ui');
+import {ReadState} from "../../data/Book";
+import {BookService} from "../../data/BookService";
+import {MonthPerformance, ReportDataGenerator} from "./ReportDataGenerator";
+
 const view = require("../../ui/view");
 const Chartist = require("chartist");
-
-
 
 
 export class StatisticsController {
@@ -23,21 +21,21 @@ export class StatisticsController {
         view.show(require("../../../view/statistics.mustache"), viewModel);
 
         new Chartist.Bar("#read-history-books-diagram", {
-            labels: monthReadingPerformance,
-            series: [monthReadingPerformance.map(x => x.countBooks())]
-        }, chartOptions(),
+                labels: monthReadingPerformance,
+                series: [monthReadingPerformance.map(x => x.countBooks())]
+            }, chartOptions(),
             responsiveOptions()
         );
 
         new Chartist.Bar("#read-history-pages-diagram", {
-            labels: monthReadingPerformance,
-            series: [monthReadingPerformance.map(x => x.countPages())]
-        }, chartOptions(),
+                labels: monthReadingPerformance,
+                series: [monthReadingPerformance.map(x => x.countPages())]
+            }, chartOptions(),
             responsiveOptions()
         );
     }
 
-   
+
 }
 
 

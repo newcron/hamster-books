@@ -1,9 +1,9 @@
 import {AuthorService} from "../../data/AuthorService";
 import {Author, Book} from "../../data/Book";
 import {BookService} from "../../data/BookService";
-import {UiToolkit} from "../../ui/UiToolkit";
+
 import {EditBookForm} from "./EditBookForm";
-import {EditFormViewController} from "./EditFormViewController";
+import {EditBookFormComponent} from "./EditBookFormComponent";
 import {editBook} from "./FormViewModel";
 
 var view = require("../../ui/view");
@@ -26,7 +26,7 @@ export class EditBookController {
     private showForm(bookToEdit: Book, allAuthors: Author[]) {
         view.show(require("../../../view/book-modify.mustache"),
             editBook(bookToEdit));
-        new EditFormViewController(new EditBookForm(), allAuthors, bookToEdit).showForm();
+        new EditBookFormComponent(new EditBookForm(), allAuthors, bookToEdit).showForm();
     }
 
     handleCreateNew = async () => {

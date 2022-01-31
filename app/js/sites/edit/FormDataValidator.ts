@@ -1,5 +1,5 @@
 import {EditBookForm} from "./EditBookForm";
-import {PickAuthorComponent} from "./PickAuthorComponent";
+import {PickAuthorComponent} from "./author/PickAuthorComponent";
 import {Book} from "../../data/Book";
 import {UiElement} from "../../ui/_impl/UiElement";
 import XDate from "xdate";

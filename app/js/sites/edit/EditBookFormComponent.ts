@@ -4,14 +4,14 @@ import {DateFormFormatter} from "../../ui/DateFormFormatter";
 import {UiToolkit} from "../../ui/UiToolkit";
 import {EditBookForm} from "./EditBookForm";
 import {FormDataExtractor} from "./FormDataExtractor";
-import {PickAuthorComponent} from "./PickAuthorComponent";
+import {PickAuthorComponent} from "./author/PickAuthorComponent";
 import {AjaxService} from "../../net/AjaxRequest";
 import {FormDataValidator} from "./FormDataValidator";
 
 var urls = require("../../net/urls");
 
 
-export class EditFormViewController {
+export class EditBookFormComponent {
 
     private pickAuthorComponent: PickAuthorComponent;
 
@@ -39,7 +39,7 @@ export class EditFormViewController {
         if (new FormDataValidator(this.form, this.pickAuthorComponent, this.bookToEdit).validate()) {
             const data = new FormDataExtractor(this.form, this.pickAuthorComponent, this.bookToEdit).extract();
 
-            new AjaxService().post(urls.addEditBook(), data)
+            new AjaxService().post(urls.addEditBook(), data).then(() => location.hash = "#/read");
         }
 
     }

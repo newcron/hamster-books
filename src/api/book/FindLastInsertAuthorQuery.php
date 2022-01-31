@@ -1,7 +1,7 @@
 <?php
 
 
-namespace hamstersbooks\api\author;
+namespace hamstersbooks\api\book;
 
 
 use hamstersbooks\util\persistence\Query;

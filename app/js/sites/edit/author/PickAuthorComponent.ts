@@ -1,6 +1,6 @@
-import {Author} from "../../data/Book";
-import {UiToolkit} from "../../ui/UiToolkit";
-import {UiElement} from "../../ui/_impl/UiElement";
+import {Author} from "../../../data/Book";
+import {UiToolkit} from "../../../ui/UiToolkit";
+import {UiElement} from "../../../ui/_impl/UiElement";
 import {AuthorSuggester} from "./AuthorSuggester";
 import {AuthorReferenceParser} from "./AuthorReferenceParser";
 
@@ -30,7 +30,7 @@ export class PickAuthorComponent {
 
 
     private regenerateAndAttachHtml(target: UiElement) {
-        const html = require("../../../view/pick-author-component.mustache")(
+        const html = require("../../../../view/pick-author-component.mustache")(
             {
                 authors: this.selectedAuthors.map(x => ({
                     id: x.id,
@@ -51,7 +51,7 @@ export class PickAuthorComponent {
         const input = new UiElement(event.target as Element).value().get();
         const suggestions = this.authorSuggester.suggest(input);
 
-        const markup = require("../../../view/book-modify-author-autocomplete.mustache")({
+        const markup = require("../../../../view/book-modify-author-autocomplete.mustache")({
             suggestions: suggestions.map(s => ({
                 id: s.author.id,
                 matchType: s.perfectMatch ? "exact-match" : "partial-match",

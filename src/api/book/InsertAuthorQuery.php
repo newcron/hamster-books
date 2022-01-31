@@ -1,7 +1,7 @@
 <?php
 
 
-namespace hamstersbooks\api\author;
+namespace hamstersbooks\api\book;
 
 
 use hamstersbooks\util\persistence\Query;
@@ -11,7 +11,8 @@ class InsertAuthorQuery implements Query
 
     private $params;
 
-    public function __construct($firstName, $middleName, $lastName) {
+    public function __construct($firstName, $middleName, $lastName)
+    {
 
 
         if ($firstName === null && $lastName === null) {
