@@ -1,9 +1,11 @@
 import XDate from "xdate";
-import { Book, ReadState } from "../../data/Book";
+import {Book, ReadState} from "../../data/Book";
 
 export class ReportDataGenerator {
 
     private readProgress: Map<string, BookProgress[]> = new Map();
+    private byAddedMonth: Map<string, Book[]> = new Map()
+
 
     constructor(private data: Book[]) {
     }
@@ -11,7 +13,7 @@ export class ReportDataGenerator {
     public generate(): Report {
 
 
-        this.data.filter(book => book.readState === ReadState.READ && book.readNotes!==undefined)
+        this.data.filter(book => book.readState === ReadState.READ && book.readNotes !== undefined)
             .filter(book => book.readNotes.finishDate !== undefined)
             .forEach(readBookWithEndDate => {
                 if (readBookWithEndDate.readNotes.startDate === undefined) {
@@ -26,7 +28,15 @@ export class ReportDataGenerator {
                 }
             })
 
-        return new Report(this.readProgress);
+        this.data.forEach(book => {
+            var date = book.addedDate.toString("yyyy-MM");
+            if (!this.byAddedMonth.has(date)) {
+                this.byAddedMonth.set(date, []);
+            }
+            this.byAddedMonth.get(date).push(book);
+        })
+
+        return new Report(this.readProgress, this.byAddedMonth);
     }
 
     private recognize(effectiveDate: XDate, p: BookProgress): void {
@@ -39,32 +49,43 @@ export class ReportDataGenerator {
     }
 
 
-
-
 }
 
 
-
 export class Report {
-    public constructor(private readonly readProgress: Map<string, BookProgress[]>) { }
+    public constructor(private readonly readProgress: Map<string, BookProgress[]>, private byAddedMonth: Map<string, Book[]>) {
+    }
+
+    public getBooksAddedPerMonth(): MonthPerformance[] {
+        const perf: MonthPerformance[] = [];
+        let firstCurrentMonth = new XDate().addYears(-6).setDate(1).setHours(0).setMinutes(0).setSeconds(0).setMilliseconds(0);
+        let iterDate = firstCurrentMonth.clone();
+        do {
+            const key = iterDate.toString("yyyy-MM");
+            const amount = this.byAddedMonth.has(key) ? this.byAddedMonth.get(key).map(x => new BookProgress(1, x)) : [];
+            perf.push(new MonthPerformance(iterDate.clone(), amount))
+        } while (iterDate.addMonths(1).diffDays(new XDate()) >= 0)
+
+        return perf;
+    }
 
     public getMonthReadingPerformance(): MonthPerformance[] {
         const perf: MonthPerformance[] = [];
-        let firstCurrentMonth = new XDate().addYears(-4).setDate(1).setHours(0).setMinutes(0).setSeconds(0).setMilliseconds(0);
+        let firstCurrentMonth = new XDate().addYears(-6).setDate(1).setHours(0).setMinutes(0).setSeconds(0).setMilliseconds(0);
         let iterDate = firstCurrentMonth.clone();
         let buffer: BookProgress[] = [];
         do {
             if (!this.isInSameMonth(firstCurrentMonth, iterDate)) {
                 perf.push(new MonthPerformance(firstCurrentMonth, buffer))
-                buffer = []; 
+                buffer = [];
                 firstCurrentMonth = iterDate.clone();
             }
             buffer.push(...this.getProgressFor(iterDate));
 
         } while (iterDate.addDays(1).diffDays(new XDate()) >= 0)
-    
+
         perf.push(new MonthPerformance(firstCurrentMonth, buffer));
-        
+
 
         return perf;
     }
@@ -86,18 +107,19 @@ export class Report {
 
 
 export class MonthPerformance {
-    public constructor(private firstDayInMonth: XDate, private bookProgress: BookProgress[]) { }
+    public constructor(private firstDayInMonth: XDate, private bookProgress: BookProgress[]) {
+    }
 
     public getMonthTitle() {
         return this.firstDayInMonth.toString("MMM yy", "de");
     }
 
     public countBooks() {
-        return this.bookProgress.map(x=>x.percentage).reduce((prev, curr)=>prev+curr, 0);
+        return this.bookProgress.map(x => x.percentage).reduce((prev, curr) => prev + curr, 0);
     }
 
     public countPages() {
-        const p = this.bookProgress.map(x=>x.percentage * (x.book.pageCount == undefined ? 0 : x.book.pageCount)).reduce((prev, curr)=>prev+curr, 0);
+        const p = this.bookProgress.map(x => x.percentage * (x.book.pageCount == undefined ? 0 : x.book.pageCount)).reduce((prev, curr) => prev + curr, 0);
 
         return p;
     }
@@ -105,6 +127,7 @@ export class MonthPerformance {
 }
 
 export class BookProgress {
-    public constructor(readonly percentage: number, readonly book: Book) { }
+    public constructor(readonly percentage: number, readonly book: Book) {
+    }
 }
 
