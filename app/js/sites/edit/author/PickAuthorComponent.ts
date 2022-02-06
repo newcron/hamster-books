@@ -49,7 +49,14 @@ export class PickAuthorComponent {
 
     private onAddAuthorKeyUp = (event: KeyboardEvent) => {
         const input = new UiElement(event.target as Element).value().get();
+
+        if (input === "") {
+            this.autocompleteSection.clear();
+            return;
+        }
+
         const suggestions = this.authorSuggester.suggest(input);
+
 
         const markup = require("../../../../view/book-modify-author-autocomplete.mustache")({
             suggestions: suggestions.map(s => ({
@@ -57,12 +64,12 @@ export class PickAuthorComponent {
                 matchType: s.perfectMatch ? "exact-match" : "partial-match",
                 authorName: s.author.getNameLastNameFirst()
 
-            }))
+            })),
+            hasInput: input !== ""
         });
-
-
         const newAutocompleteContents = new UiToolkit().createElement(markup);
         newAutocompleteContents.replaceContentsOf(this.autocompleteSection);
+
 
     }
 
@@ -95,7 +102,12 @@ export class PickAuthorComponent {
     }
 
     private onAuthorCreateNewFromInput = (event: Event) => {
-        const author = new AuthorReferenceParser().parse(this.authorNameInput.value().get())
+        let authorInput = this.authorNameInput.value().get();
+        if (authorInput === "") {
+            this.markValidationError();
+            return;
+        }
+        const author = new AuthorReferenceParser().parse(authorInput)
         this.selectedAuthors.push(Author.createTransient(author.firstName, author.middleName, author.lastName));
         this.insertInto(this.attachedTo);
     }

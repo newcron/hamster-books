@@ -1,6 +1,8 @@
 <?php
 # file is only on production and will override the following settings - this will make a switch between local dev settings and prod settings
-@include "production_constants.php";
+
+@include __DIR__ . "/production_constants.php";
+@include __DIR__ . "/../production_constants.php";
 
 if (getenv("DB_ENV_CONFIGURED") !== false) {
     @define("DB_HOST", getenv("DB_HOST"));

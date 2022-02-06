@@ -1,65 +1,67 @@
 import XDate from "xdate";
-import {BookApiFormat, ReadStateApi} from "./BookApiFormat";
+import {BookApiFormat} from "./BookApiFormat";
 
 
 export class Book {
 
-    public readonly id: number; 
+    public readonly id: number;
     public readonly title: string;
     public readonly isbn?: string;
-    public readonly authors: Author[]; 
+    public readonly authors: Author[];
     public readonly publisher?: { readonly name: string }
-    public readonly publicationYear?: number; 
-    public readonly addedDate: XDate; 
-    public readonly modifiedDate: XDate;   
+    public readonly publicationYear?: number;
+    public readonly addedDate: XDate;
+    public readonly modifiedDate: XDate;
     public readonly pageCount?: number;
 
-    public readonly language? : string
+    public readonly language?: string
     public readonly readState: ReadState;
 
-    public readonly readNotes : {
-        readonly startDate?:XDate, 
-        readonly finishDate?:XDate,
-        readonly rating?:number,
-        readonly comment?:string,
-        readonly tags: BookNotesTag[]
+    public readonly readNotes: {
+        readonly startDate?: XDate,
+        readonly finishDate?: XDate,
+        readonly rating?: number,
+        readonly comment?: string,
+        readonly tags: BookNotesTag[],
+        cancelledOnPage?: number
     }
 
     constructor(apiData: BookApiFormat | "transient") {
-        if(apiData === "transient") {
+        if (apiData === "transient") {
             this.id = 0;
-            this.title="";
+            this.title = "";
             this.authors = [];
             this.addedDate = new XDate();
             this.modifiedDate = new XDate();
             this.readState = ReadState.UNREAD;
-            this.readNotes = { tags: []}
+            this.readNotes = {tags: []}
             return;
         }
-        this.id = apiData.id; 
+        this.id = apiData.id;
         this.title = apiData.title;
         this.isbn = apiData.isbn;
         this.publisher = apiData.publisher
-        this.authors = apiData.authors.map(a=>new Author(a.id, a.firstName, a.middleName, a.lastName));
+        this.authors = apiData.authors.map(a => new Author(a.id, a.firstName, a.middleName, a.lastName));
         this.publicationYear = apiData.publicationYear
-        this.addedDate = new XDate(apiData.addedDate); 
-        this.modifiedDate = new XDate(this.modifiedDate);
+        this.addedDate = new XDate(apiData.addedDate);
+        this.modifiedDate = new XDate(apiData.modifiedDate);
         this.readState = apiData.readState as unknown as ReadState;
         this.pageCount = apiData.pageCount == undefined ? undefined : apiData.pageCount;
-                
-        
-        if(apiData.readNotes!==undefined) {
+
+
+        if (apiData.readNotes !== undefined) {
             this.readNotes = {
-                startDate: apiData.readNotes.startDate ? new XDate(apiData.readNotes.startDate) : undefined, 
-                finishDate: apiData.readNotes.finishDate ? new XDate(apiData.readNotes.finishDate) : undefined, 
+                startDate: apiData.readNotes.startDate ? new XDate(apiData.readNotes.startDate) : undefined,
+                finishDate: apiData.readNotes.finishDate ? new XDate(apiData.readNotes.finishDate) : undefined,
                 tags: apiData.readNotes.tags,
-                rating: apiData.readNotes.rating, 
-                comment: apiData.readNotes.comment, 
+                rating: apiData.readNotes.rating,
+                comment: apiData.readNotes.comment,
+                cancelledOnPage: apiData.readNotes.cancelled_on_page
 
             }
         } else {
-            this.readNotes= {
-                tags: [], 
+            this.readNotes = {
+                tags: [],
             }
         }
     }
@@ -77,14 +79,14 @@ export class Book {
     }
 
     public getAuthorNamesFirstNameFirst() {
-        return this.authors.map(a=>a.getNameFirstNameFirst()).join(", ");
+        return this.authors.map(a => a.getNameFirstNameFirst()).join(", ");
     }
 
-    public getPublisherName() : string {
+    public getPublisherName(): string {
         return this.publisher === undefined ? undefined : this.publisher.name
     }
 
-    public is(tag: BookNotesTag) : boolean {
+    public is(tag: BookNotesTag): boolean {
         return this.readNotes.tags.indexOf(tag) !== -1;
     }
 
@@ -96,23 +98,23 @@ export class Book {
 
 export class Author {
     constructor(
-        public readonly id: number, 
-        public readonly firstName?: string, 
+        public readonly id: number,
+        public readonly firstName?: string,
         readonly middleName?: string,
         public readonly lastName?: string
-        ) {
+    ) {
     }
 
     public isTransient() {
         return this.id === 0;
     }
 
-    public getNameFirstNameFirst() { 
-        return orEmpty(this.firstName)+" "+orEmpty(this.middleName)+" "+orEmpty(this.lastName);
+    public getNameFirstNameFirst() {
+        return orEmpty(this.firstName) + " " + orEmpty(this.middleName) + " " + orEmpty(this.lastName);
     }
 
     public getNameLastNameFirst() {
-        return orEmpty(this.lastName)+", "+orEmpty(this.firstName)+" "+orEmpty(this.middleName);
+        return orEmpty(this.lastName) + ", " + orEmpty(this.firstName) + " " + orEmpty(this.middleName);
     }
 
     public static createTransient(firstName?: string, middleName?: string, lastName?: string) {
@@ -121,7 +123,7 @@ export class Author {
 }
 
 export enum ReadState {
-    READ="READ", UNREAD="UNREAD"
+    READ = "READ", UNREAD = "UNREAD"
 }
 
 export interface ReadingTimespan {
@@ -131,9 +133,9 @@ export interface ReadingTimespan {
 
 
 export enum BookNotesTag {
-    READ_DATE_GUESSED="READ_DATE_GUESSED", 
-    MONTH_FAVOURITE="MONTH_FAVOURITE", 
-    CANCELLED="CANCELLED"
+    READ_DATE_GUESSED = "READ_DATE_GUESSED",
+    MONTH_FAVOURITE = "MONTH_FAVOURITE",
+    CANCELLED = "CANCELLED"
 
 }
 

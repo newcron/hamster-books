@@ -1,23 +1,22 @@
-<div>
+<div style="width: 100%">
 
 
-    <div class="existing-author-list" id="existing-author-list">          
+    <div class="existing-author-list" id="existing-author-list">
         {{#authors}}
-            <div class="author-row" data-author-id="{{id}}">
-                <div class="author-row-name">
+            <div class="author-row book-form-field" data-author-id="{{id}}">
+                <div class="author-row-name form-control-like grow">
                     {{displayName}} {{#transient}}(neu){{/transient}}
                 </div>
                 <div class="author-row-tools">
-                    <button class="inline-button delete-author-button" data-author-id="{{id}}" type="button">🗑️</button>
-                </div>                        
+                    <button class="inline-button delete-author-button" data-author-id="{{id}}" type="button">🗑️
+                    </button>
+                </div>
             </div>
         {{/authors}}
     </div>
 
-    <div class="author-row" id="add-new-author-button">
-        <div class="author-row-name">
-            <input type="text" id="add-author-name" placeholder="Nachname, Vorname Zuname">
-        </div>
+    <div class="author-row book-form-field" id="add-new-author-button">
+        <input class="form-control" type="text" id="add-author-name" placeholder="Nachname, Vorname Zuname">
     </div>
     <div class="author-row existing-author-autocomplete" id="existing-author-autocomplete"></div>
 </div>

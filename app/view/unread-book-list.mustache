@@ -9,8 +9,14 @@
                 <section class="cluster-content">
                     {{#books}}
                         <a href="#/book/{{id}}" class="unread-book-entry">
-                            <span class="unread-book-entry-title">{{title}}</span>
-                            <span class="unread-book-entry-added">{{addedDate}}</span>
+                            <section class="unread-book-entry-head">
+                                <section class="unread-book-entry-added">Eingetragen am {{addedDate}}</section>
+                                <section class="unread-book-entry-subduration">({{subDuration}} Monate)</section>
+                            </section>
+                            <section class="unread-book-entry-title">{{title}}</section>
+
+                        </a>
+
                         </a>
                     {{/books}}
                 </section>

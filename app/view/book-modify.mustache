@@ -1,6 +1,6 @@
 <form class="book-form" id="modify-form" role="form" action="/">
     {{#edit}}
-    <input type="hidden" name="id" id="modify-id" value="{{bookToEdit.id}}">
+        <input type="hidden" name="id" id="modify-id" value="{{bookToEdit.id}}">
     {{/edit}}
 
     <div class="book-form-group">
@@ -10,10 +10,21 @@
             <input type="text" class="form-control" id="modify-title" name="title" value="{{bookToEdit.title}}">
         </div>
     </div>
+
+    <div class="book-form-group">
+        <label for="modify-isbn" class="book-form-label">ISBN:</label>
+
+        <div class="book-form-field ">
+            <input type="text" class="form-control isbn monospace half" id="modify-isbn" name="isbn"
+                   value="{{bookToEdit.isbn}}">
+            <!-- <i id="action-search-isbn" class="icon-search"></i> -->
+        </div>
+    </div>
+
     <div class="book-form-group">
         <label for="modify-author-id" class="book-form-label">Author:in:</label>
         <div class="book-form-field" id="pick-author-component-target">
-                  
+
 
         </div>
 
@@ -22,43 +33,45 @@
         <label for="modify-page-count" class="book-form-label">Seitenzahl:</label>
 
         <div class="book-form-field number">
-            <input type="number" class="form-control" id="modify-page-count" name="page_count" value="{{bookToEdit.pageCount}}">
+            <input type="number" class="form-control quarter monospace" id="modify-page-count" name="page_count"
+                   value="{{bookToEdit.pageCount}}">
         </div>
     </div>
-    <div class="book-form-group">
-        <label for="modify-isbn" class="book-form-label">ISBN:</label>
 
-        <div class="book-form-field ">
-            <input type="text" class="form-control isbn" id="modify-isbn" name="isbn" value="{{bookToEdit.isbn}}">
-            <i id="action-search-isbn" class="icon-search"></i>
-        </div>
-    </div>
     <div class="book-form-group">
         <label for="modify-publisher" class="book-form-label">Verlag:</label>
 
         <div class="book-form-field">
-            <input type="text" class="form-control" id="modify-publisher" name="publisher" value="{{bookToEdit.publisher}}">
+            <input type="text" class="form-control" id="modify-publisher" name="publisher"
+                   value="{{bookToEdit.publisher}}">
         </div>
     </div>
     <div class="book-form-group">
         <label for="modify-publication-year" class="book-form-label">Veröffentlichungsjahr:</label>
 
         <div class="book-form-field number">
-            <input type="number" class="form-control" id="modify-publication-year" name="publication_year"
+            <input type="number" class="form-control  quarter monospace" id="modify-publication-year"
+                   name="publication_year"
                    value="{{bookToEdit.publicationYear}}">
         </div>
     </div>
 
 
-    <div class="book-form-group">
-        <label class="book-form-label">
-            <input type="checkbox" id="modify-is-read" {{#isRead}}checked="checked"{{/isRead}}>
-            Gelesen
-            <input type="hidden" id="modify-read-state" name="read_state">
-        </label>
-        <div class="book-form-field is-read-context hidden">
-            <hr>
+    <div class="book-form-group ">
+        <div class="book-form-field radio-group">
+
+
+            <input type="radio" class="hidden read-state-selector" name="read_state" id="read_state_unread"
+                   {{^isRead}}checked="checked"{{/isRead}} value="UNREAD">
+            <label class="radio-item" for="read_state_unread">Ungelesen
+            </label>
+            <input type="radio" class="hidden read-state-selector" name="read_state" id="read_state_read"
+                   {{#isRead}}checked="checked"{{/isRead}} value="READ">
+            <label class="radio-item" for="read_state_read">
+                Gelesen
+            </label>
         </div>
+
     </div>
 
     <div class="book-form-group is-read-context hidden">
@@ -66,7 +79,9 @@
             Aufgeschlagen
         </label>
         <div class="book-form-field date">
-            <input value="{{bookToEdit.readInfo.startDate}}" type="date" class="form-control" name="read_date_start" id="modify-read-date-start">
+            <input value="{{bookToEdit.readInfo.startDate}}" type="date" class="form-control half monospace"
+                   name="read_date_start"
+                   id="modify-read-date-start">
         </div>
     </div>
     <div class="book-form-group is-read-context hidden">
@@ -74,7 +89,9 @@
             Zugeschlagen
         </label>
         <div class="book-form-field date">
-            <input value="{{bookToEdit.readInfo.finishDate}}" type="date" class="form-control" name="read_date_end" id="modify-read-date-end">
+            <input value="{{bookToEdit.readInfo.finishDate}}" type="date" class="form-control half monospace"
+                   name="read_date_end"
+                   id="modify-read-date-end">
         </div>
     </div>
 
@@ -82,32 +99,76 @@
         <label for="modify-read-rating" class="book-form-label">Bewertung:</label>
 
         <div class="book-form-field number">
-            <input type="number" class="form-control" id="modify-read-rating" name="read_rating" step="0.1"
-                   value="{{bookToEdit.readInfo.rating}}">
+            <select class="form-control" id="modify-read-rating" name="read_rating">
+                {{^bookToEdit.readInfo.rating}}
+                    <option value="" disabled selected>Bitte wählen</option>
+                {{/bookToEdit.readInfo.rating}}
+                {{#bookToEdit.starOptions}}
+                    <option value="{{val}}" {{#selected}}selected{{/selected}}>{{label}}</option>
+                {{/bookToEdit.starOptions}}
+
+            </select>
+            <!-- <input type="number" class="form-control quarter monospace" id="modify-read-rating" name="read_rating"
+                   step="0.1"
+                   value="{{bookToEdit.readInfo.rating}}"> -->
         </div>
     </div>
     <div class="book-form-group is-read-context hidden">
         <label for="modify-read-comment" class="book-form-label">Kommentar:</label>
 
         <div class="book-form-field">
-            <textarea class="form-control" id="modify-read-comment" name="read_comment" rows="6">{{bookToEdit.readInfo.comment}}</textarea>
+            <textarea class="form-control" id="modify-read-comment" name="read_comment"
+                      rows="6">{{bookToEdit.readInfo.comment}}</textarea>
         </div>
     </div>
     <div class="book-form-group is-read-context hidden">
         <label class="book-form-label">Anmerkungen:</label>
 
-        <div class="book-form-field" id="modify-tag-list">
-            <input type="checkbox" {{#bookToEdit.readInfo.cancelled}}checked{{/bookToEdit.readInfo.cancelled}} name="cancelled" id="cancelled" data-tag-name="{{bookToEdit.readInfo.cancelledTagName}}" /> <label for="cancelled">Abgebrochen</label><br/>
-            <input type="checkbox" {{#bookToEdit.readInfo.readDateGuessed}}checked{{/bookToEdit.readInfo.readDateGuessed}} name="readDateGuessed" id="readDateGuessed" data-tag-name="{{bookToEdit.readInfo.readDateGuessedTagName}}" /> <label for="readDateGuessed">Lesedatum Geschätzt</label><br/>
-            <input type="checkbox" {{#bookToEdit.readInfo.monthHighlight}}checked{{/bookToEdit.readInfo.monthHighlight}} name="monthHighlight" id="monthHighlight" data-tag-name="{{bookToEdit.readInfo.monthHighlightTagName}}" /> <label for="monthHighlight">Monatshighlight</label><br/>
-            <input type="hidden" name="tags" id="modify-tags" />
+        <div class="book-form-field checkbox-list">
+            <input type="checkbox"
+                   {{#bookToEdit.readInfo.cancelled}}checked{{/bookToEdit.readInfo.cancelled}}
+                   name="cancelled"
+                   class="hidden"
+                   id="cancelled"
+                   data-tag-name="{{bookToEdit.readInfo.cancelledTagName}}"/>
+
+            <label for="cancelled" class="checkbox-label">Abgebrochen</label>
+            <lavel for="cancelled-on-page" class="cancelled-context">auf seite</lavel>
+            <input type="text" name="cancelled_on_page" class="form-control quarter monospace cancelled-context"
+                   value="{{bookToEdit.readInfo.cancelledOnPage}}" id="cancelled-on-page"/>
+        </div>
+        <div class="book-form-field checkbox-list">
+            <input type="checkbox"
+                   class="hidden"
+                   {{#bookToEdit.readInfo.readDateGuessed}}checked{{/bookToEdit.readInfo.readDateGuessed}}
+                   name="readDateGuessed"
+                   id="readDateGuessed"
+                   data-tag-name="{{bookToEdit.readInfo.readDateGuessedTagName}}"/>
+            <label for="readDateGuessed" class="checkbox-label">Lesedatum Geschätzt</label>
+        </div>
+        <div class="book-form-field checkbox-list">
+            <input type="checkbox"
+                   {{#bookToEdit.readInfo.monthHighlight}}checked{{/bookToEdit.readInfo.monthHighlight}}
+                   class="hidden"
+                   name="monthHighlight"
+                   id="monthHighlight"
+                   data-tag-name="{{bookToEdit.readInfo.monthHighlightTagName}}"/>
+            <label for="monthHighlight" class="checkbox-label">Monatshighlight</label><br/>
+            <input type="hidden" name="tags" id="modify-tags"/>
 
         </div>
 
     </div>
-    <div class="book-form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">Speichern</button>
+    {{#edit}}
+        <div class="book-form-group">
+            <div class="book-form-label">
+                Eingetragen am {{creationDate}}.<br/>Letzte Änderung am {{lastEditDate}}
+            </div>
+
+
         </div>
+    {{/edit}}
+    <div class="book-form-group right-align">
+        <button type="submit" class="btn btn-default">Speichern</button>
     </div>
 </form>

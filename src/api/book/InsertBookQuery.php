@@ -10,7 +10,7 @@ class InsertBookQuery implements Query
 {
     private $formParams;
 
-    public function __construct($isbn, $title, $publisher, $pageCount, $publicationYear, $readDateStart, $readDateEnd, $readComment, $readRating, $readState, $tags)
+    public function __construct($isbn, $title, $publisher, $pageCount, $publicationYear, $readDateStart, $readDateEnd, $readComment, $readRating, $readState, $tags, $readCancelledPage)
     {
         $this->formParams = [
             $isbn,
@@ -23,7 +23,8 @@ class InsertBookQuery implements Query
             $readComment,
             $readRating,
             $readState,
-            $tags
+            $tags,
+            $readCancelledPage
         ];
     }
 
@@ -43,9 +44,10 @@ class InsertBookQuery implements Query
             read_comment,
             read_rating,
             read_state,
-            tags
+            tags, 
+            read_canceled_page
         ) values (
-            now(), now(), 'DE', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            now(), now(), 'DE', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     }
 
     public function getParameters()

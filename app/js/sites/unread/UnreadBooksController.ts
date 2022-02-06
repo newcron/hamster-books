@@ -28,6 +28,7 @@ export class UnreadBooksController {
                         return {
                             id: b.id,
                             title: b.title,
+                            subDuration: Math.round(b.addedDate.diffMonths(new XDate())),
                             addedDate: b.addedDate.toString("dd.MM.yyyy"),
                         }
                     })

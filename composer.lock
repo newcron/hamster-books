@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e6de4b454f78e29245f29669af98388",
+    "content-hash": "271a4585506c22fe62ddf2af2dbf27d8",
     "packages": [
         {
             "name": "birke/rememberme",
@@ -88,51 +88,6 @@
             ],
             "description": "A Database Migration Tool Similar to Flyway",
             "time": "2016-01-05T13:56:52+00:00"
-        },
-        {
-            "name": "exeu/amazon-ecs-php",
-            "version": "V1.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Exeu/Amazon-ECS-PHP-Library.git",
-                "reference": "0083ec73e3f82b4b215f2db17b384d2529636436"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Exeu/Amazon-ECS-PHP-Library/zipball/0083ec73e3f82b4b215f2db17b384d2529636436",
-                "reference": "0083ec73e3f82b4b215f2db17b384d2529636436",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "lib/AmazonECS.class.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Jan Eichhorn",
-                    "email": "exeu65@googlemail.com",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Amazon ECS PHP Library",
-            "homepage": "https://github.com/Exeu/Amazon-ECS-PHP-Library",
-            "keywords": [
-                "ECS",
-                "Product Advertising",
-                "amazon",
-                "soap"
-            ],
-            "abandoned": true,
-            "time": "2012-09-16T08:47:12+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

@@ -1,11 +1,23 @@
 .icon {
-  background-size: contain;
-  width: 16px;
-  height: 16px;
   display: inline-block;
-  background-position: center center;
+  width: 1rem;
+  height: 1rem;
+  background-size: contain;
+  vertical-align: text-bottom;
 }
 
-.icon-search:extend(.icon) {
-  background-image: url("@{image-url}/iconmonstr-magnifier-2-icon.svg");
+.rating-star-full:extend(.icon) {
+  background-image: url("../img/star-full.svg");
+}
+
+.rating-star-half:extend(.icon) {
+  background-image: url("../img/star-half.svg");
+}
+
+.rating-month-highlight:extend(.icon) {
+  background-image: url("../img/month-highlight.svg");
+}
+
+.rating-cancelled:extend(.icon) {
+  background-image: url("../img/cancelled.svg");
 }

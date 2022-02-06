@@ -7,15 +7,44 @@
             <section class="cluster">
                 <h3 class="cluster-title">{{groupName}}</h3>
                 <section class="cluster-content">
+
                     {{#books}}
                         <a href="#/book/{{id}}" class="read-book-entry">
-                            <span class="read-book-entry-title">{{title}}</span>
-                            <span class="read-book-entry-author">{{authorName}}</span>
-                            <span class="read-book-entry-added">{{addedDate}}</span>
-                            <span class="read-book-entry-read">{{readDate}}</span>
-                            <span class="read-book-entry-rating">{{rating}}</span>
+                            <section class="read-book-entry-head">
+                                <section class="read-book-entry-head-author">{{authorName}}</section>
+                                <section class="read-book-entry-head-duration">{{readDurationDays}} Tage</section>
+                            </section>
+                            <section class="read-book-entry-body">
+                                <section class="read-book-entry-body-title">
+                                    {{#isCancelled}}
+                                        <i class="rating-cancelled"></i>
+                                    {{/isCancelled}}
+                                    {{#isMonthHighlight}}
+                                        <i class="rating-month-highlight"></i>
+                                    {{/isMonthHighlight}}
+                                    {{title}}</section>
+                                <section class="read-book-entry-body-rating">
+                                    {{#ratingExpanded}}
+                                        {{#isFull}}
+                                            <i class="rating-star-full"></i>
+                                        {{/isFull}}
+                                        {{^isFull}}
+                                            <i class="rating-star-half"></i>
+                                        {{/isFull}}
+
+                                    {{/ratingExpanded}}
+
+
+
+                                </section>
+
+                            </section>
+
                         </a>
+
                     {{/books}}
+
+
                 </section>
             </section>
         {{/groups}}

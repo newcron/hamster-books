@@ -4,70 +4,72 @@
 namespace hamstersbooks\api\book;
 
 
-class BookFormatConverter {
+class BookFormatConverter
+{
 
-    public function convertList(array $list) {
-        $map = []; 
-        
-        foreach($list as $item) {
-            $id = $item->id; 
-            if(!array_key_exists($id, $map)) {
+    public function convertList(array $list)
+    {
+        $map = [];
+
+        foreach ($list as $item) {
+            $id = $item->id;
+            if (!array_key_exists($id, $map)) {
                 $map[$id] = [
-                    "id" => intval($item->id), 
-                    "title"=>$item->title, 
-                    "isbn"=>$item->isbn,
-                    "authors"=>[],
-                    "publisher"=> [
-                        "name"=>$item->publisher
+                    "id" => intval($item->id),
+                    "title" => $item->title,
+                    "isbn" => $item->isbn,
+                    "authors" => [],
+                    "publisher" => [
+                        "name" => $item->publisher
                     ],
                     "publicationYear" => empty($item->publication_year) ? null : intval($item->publication_year),
-                    "addedDate" => $this->toDateTime($item->added_date), 
+                    "addedDate" => $this->toDateTime($item->added_date),
                     "modifiedDate" => $this->toDateTime($item->modified_date),
-                    "pageCount" => empty($item->page_count) ? null : intval($item->page_count), 
-                    "language" => $item->language, 
-                    "readState" => $item->read_state, 
+                    "pageCount" => empty($item->page_count) ? null : intval($item->page_count),
+                    "language" => $item->language,
+                    "readState" => $item->read_state,
                     "readNotes" => [
                         "startDate" => $this->toDate($item->read_date_start),
                         "finishDate" => $this->toDate($item->read_date_end),
-                        "rating" => empty($item->read_rating) ? null : floatval($item->read_rating), 
-                        "comment"=> $item->read_comment,
-                        "tags" =>  empty($item->tags) ? [] :  explode(",", $item->tags)
-                        
+                        "rating" => empty($item->read_rating) ? null : floatval($item->read_rating),
+                        "comment" => $item->read_comment,
+                        "tags" => empty($item->tags) ? [] : explode(",", $item->tags),
+                        "cancelled_on_page" => empty($item->read_canceled_page) ? null : intval($item->read_canceled_page)
+
                     ]
 
                 ];
             }
 
-            
+
             array_push($map[$id]["authors"], [
 
-                "id"=> intval($item->author__id), 
-                "firstName" => empty($item->author__first_name) ? null : $item->author__first_name, 
-                "middleName" => empty($item->author__middle_name) ? null : $item->author__middle_name, 
+                "id" => intval($item->author__id),
+                "firstName" => empty($item->author__first_name) ? null : $item->author__first_name,
+                "middleName" => empty($item->author__middle_name) ? null : $item->author__middle_name,
                 "lastName" => empty($item->author__last_name) ? null : $item->author__last_name
             ]);
-            
+
         }
 
-
-        
-        
 
         return array_values($map);
     }
 
-    private function toDate($dtString) {
-        if(empty($dtString)) {
+    private function toDate($dtString)
+    {
+        if (empty($dtString)) {
             return null;
         }
         return substr($dtString, 0, 10);
     }
 
-    private function toDateTime($dtString) {
-        if(empty($dtString)) {
+    private function toDateTime($dtString)
+    {
+        if (empty($dtString)) {
             return null;
         }
-        return str_replace(" ", "T", $dtString)."Z";
+        return str_replace(" ", "T", $dtString) . "Z";
     }
 
 }

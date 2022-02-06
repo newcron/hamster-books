@@ -1,16 +1,17 @@
-import { UiToolkit } from "../../ui/UiToolkit";
-import { UiElement } from "../../ui/_impl/UiElement";
+import {UiToolkit} from "../../ui/UiToolkit";
+import {UiElement} from "../../ui/_impl/UiElement";
 
 var DateFormFormatter = require('../../ui/DateFormFormatter');
 
 export class EditBookForm {
 
-    private element : UiElement; 
+    private element: UiElement;
+
     constructor() {
         this.element = new UiToolkit().find().byId("modify-form");
     }
 
-    apply(action: (i: EditBookForm) => void){
+    apply(action: (i: EditBookForm) => void) {
         action(this);
     }
 
@@ -74,6 +75,26 @@ export class EditBookForm {
         return this.findField("modify-is-read");
     }
 
+    readStateRadios() {
+        return this.element.find().all(".read-state-selector")
+    }
+
+    cancelledCheckbox() {
+        return this.element.find().byId("cancelled");
+    }
+
+    cancelledContextField() {
+        return this.element.find().all(".cancelled-context");
+    }
+
+    cancelledOnPageField() {
+        return this.element.find().byId("cancelled-on-page");
+    }
+
+    selectedReadStateRadio() {
+        return this.element.find().all(".read-state-selector:checked")[0];
+    }
+
     readStateField() {
         return this.findField("modify-read-state");
     }
@@ -91,7 +112,6 @@ export class EditBookForm {
     }
 
 
-
     pickAuthorButton() {
         return this.findField("modify-author-selector");
     }
@@ -102,12 +122,13 @@ export class EditBookForm {
     }
 
     addAuthorField() {
-        return this.element.find().byId("add-author-name"); 
+        return this.element.find().byId("add-author-name");
     }
 
 
-    authorAutocompleteSection(){
+    authorAutocompleteSection() {
         return this.element.find().byId("existing-author-autocomplete");
     }
+
 
 }

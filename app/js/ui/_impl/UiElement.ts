@@ -1,4 +1,4 @@
-import { Finder } from "./Finder";
+import {Finder} from "./Finder";
 
 export class UiElement {
     constructor(private element: Element) {
@@ -27,62 +27,76 @@ export class UiElement {
     }
 
     replaceContentsOf(newTarget: UiElement) {
-        newTarget.children().forEach(x=>x.remove());
+        newTarget.children().forEach(x => x.remove());
         this.appendTo(newTarget);
     }
 
     class(className: string) {
-        var cl = this.element.classList; 
+        var cl = this.element.classList;
         return {
-            add: () => { 
-                if(!cl.contains(className)) {
+            add: () => {
+                if (!cl.contains(className)) {
                     cl.add(className);
                 }
             },
 
             remove: () => {
-                if(cl.contains(className)) {
+                if (cl.contains(className)) {
                     cl.remove(className);
                 }
-            }, 
+            },
 
             toggle: () => {
-                if(cl.contains(className)) {
+                if (cl.contains(className)) {
                     cl.remove(className);
                 } else {
                     cl.add(className);
                 }
-            }, 
+            },
 
-            isPresent: ()=> cl.contains(className)
+            isPresent: () => cl.contains(className),
+
+            set: (enableClass: boolean) => {
+                if (enableClass && !cl.contains(className)) {
+                    cl.add(className);
+                } else if (cl.contains(className)) {
+                    cl.remove(className);
+                }
+            }
         }
     }
 
     text() {
         return {
-            get: ()=>this.element.textContent, 
-            set: (newValue: string) => {this.element.textContent=newValue},
+            get: () => this.element.textContent,
+            set: (newValue: string) => {
+                this.element.textContent = newValue
+            },
             isEmpty: () => !isPresent(this.element.textContent),
             isPresent: () => isPresent(this.element.textContent)
         }
     }
 
     value() {
-        var ie = this.element as HTMLInputElement; 
+        var ie = this.element as HTMLInputElement;
         return {
-            get: ()=>ie.value, 
-            set: (newValue: string) => {ie.textContent=newValue}, 
+            get: () => ie.value,
+            set: (newValue: string) => {
+                ie.textContent = newValue
+            },
             isEmpty: () => !isPresent(ie.value),
-            isPresent: () => isPresent(ie.value), 
-            map: <T>(mapper: (x: string) => T) => isPresent(ie.value) ? mapper(ie.value) : undefined 
+            isPresent: () => isPresent(ie.value),
+            map: <T>(mapper: (x: string) => T) => isPresent(ie.value) ? mapper(ie.value) : undefined
         }
     }
 
     checked() {
-        var ie = this.element as HTMLInputElement; 
+        var ie = this.element as HTMLInputElement;
         return {
-            get: ()=>ie.checked, 
-            set: (newValue: boolean) => {ie.checked = newValue}
+            get: () => ie.checked,
+            set: (newValue: boolean) => {
+                ie.checked = newValue
+            }
         }
     }
 
@@ -90,56 +104,56 @@ export class UiElement {
         this.element.parentNode.removeChild(this.element);
     }
 
-    on(eventName : string) {
+    on(eventName: string) {
         return {
-            fire: (callback : EventListener) => {
+            fire: (callback: EventListener) => {
                 this.element.addEventListener(eventName, callback);
                 return {
-                    andEvaluateNow : () => {
+                    andEvaluateNow: () => {
                         callback(new Event(eventName));
                     }
                 }
-            }, 
-            
+            },
+
             fireAndConsume: (callback: EventListener) => {
                 this.element.addEventListener(eventName, (event: Event) => {
-                    event.preventDefault(); 
+                    event.preventDefault();
                     callback(event);
                 })
                 return {
-                    andEvaluateNow : () => {
+                    andEvaluateNow: () => {
                         callback(new Event(eventName));
                     }
                 }
-            }, 
-            
+            },
+
             disarm: (callback: EventListener) => {
                 this.element.removeEventListener(eventName, callback);
-            }, 
+            },
 
-            matching : (subSelector: string) => {
+            matching: (subSelector: string) => {
                 return {
                     fire: (callback: EventListener) => {
-                        this.element.addEventListener(eventName, (event: Event)=>{
-                            if([].slice.call(this.element.querySelectorAll(subSelector)).indexOf(event.target) !== -1) {
+                        this.element.addEventListener(eventName, (event: Event) => {
+                            if ([].slice.call(this.element.querySelectorAll(subSelector)).indexOf(event.target) !== -1) {
                                 callback(event);
                             }
                         })
                         return {
-                            andEvaluateNow : () => {
+                            andEvaluateNow: () => {
                                 callback(new Event(eventName));
                             }
                         }
-                    }, 
+                    },
 
                     fireAndConsume: (callback: EventListener) => {
-                        this.element.addEventListener(eventName, (event: Event)=>{
-                            if([].slice.call(this.element.querySelectorAll(subSelector)).indexOf(event.target) !== -1) {
+                        this.element.addEventListener(eventName, (event: Event) => {
+                            if ([].slice.call(this.element.querySelectorAll(subSelector)).indexOf(event.target) !== -1) {
                                 event.preventDefault();
                                 callback(event);
                             }
                             return {
-                                andEvaluateNow : () => {
+                                andEvaluateNow: () => {
                                     callback(new Event(eventName));
                                 }
                             }
@@ -152,7 +166,9 @@ export class UiElement {
     }
 
 
-
+    clear() {
+        this.children().forEach(x => x.remove());
+    }
 }
 
 function isPresent(value: any) {

@@ -10,7 +10,7 @@ export class FormDataExtractor {
 
     extract(): CreateEditBookApiFormat {
         const f = this.f;
-        const readState = f.isReadCheckbox().checked().get() ? ReadStateApi.READ : ReadStateApi.UNREAD;
+        const readState = f.selectedReadStateRadio().value().get() as ReadStateApi;
         const tags = f.getForm().find().all("[data-tag-name]:checked").map(e => e.attr("data-tag-name").get() as BookNotesTag);
         return {
             id: this.b.isTransient() ? undefined : this.b.id,
@@ -32,6 +32,7 @@ export class FormDataExtractor {
                 comment: f.commentField().value().get(),
                 finishDate: parseDate(f.finishedReadingField().value().get()),
                 startDate: parseDate(f.startedReadingField().value().get()),
+                cancelledOnPage: f.cancelledOnPageField().value().isPresent() ? parseInt(f.cancelledOnPageField().value().get()) : undefined,
                 rating: f.ratingField().value().map(x => parseFloat(x))
             }
         }

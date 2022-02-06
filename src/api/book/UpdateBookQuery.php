@@ -16,7 +16,7 @@ class UpdateBookQuery implements Query
      * UpdateBookQuery constructor.
      * @param array $formParams
      */
-    public function __construct($id, $isbn, $title, $publisher, $pageCount, $publicationYear, $readDateStart, $readDateEnd, $readComment, $readRating, $readState, $tags)
+    public function __construct($id, $isbn, $title, $publisher, $pageCount, $publicationYear, $readDateStart, $readDateEnd, $readComment, $readRating, $readState, $tags, $cancelledOnPage)
     {
         if (empty($id)) {
             throw new \Exception("id field mandatory for updating a book");
@@ -33,6 +33,7 @@ class UpdateBookQuery implements Query
             $readRating,
             $readState,
             $tags,
+            $cancelledOnPage,
             $id];
 
 
@@ -54,7 +55,8 @@ class UpdateBookQuery implements Query
             read_comment = ?,
             read_rating = ?,
             read_state = ?,
-            tags = ?
+            tags = ?, 
+            read_canceled_page = ?
             where id = ?;";
 
 

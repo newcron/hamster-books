@@ -1,4 +1,5 @@
 DOCKER_IP := "127.0.0.1"
+SHELL=bash
 
 regenerate_env: down
 	docker-compose -f environment/docker-compose-hamstersbooks-permanent-fs.yml -p hamstersbooks down
@@ -42,4 +43,8 @@ release:
 	cp web/index.php app-optimized/index.php
 	cp htaccess-enable-gzip-and-routing app-optimized/.htaccess
 	cp htaccess-set-cache-control app-optimized/assets/.htaccess
-	tar -cvf build.tar --exclude=.git app-optimized src sql constants.php vendor
+	tar -cvf build.tar --exclude=.git   app-optimized src sql constants.php vendor
+
+deploy:
+	# fixme: this is not working - sourcing is being ignored
+	source .deployment-secret; curl -XPOST https://deployments.hamstersbooks.de -F "data=@build.tar"  -u "$(DEPLOYMENT_USERNAME):$(DEPLOYMENT_PASSWORD)" 

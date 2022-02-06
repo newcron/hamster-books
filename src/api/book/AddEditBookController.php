@@ -41,15 +41,19 @@ class AddEditBookController
             $params["isbn"],
             $params["title"],
             $params["publisher"]["name"] ?? null,
-            $params["pageCount"],
-            $params["publicationYear"],
+            $params["pageCount"] ?? null,
+            $params["publicationYear"] ?? null,
             $params["readNotes"]["startDate"] ?? null,
             $params["readNotes"]["finishDate"] ?? null,
             $params["readNotes"]["comment"] ?? null,
             $params["readNotes"]["rating"] ?? null,
             $params["readState"],
-            $this->serializeTags($params["readNotes"]["tags"])
+            $this->serializeTags($params["readNotes"]["tags"]),
+            $params["readNotes"]["cancelledOnPage"] ?? null
+
         ));
+
+        // todo: add cancel note: cancelledOnPage
         return (int)$params["id"];
     }
 
@@ -59,15 +63,17 @@ class AddEditBookController
             $params["isbn"],
             $params["title"],
             $params["publisher"]["name"] ?? null,
-            $params["pageCount"],
-            $params["publicationYear"],
+            $params["pageCount"] ?? null,
+            $params["publicationYear"] ?? null,
             $params["readNotes"]["startDate"] ?? null,
             $params["readNotes"]["finishDate"] ?? null,
             $params["readNotes"]["comment"] ?? null,
             $params["readNotes"]["rating"] ?? null,
             $params["readState"],
-            $this->serializeTags($params["readNotes"]["tags"])
+            $this->serializeTags($params["readNotes"]["tags"]),
+            $params["readNotes"]["cancelledOnPage"] ?? null
         ));
+        // todo: add cancel note: cancelledOnPage
 
         return (int)($executor->fetchUnique(new FindLastInsertBookQuery())->id);
 

@@ -1,15 +1,14 @@
-import { Group } from "../../data/grouping/Grouper"
+export interface UnreadBookListViewModel {
 
-export interface UnreadBookListViewModel { 
-    
     unreadCount: number,
     oldSubCount: number,
     groups: {
-        groupName: string, 
+        groupName: string,
         books: {
             id: number,
-            title: string, 
-            addedDate: string, 
+            title: string,
+            addedDate: string,
+            subDuration: number
         }[]
     }[]
 }
