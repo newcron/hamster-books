@@ -1,90 +1,88 @@
-import {ReadState} from "../../data/Book";
 import {BookService} from "../../data/BookService";
-import {MonthPerformance, ReportDataGenerator} from "./ReportDataGenerator";
+import {BooksAddedTimelineReport} from "./BooksAddedTimelineReport";
+import {UiToolkit} from "../../ui/UiToolkit";
+import {CategoryScale, Chart, Legend, LinearScale, LineController, LineElement, PointElement, Tooltip} from "chart.js";
+import {DateOnly} from "../../data/DateOnly";
+import {PagesReadTimelineReport} from "./PagesReadTimelineReport";
+import {BooksReadTimelineReport} from "./BooksReadTimelineReport";
 
 const view = require("../../ui/view");
-const Chartist = require("chartist");
-
+Chart.register(LineController, Tooltip, CategoryScale, LinearScale, PointElement, LineElement, Legend);
 
 export class StatisticsController {
     public async handle() {
+
         const bookService = new BookService();
-        const read = await bookService.loadBooksInState(ReadState.READ);
-
-        const report = new ReportDataGenerator(read).generate();
-        const monthReadingPerformance = report.getMonthReadingPerformance();
-        const monthAddingPerformance = report.getBooksAddedPerMonth();
+        const allBooks = await bookService.loadAllBooks();
 
 
-        var viewModel = {
-            height: window.innerWidth >= 700 ? 300 : 600
-        };
+        view.show(require("../../../view/statistics.mustache"));
 
-        view.show(require("../../../view/statistics.mustache"), viewModel);
+        const startDate = DateOnly.today().addYears(-2);
 
-        new Chartist.Line("#read-history-books-diagram", {
-                labels: monthReadingPerformance,
-                series: [monthReadingPerformance.map(x => x.countBooks())]
-            }, chartOptions(),
-            responsiveOptions()
-        );
 
-        new Chartist.Line("#read-history-pages-diagram", {
-                labels: monthReadingPerformance,
-                series: [monthReadingPerformance.map(x => x.countPages())]
-            }, chartOptions(),
-            responsiveOptions()
-        );
+        let pagesHistory = new PagesReadTimelineReport(allBooks).generate().monthlyHistory(startDate);
+        let bookHistory = new BooksReadTimelineReport(allBooks).generate().monthlyHistory(startDate);
+        let addedHistory = new BooksAddedTimelineReport(allBooks).generate().monthlyHistory(startDate);
 
-        new Chartist.Line("#books-added-diagram", {
-            labels: monthAddingPerformance,
-            series: [monthAddingPerformance.map(x => x.countBooks())]
-        }, chartOptions(), responsiveOptions())
+
+        new Chart(context("read-history-books-diagram"), {
+            type: "line",
+            data: {
+                labels: pagesHistory.map(x => x.date.asString()),
+                datasets: [{
+                    label: "Gelesene Bücher",
+                    data: bookHistory.map(x => Math.round(x.sum() * 10) / 10),
+                    borderColor: "#7A9558",
+                    backgroundColor: "#7A9558",
+                }, {
+                    label: "Hinzugefügte Bücher",
+                    borderColor: "#E45308",
+                    backgroundColor: "#E45308",
+                    data: addedHistory.map(x => x.sum()),
+                }
+
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                }
+
+            }
+        });
+
+        new Chart(context("read-pages-history-books-diagram"), {
+            type: "line",
+            data: {
+                labels: pagesHistory.map(x => x.date.asString()),
+                datasets: [{
+                    label: "Gelesene Seiten",
+                    data: pagesHistory.map(x => Math.round(x.sum())),
+                    borderColor: "#00247B",
+                    backgroundColor: "#00247B",
+
+                }
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                }
+
+            }
+        });
     }
 
 
 }
 
-
-function chartOptions() {
-    return {
-        axisX: {
-            labelInterpolationFnc: function (value: MonthPerformance, index: number) {
-                return index % 4 == 0 ? value.getMonthTitle() : null;
-            }
-        },
-        axisY: {
-            onlyInteger: true
-        },
-        low: 0,
-        lineSmooth: Chartist.Interpolation.none(),
-    }
+function context(id: string) {
+    const el = new UiToolkit().find().byId(id).element as HTMLCanvasElement;
+    return el.getContext("2d");
 }
 
-function responsiveOptions() {
-    return [
-        ["screen and (max-width: 700px)", {
-            showLine: true,
-            showPoint: false,
-
-            low: 0,
-            axisX: {
-                labelInterpolationFnc: function (value: MonthPerformance, index: number) {
-                    // Will return M, T, W etc. on small screens
-                    return index % 4 == 0 ? value.getMonthTitle() : null;
-                }
-            }
-        }],
-        ["screen and (max-width: 450px)", {
-            showLine: true,
-            low: 0,
-            axisX: {
-                labelInterpolationFnc: function (value: MonthPerformance, index: number) {
-                    // Will return M, T, W etc. on small screens
-                    return index % 8 == 2 ? value.getMonthTitle() : null;
-                }
-            }
-        }]
-
-    ];
-}

@@ -7,7 +7,7 @@ namespace hamstersbooks\api\book;
 use hamstersbooks\api\output\ApiResponse;
 use hamstersbooks\util\persistence\QueryExecutor;
 
-class BrowseBooksController
+class BrowseBooksByStateController
 {
     public function __invoke($state, QueryExecutor $executor)
     {
@@ -24,7 +24,7 @@ class BrowseBooksController
     public static function handle()
     {
         return function ($state) {
-            (new BrowseBooksController())->__invoke($state, QueryExecutor::usingExistingConnection());
+            (new BrowseBooksByStateController())->__invoke($state, QueryExecutor::usingExistingConnection());
         };
     }
 }

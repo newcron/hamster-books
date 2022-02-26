@@ -17,7 +17,6 @@ delete:
 	docker-compose -f environment/docker-compose-hamstersbooks-permanent-fs.yml -p hamstersbooks kill
 	docker-compose -f environment/docker-compose-hamstersbooks-permanent-fs.yml -p hamstersbooks rm -f -v
 
-
 migrations-init:
 	curl $(DOCKER_IP)/deploy/database/init
 

@@ -1,5 +1,6 @@
 import XDate from "xdate";
 import {BookApiFormat} from "./BookApiFormat";
+import {DateOnly} from "./DateOnly";
 
 
 export class Book {
@@ -93,6 +94,19 @@ export class Book {
     isTransient() {
         return this.id === 0;
     }
+
+    hasReadTimerange() {
+        return this.isFinishedReading() && this.readNotes.startDate !== undefined;
+    }
+
+    public getReadTimerange(): DateOnly[] {
+        if (this.hasReadTimerange()) {
+            return DateOnly.fromDate(this.readNotes.startDate.toDate()).allDaysUntil(DateOnly.fromDate(this.readNotes.finishDate.toDate()));
+        } else {
+            return [DateOnly.fromDate(this.readNotes.finishDate.toDate())];
+        }
+    }
+
 }
 
 

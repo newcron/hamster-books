@@ -1,5 +1,7 @@
 import XDate from "xdate";
 import {Book, ReadState} from "../../data/Book";
+import {BooksAddedTimelineReport} from "./BooksAddedTimelineReport";
+import {PagesReadTimelineReport} from "./PagesReadTimelineReport";
 
 export class ReportDataGenerator {
 
@@ -11,6 +13,10 @@ export class ReportDataGenerator {
     }
 
     public generate(): Report {
+
+        new BooksAddedTimelineReport(this.data).generate();
+        new PagesReadTimelineReport(this.data).generate();
+        new BooksAddedTimelineReport(this.data).generate();
 
 
         this.data.filter(book => book.readState === ReadState.READ && book.readNotes !== undefined)

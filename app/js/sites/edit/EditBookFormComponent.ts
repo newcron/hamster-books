@@ -7,8 +7,7 @@ import {FormDataExtractor} from "./FormDataExtractor";
 import {PickAuthorComponent} from "./author/PickAuthorComponent";
 import {AjaxService} from "../../net/AjaxRequest";
 import {FormDataValidator} from "./FormDataValidator";
-
-var urls = require("../../net/urls");
+import {UrlFactory} from "../../net/UrlFactory";
 
 
 export class EditBookFormComponent {
@@ -48,7 +47,7 @@ export class EditBookFormComponent {
         if (new FormDataValidator(this.form, this.pickAuthorComponent, this.bookToEdit).validate()) {
             const data = new FormDataExtractor(this.form, this.pickAuthorComponent, this.bookToEdit).extract();
 
-            new AjaxService().post(urls.addEditBook(), data).then(() => location.hash = "#/read");
+            new AjaxService().post(new UrlFactory().addEditBook(), data).then(() => location.hash = "#/read");
         }
 
     }

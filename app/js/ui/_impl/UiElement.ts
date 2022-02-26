@@ -1,11 +1,12 @@
 import {Finder} from "./Finder";
 
 export class UiElement {
-    constructor(private element: Element) {
+    constructor(public element: Element) {
         if (this.element === null || this.element === undefined) {
             throw "element does not exist";
         }
     }
+
 
     find(): Finder {
         return new Finder(this.element);

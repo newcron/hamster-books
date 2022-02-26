@@ -5,7 +5,8 @@ use hamstersbooks\api\auth\AuthController;
 use hamstersbooks\api\author\BrowseAuthorsController;
 use hamstersbooks\api\author\GetAuthorsBibliographyController;
 use hamstersbooks\api\book\AddEditBookController;
-use hamstersbooks\api\book\BrowseBooksController;
+use hamstersbooks\api\book\BrowseAllBooksController;
+use hamstersbooks\api\book\BrowseBooksByStateController;
 use hamstersbooks\api\book\ReadBookController;
 use hamstersbooks\api\book\SearchBookOnAmazonController;
 use hamstersbooks\api\book\SearchBookOnAmazonNewController;
@@ -19,8 +20,9 @@ use hamstersbooks\web\IndexController;
 
 return [
     "GET|POST /api/*" => AuthController::handle(),
-    'GET /api/book/@id' => ReadBookController::handle(),
-    'GET /api/book/all/@state' => BrowseBooksController::handle(),
+    'GET /api/book/by-id/@id' => ReadBookController::handle(),
+    'GET /api/book/all' => BrowseAllBooksController::handle(),
+    'GET /api/book/all/by-state/@state' => BrowseBooksByStateController::handle(),
     'GET /api/book/search/@isbn' => SearchBookOnAmazonController::handle(),
 
     'POST /api/book/' => AddEditBookController::handle(),
