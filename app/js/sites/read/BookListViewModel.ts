@@ -2,6 +2,7 @@ export interface ReadBookListViewModel {
 
     readCount: number,
     readingCount: number,
+    thisYearRead: number,
     groups: {
         groupName: string,
         books: {

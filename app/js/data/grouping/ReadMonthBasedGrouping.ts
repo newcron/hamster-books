@@ -30,7 +30,7 @@ export class ReadMonthBasedGrouping implements GroupingStrategy {
             return a.isFinishedReading() ? 1 : -1;
         }
         if (!a.isFinishedReading() && !b.isFinishedReading()) {
-            return a.title.localeCompare(b.title);
+            return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
         }
         return b.readNotes.finishDate.getTime() - a.readNotes.finishDate.getTime();
     }

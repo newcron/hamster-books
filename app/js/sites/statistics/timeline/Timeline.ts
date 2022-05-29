@@ -8,10 +8,12 @@ export class Timeline<T> {
 
 
     private readonly contributions = new Map<string, Progress<T>[]>()
-
+    private earliestDate?: DateOnly = undefined;
 
     public recognize(date: DateOnly, progress: Progress<T>) {
-
+        if (this.earliestDate === undefined || this.earliestDate > date) {
+            this.earliestDate = date;
+        }
         let key = this.key(date);
         if (!this.contributions.has(key)) {
             this.contributions.set(key, []);
@@ -19,11 +21,14 @@ export class Timeline<T> {
         this.contributions.get(key).push(progress);
     }
 
-    public dailyHistory(fromDate: DateOnly): ProgressPerDay<T>[] {
+    public dailyHistory(fromDate: DateOnly | undefined): ProgressPerDay<T>[] {
+        if (fromDate === undefined) {
+            fromDate = this.earliestDate;
+        }
         return fromDate.allDaysUntil(DateOnly.today()).map(date => new ProgressPerDay(date, this.progressOn(date)))
     }
 
-    public monthlyHistory(fromDate: DateOnly): ProgressPerMonth<T>[] {
+    public monthlyHistory(fromDate: DateOnly | undefined): ProgressPerMonth<T>[] {
         var items: MonthAccumulator<T>[] = [];
 
         this.dailyHistory(fromDate).forEach(day => {
@@ -42,6 +47,7 @@ export class Timeline<T> {
 
 
     progressOn(date: DateOnly): Progress<T>[] {
+
         let key = date.toIsoString();
         return this.contributions.has(key) ? this.contributions.get(key) : [];
     }

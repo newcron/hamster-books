@@ -5,6 +5,8 @@ import {CategoryScale, Chart, Legend, LinearScale, LineController, LineElement, 
 import {DateOnly} from "../../data/DateOnly";
 import {PagesReadTimelineReport} from "./PagesReadTimelineReport";
 import {BooksReadTimelineReport} from "./BooksReadTimelineReport";
+import {SubTimelineReport} from "./SubTimelineReport";
+import {MonthOnly} from "../../data/MonthOnly";
 
 const view = require("../../ui/view");
 Chart.register(LineController, Tooltip, CategoryScale, LinearScale, PointElement, LineElement, Legend);
@@ -24,6 +26,7 @@ export class StatisticsController {
         let pagesHistory = new PagesReadTimelineReport(allBooks).generate().monthlyHistory(startDate);
         let bookHistory = new BooksReadTimelineReport(allBooks).generate().monthlyHistory(startDate);
         let addedHistory = new BooksAddedTimelineReport(allBooks).generate().monthlyHistory(startDate);
+        let subHistory = new SubTimelineReport(allBooks).generate().monthlyHistory(MonthOnly.fromDate(startDate).firstOfMonth());
 
 
         new Chart(context("read-history-books-diagram"), {
@@ -69,11 +72,22 @@ export class StatisticsController {
             },
             options: {
                 responsive: true,
-                interaction: {
-                    mode: 'index',
-                    intersect: false
-                }
+            }
+        });
 
+        new Chart(context("sub-history-books-diagram"), {
+            type: "line",
+            data: {
+                labels: subHistory.map(x => x.date.asString()),
+                datasets: [{
+                    label: "SUB",
+                    data: subHistory.map(x => x.sum()),
+                    borderColor: "#00247B",
+                    backgroundColor: "#00247B",
+                }]
+            },
+            options: {
+                responsive: true,
             }
         });
     }

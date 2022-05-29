@@ -18,11 +18,11 @@ export class AuthorBasedGrouping implements GroupingStrategy {
     }
 
     groupSortingFunction(a: AuthorGroup, b: AuthorGroup): number {
-        return a.author.getNameLastNameFirst() > b.author.getNameLastNameFirst() ? 1 : -1
+        return a.author.getNameLastNameFirst().toLowerCase() > b.author.getNameLastNameFirst().toLowerCase() ? 1 : -1
     }
 
     bookInGroupSortingFunction(a: Book, b: Book): number {
-        return a.title.localeCompare(b.title);
+        return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
     }
 
 }

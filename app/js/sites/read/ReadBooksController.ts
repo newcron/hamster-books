@@ -17,6 +17,7 @@ export class ReadBooksController {
         const viewModel: ReadBookListViewModel = {
             readCount: books.filter(x => x.isFinishedReading()).length,
             readingCount: books.filter(x => x.isCurrentlyRead()).length,
+            thisYearRead: books.filter(x => x.isFinishedReading() && x.readNotes.finishDate.getFullYear() === new XDate().getFullYear()).length,
             groups: groups.map(g => {
 
 

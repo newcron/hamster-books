@@ -21,7 +21,15 @@ export class MonthOnly {
         return new MonthOnly(d.year, d.month)
     }
 
+    public previousMonth() {
+        return this.month === 1 ? new MonthOnly(this.year - 1, 12) : new MonthOnly(this.year, this.month - 1);
+    }
+
     public contains(d: DateOnly) {
         return this.year === d.year && this.month === d.month;
+    }
+
+    firstOfMonth() {
+        return new DateOnly(this.year, this.month, 1);
     }
 }
