@@ -1,8 +1,17 @@
 <section id="unread-books">
-    <p class="l-rightalign">
-        SUB: {{unreadCount}}, Alt-SUB: {{oldSubCount}},
-        Wartezeit: {{unreadTime.years}} Jahre, {{unreadTime.months}} monate
-    </p>
+
+    <div class="book-list-header">
+        <div class="book-list-header-listname">
+            {{listName}}
+        </div>
+        <div class="book-list-header-details">
+            <span class="nowrap">SUB: {{unreadCount}},</span>
+            <span class="nowrap">Alt-SUB: {{oldSubCount}},</span>
+            <span class="nowrap">Wartezeit: {{unreadTime}} Monate</span>
+        </div>
+    </div>
+
+
     <div class="list-group">
         {{#groups}}
             <section class="cluster">

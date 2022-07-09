@@ -5,17 +5,18 @@ namespace hamstersbooks\api\auth;
 
 
 use hamstersbooks\api\output\ApiResponse;
+use hamstersbooks\util\persistence\QueryExecutor;
 
 class AuthController
 {
 
-    public function __invoke()
+    public function __invoke(QueryExecutor $queryExecutor)
     {
         if (AccessVerifier::fromSession()->mayAccess()) {
             return true;
         }
 
-        if(AccessVerifier::fromRememberMe()->mayAccess()) {
+        if (AccessVerifier::fromRememberMe()->mayAccess()) {
             return true;
         }
 
@@ -27,7 +28,8 @@ class AuthController
     public static function handle()
     {
         return function () {
-            return call_user_func(new AuthController());
+            return (new AuthController())->__invoke(QueryExecutor::usingExistingConnection());
         };
     }
+
 }

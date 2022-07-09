@@ -16,6 +16,10 @@ export class StatisticsController {
 
         const bookService = new BookService();
         const allBooks = await bookService.loadAllBooks();
+        if (allBooks.length == 0) {
+            view.show(require("../../../view/statistics-empty.mustache"));
+            return;
+        }
 
 
         view.show(require("../../../view/statistics.mustache"));

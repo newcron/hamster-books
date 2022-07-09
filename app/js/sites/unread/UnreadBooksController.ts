@@ -5,6 +5,7 @@ import {Grouper} from "../../data/grouping/Grouper";
 
 import {UnreadBookListViewModel} from "./BookListViewModel";
 import {AddedYearGrouping} from "../../data/grouping/AddedYearGrouping";
+import {BookListService} from "../../BookListService";
 
 
 var view = require("../../ui/view");
@@ -18,15 +19,13 @@ export class UnreadBooksController {
 
         const now = new XDate();
 
-        const unreadMonths = books.map(b => Math.round(b.addedDate.diffMonths(new XDate()))).reduce((prev, current) => prev + current);
+        const unreadMonths = books.map(b => Math.round(b.addedDate.diffMonths(new XDate()))).reduce((prev, current) => prev + current, 0);
 
         const viewModel: UnreadBookListViewModel = {
+            listName: new BookListService().getSelected().name,
             unreadCount: books.length,
             oldSubCount: books.filter(x => x.addedDate.diffDays(now) > 365).length,
-            unreadTime: {
-                months: unreadMonths % 12,
-                years: Math.floor(unreadMonths / 12)
-            },
+            unreadTime: unreadMonths,
             groups: groups.map(g => {
                 return {
                     groupName: g.groupTitle,

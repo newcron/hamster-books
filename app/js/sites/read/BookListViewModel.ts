@@ -1,5 +1,5 @@
 export interface ReadBookListViewModel {
-
+    listName: string
     readCount: number,
     readingCount: number,
     thisYearRead: number,

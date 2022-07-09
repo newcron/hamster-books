@@ -1,11 +1,8 @@
 export interface UnreadBookListViewModel {
-
+    listName: string
     unreadCount: number,
     oldSubCount: number,
-    unreadTime: {
-        years: number
-        months: number;
-    }
+    unreadTime: number,
     groups: {
         groupName: string,
         books: {

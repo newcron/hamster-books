@@ -4,13 +4,14 @@
 namespace hamstersbooks\api\book;
 
 
+use hamstersbooks\api\booklist\BookList;
 use hamstersbooks\util\persistence\Query;
 
 class InsertBookQuery implements Query
 {
     private $formParams;
 
-    public function __construct($isbn, $title, $publisher, $pageCount, $publicationYear, $readDateStart, $readDateEnd, $readComment, $readRating, $readState, $tags, $readCancelledPage)
+    public function __construct($isbn, $title, $publisher, $pageCount, $publicationYear, $readDateStart, $readDateEnd, $readComment, $readRating, $readState, $tags, $readCancelledPage, BookList $list)
     {
         $this->formParams = [
             $isbn,
@@ -24,7 +25,8 @@ class InsertBookQuery implements Query
             $readRating,
             $readState,
             $tags,
-            $readCancelledPage
+            $readCancelledPage,
+            $list->getId()
         ];
     }
 
@@ -45,9 +47,10 @@ class InsertBookQuery implements Query
             read_rating,
             read_state,
             tags, 
-            read_canceled_page
+            read_canceled_page, 
+            list_id
         ) values (
-            now(), now(), 'DE', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            now(), now(), 'DE', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     }
 
     public function getParameters()

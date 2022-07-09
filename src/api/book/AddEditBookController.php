@@ -4,6 +4,7 @@
 namespace hamstersbooks\api\book;
 
 
+use hamstersbooks\api\booklist\BookListService;
 use hamstersbooks\api\output\ApiResponse;
 use hamstersbooks\util\persistence\QueryExecutor;
 
@@ -71,7 +72,8 @@ class AddEditBookController
             $params["readNotes"]["rating"] ?? null,
             $params["readState"],
             $this->serializeTags($params["readNotes"]["tags"]),
-            $params["readNotes"]["cancelledOnPage"] ?? null
+            $params["readNotes"]["cancelledOnPage"] ?? null,
+            (new BookListService())->getSelectedList()
         ));
         // todo: add cancel note: cancelledOnPage
 

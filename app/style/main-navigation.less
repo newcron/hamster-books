@@ -11,6 +11,15 @@
   z-index: 99999;
   font-family: Garamond;
 
+  .select-list-item {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 32px;
+    width: 36px;
+    background-image: url(" @{image-url}/pageturnicon.svg");
+  }
+
   .main-navigation-title {
     color: white;
     margin: 0;
@@ -37,7 +46,7 @@
 
       a:hover {
         text-decoration: none;
-        background: rgba(255,255,255, 0.4)
+        background: rgba(255, 255, 255, 0.4)
       }
     }
 
@@ -57,12 +66,10 @@
 }
 
 
-
-
 @media screen and (min-width: 500px) {
   .main-navigation {
-      /* transition is very expensive for phones without hardware acceleration */
-      transition: background-image 0.4s;
+    /* transition is very expensive for phones without hardware acceleration */
+    transition: background-image 0.4s;
   }
 }
 

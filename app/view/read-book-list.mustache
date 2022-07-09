@@ -1,7 +1,15 @@
 <section id="read-books">
-    <p class="l-rightalign">
-        Insgesamt: {{readCount}}, Wird Gelesen: {{readingCount}}, Dieses Jahr: {{thisYearRead}}
-    </p>
+    <div class="book-list-header">
+        <div class="book-list-header-listname">
+            {{listName}}
+        </div>
+        <div class="book-list-header-details">
+            <span class="nowrap">Insgesamt: {{readCount}},</span>
+            <span class="nowrap">Aktuell: {{readingCount}},</span>
+            <span class="nowrap">Dieses Jahr: {{thisYearRead}}</span>
+        </div>
+    </div>
+
     <div class="list-group">
         {{#groups}}
             <section class="cluster">

@@ -1,11 +1,15 @@
+import {BookListService} from "../BookListService";
+
+
 export class UrlFactory {
 
+
     public getBooksByState(state: string) {
-        return "api/book/all/by-state/" + state;
+        return appendList("api/book/all/by-state/" + state);
     }
 
     public getAllBooks() {
-        return "api/book/all/";
+        return appendList("api/book/all/");
     }
 
     public getBook(id: number) {
@@ -17,7 +21,11 @@ export class UrlFactory {
     }
 
     public addEditBook() {
-        return "api/book"
+        return appendList("api/book")
     }
+    
+}
 
+function appendList(str: string) {
+    return str + "?bookListId=" + new BookListService().getSelected().id;
 }

@@ -4,6 +4,7 @@
 namespace hamstersbooks\api\book;
 
 
+use hamstersbooks\api\booklist\BookListService;
 use hamstersbooks\api\output\ApiResponse;
 use hamstersbooks\util\persistence\QueryExecutor;
 
@@ -12,13 +13,15 @@ class BrowseBooksByStateController
     public function __invoke($state, QueryExecutor $executor)
     {
 
-        $result = $executor->fetchAll(new FindBooksByStateQuery($state));
-        
+        $bookList = (new BookListService())->getSelectedList();
+        $result = $executor->fetchAll(new FindBooksByStateQuery($state, $bookList));
+
         ApiResponse::ok()->withJsonContent(
-            [ 
-                "books"=> (new BookFormatConverter())->convertList($result)
-            ]         
-            )->send();
+            [
+                "list" => $bookList,
+                "books" => (new BookFormatConverter())->convertList($result)
+            ]
+        )->send();
     }
 
     public static function handle()

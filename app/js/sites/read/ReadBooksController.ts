@@ -4,6 +4,7 @@ import {Grouper} from "../../data/grouping/Grouper";
 import {ReadMonthBasedGrouping} from "../../data/grouping/ReadMonthBasedGrouping";
 import {ReadBookListViewModel} from "./BookListViewModel";
 import XDate from "xdate";
+import {BookListService} from "../../BookListService";
 
 var view = require("../../ui/view");
 
@@ -11,10 +12,12 @@ var view = require("../../ui/view");
 export class ReadBooksController {
     public async handle() {
 
+
         const books = await new BookService().loadBooksInState(ReadState.READ);
         const groups = new Grouper(new ReadMonthBasedGrouping()).assign(books);
 
         const viewModel: ReadBookListViewModel = {
+            listName: new BookListService().getSelected().name,
             readCount: books.filter(x => x.isFinishedReading()).length,
             readingCount: books.filter(x => x.isCurrentlyRead()).length,
             thisYearRead: books.filter(x => x.isFinishedReading() && x.readNotes.finishDate.getFullYear() === new XDate().getFullYear()).length,
