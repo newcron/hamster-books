@@ -31,8 +31,8 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: "application"
-      - name: check existence
+      - name: "Deploy Application"
         run: |
-          ls -la
+          curl -XPOST https://deployments.hamstersbooks.de -F "data=@build.tar"  -u "${{secrets.DEPLOY_USER}}:${{secrets.DEPLOY_PASSWORD}}"
 
   
