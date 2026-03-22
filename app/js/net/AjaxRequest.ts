@@ -1,9 +1,8 @@
-import { ErrorEventTarget, EventType } from "../ErrorEventTarget";
+import { CommunicationsErrorHandler, EventType } from "../CommunicationsErrorHandler";
 
 export class AjaxService {
 
     private async  makeRequest<T>(method: string, url: string, data?: any) : Promise<T> {
-        console.log(url);
         return new Promise((resolve, reject)=>{
             
             const xhr = new XMLHttpRequest(); 
@@ -13,9 +12,10 @@ export class AjaxService {
                     return;
                 }
 
-                
+
+                const responseText = xhr.responseText;
                 if (xhr.status >= 200 && xhr.status < 300) {
-                    const payload = xhr.responseText;
+                    const payload = responseText;
                     const result = JSON.parse(payload);
                     resolve(result);
                 } else {
@@ -23,20 +23,20 @@ export class AjaxService {
                     
                     
                     if(xhr.status === 401) {
-                        ErrorEventTarget.singleton().dispatchEvent(new CustomEvent(EventType.LOGIN_REQUIRED, {detail: JSON.parse(xhr.responseText).login})); 
+                        CommunicationsErrorHandler.singleton().onAuthenticationRequired(JSON.parse(responseText).login); 
                     } else { 
-                        ErrorEventTarget.singleton().dispatchEvent(new CustomEvent(EventType.NET_ERROR, {detail: xhr.responseText}))
+                        CommunicationsErrorHandler.singleton().onNetworkError(responseText);
                     }
                     
                     reject({
                         status: xhr.status,
-                        statusText: xhr.statusText,
+                        statusText: xhr.statusText
                     });
                 }
             }
             xhr.onerror = function () {
                 const req = this as unknown as XMLHttpRequest; 
-                ErrorEventTarget.singleton().dispatchEvent(new CustomEvent(EventType.NET_ERROR, {detail: xhr.responseText}))
+                CommunicationsErrorHandler.singleton().onNetworkError(xhr.responseText);
                 reject({
                     status: xhr.status,
                     statusText: xhr.statusText

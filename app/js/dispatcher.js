@@ -1,6 +1,6 @@
 var mainMenu = require("./ui/components/mainmenu/mainMenu");
 const { ReadBooksController } = require("./sites/read/ReadBooksController");
-const { ErrorEventTarget, EventType } = require("./ErrorEventTarget");
+const { CommunicationsErrorHandler, EventType } = require("./CommunicationsErrorHandler");
 const { UnreadBooksController } = require("./sites/unread/UnreadBooksController");
 const { StatisticsController } = require("./sites/statistics/StatisticsController");
 const {EditBookController} = require("./sites/edit/EditBookController");
@@ -24,12 +24,6 @@ module.exports = {
             mainMenu.notifyChange(location.hash.substr(1));
         }
 
-        ErrorEventTarget.singleton().addEventListener(EventType.LOGIN_REQUIRED, (event)=>{
-            window.location = event.detail
-        })
-        ErrorEventTarget.singleton().addEventListener(EventType.NET_ERROR, (event)=>{
-            alert("Netzwerk Fehler:\n\n"+event.detail);
-        })
 
 
         function handleHashChange() {

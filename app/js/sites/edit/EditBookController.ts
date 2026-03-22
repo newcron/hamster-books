@@ -25,7 +25,6 @@ export class EditBookController {
 
     private showForm(bookToEdit: Book, allAuthors: Author[]) {
         let model = editBook(bookToEdit);
-        console.log(model);
         view.show(require("../../../view/book-modify.mustache"),
             model);
         new EditBookFormComponent(new EditBookForm(), allAuthors, bookToEdit).showForm();

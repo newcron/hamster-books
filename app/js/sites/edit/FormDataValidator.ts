@@ -53,7 +53,6 @@ export class FormDataValidator {
         if (this.form.pageCountField().value().isPresent() && this.form.cancelledOnPageField().value().isPresent()) {
             const totalPages = parseInt(this.form.pageCountField().value().get());
             const stoppedAt = parseInt(this.form.cancelledOnPageField().value().get());
-            console.log(totalPages, stoppedAt);
             if (totalPages < stoppedAt) {
                 this.reject(this.form.cancelledOnPageField())
             } else {

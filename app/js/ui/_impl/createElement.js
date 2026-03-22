@@ -8,8 +8,6 @@ function createElement(htmlStructure) {
     var element = new UiElement(dummyElement.firstChild);
 
     element.appendTo = function(newTarget) {
-        console.log(newTarget.element);
-        console.log(element);
 
         newTarget.element.appendChild(element.element);
     };

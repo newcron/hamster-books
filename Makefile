@@ -29,8 +29,9 @@ migrations-run:
 	curl $(DOCKER_IP)/deploy/database/migrate/run
 
 
-watch:
+watch: 
 	npx webpack --mode development
+	cp web/index.php app-optimized/index.php
 	npx webpack --watch --mode development
 
 release:

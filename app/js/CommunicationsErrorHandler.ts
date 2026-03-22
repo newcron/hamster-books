@@ -1,6 +1,6 @@
-let element : ErrorEventTarget = undefined;
+let element : CommunicationsErrorHandler = undefined;
 
-export class ErrorEventTarget {
+export class CommunicationsErrorHandler {
     fragment: DocumentFragment;
     
     private constructor() {
@@ -9,18 +9,20 @@ export class ErrorEventTarget {
 
     public static singleton() {
         if(element === undefined) {
-            element = new ErrorEventTarget(); 
+            element = new CommunicationsErrorHandler(); 
         }
         return element;
     }
-
-    public dispatchEvent(e: Event) {
-        this.fragment.dispatchEvent(e);
+    
+    public onAuthenticationRequired(loginUrl: string) {
+        window.location.href = loginUrl;
     }
-
-    public addEventListener(type: EventType, listener: (e: Event)=>void) {
-        this.fragment.addEventListener(type, listener);
+    
+    public onNetworkError(detail: any) {
+        alert("Netzwerk Fehler:\n\n"+detail);
     }
+    
+
 
 
 }
