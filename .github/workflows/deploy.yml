@@ -1,0 +1,23 @@
+name: "🐹 Hamsters Books CI/CD Pipeline"
+on: 
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build
+        run: |
+          make release
+  deploy: 
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: deploy
+        run: |
+          echo "deploying"
+
+  
