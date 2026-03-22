@@ -9,13 +9,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v5 
       - name: build
         run: |
           make release
   deploy: 
     runs-on: ubuntu-latest
+    needs: build
     environment: prod
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
       - name: deploy
         run: |
           echo "deploying"
