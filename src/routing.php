@@ -5,6 +5,7 @@ use hamstersbooks\api\auth\AuthController;
 use hamstersbooks\api\author\BrowseAuthorsController;
 use hamstersbooks\api\author\GetAuthorsBibliographyController;
 use hamstersbooks\api\book\AddEditBookController;
+use hamstersbooks\api\book\DeleteBookController;
 use hamstersbooks\api\book\BrowseAllBooksController;
 use hamstersbooks\api\book\BrowseBooksByStateController;
 use hamstersbooks\api\book\ReadBookController;
@@ -21,7 +22,8 @@ use hamstersbooks\web\auth\LoginReturnController;
 use hamstersbooks\web\IndexController;
 
 return [
-    "GET|POST /api/*" => AuthController::handle(),
+    "GET|POST|DELETE /api/*" => AuthController::handle(),
+    "DELETE /api/book/by-id/@id" => DeleteBookController::handle(),
     'GET /api/book/by-id/@id' => ReadBookController::handle(),
     'GET /api/book/all' => BrowseAllBooksController::handle(),
     'GET /api/book/all/by-state/@state' => BrowseBooksByStateController::handle(),

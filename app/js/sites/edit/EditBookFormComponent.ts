@@ -21,6 +21,11 @@ export class EditBookFormComponent {
         this.form.readStateRadios().forEach(e => e.on("change").fire(this.toggleReadNotesSection).andEvaluateNow());
         this.form.getForm().on("submit").fireAndConsume(this.submitFormData);
         this.form.cancelledCheckbox().on("change").fire(this.cancelValueChanged).andEvaluateNow();
+        if (this.bookToEdit.isTransient()) {
+            this.form.deleteButton().remove();
+        } else {
+            this.form.deleteButton().on("click").fireAndConsume(this.deleteBook)
+        }
         this.pickAuthorComponent = new PickAuthorComponent(this.bookToEdit.authors, this.allAuthors);
         this.pickAuthorComponent.insertInto(this.form.pickAuthorTarget());
     }
@@ -54,5 +59,13 @@ export class EditBookFormComponent {
 
     private removeAutocompleteSection() {
         this.form.authorAutocompleteSection().children().forEach(x => x.remove());
+    }
+
+    private deleteBook = ()=>  {
+        if (!confirm("Soll das Buch wirklich gelöscht werden?")) {
+            return;
+        }
+        new AjaxService().delete(new UrlFactory().deleteBook(this.bookToEdit.id), null).then(() => location.hash = "#/read");
+
     }
 }

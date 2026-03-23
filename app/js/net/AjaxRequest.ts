@@ -59,6 +59,11 @@ export class AjaxService {
     public async post<T>(url: string, data: any) : Promise<T> {
         return this.makeRequest("POST", url, data);
     }
+    
+    public async delete<T>(url: string, data: any) : Promise<T> {
+        return this.makeRequest("DELETE", url, data);
+    }
+    
 }
 
 

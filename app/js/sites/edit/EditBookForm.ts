@@ -30,6 +30,10 @@ export class EditBookForm {
     authorIdField() {
         return this.findField("modify-author-id")
     }
+    
+    deleteButton() {
+        return this.findField("book-delete-button");
+    }
 
     titleField() {
         return this.findField("modify-title");

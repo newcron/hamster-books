@@ -23,7 +23,10 @@ export class UrlFactory {
     public addEditBook() {
         return appendList("api/book")
     }
-    
+
+    deleteBook(bookId: number) {
+        return "api/book/by-id/" + bookId;
+    }
 }
 
 function appendList(str: string) {
